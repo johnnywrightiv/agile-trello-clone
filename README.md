@@ -10,28 +10,23 @@ Trello is a popular project management tool that allows users to create boards, 
 
 Here are some of the key features we plan to include in our Trello clone:
 
-User authentication and authorization
-Ability to create and manage boards, lists, and cards
-Drag-and-drop functionality for moving cards between lists
-Real-time updates using WebSockets
-Integration with a database for persistent data storage
+- User authentication and authorization
+- Ability to create and manage boards, lists, and cards
+- Drag-and-drop functionality for moving cards between lists
+- Integration with a database for persistent data storage
 
 ## Technology Stack
 
 Our Trello clone is built using the following technologies:
 
-React.js and Redux Toolkit for the frontend (using React-DnD)
-Node.js and Express for the backend
-MongoDB and Mongoose for the database
+- React.js and Redux Toolkit for the frontend (using React-DnD)
+- Node.js and Express for the backend
+- MongoDB and Mongoose for the database
 
 ## Getting Started
 
 To get started with our Trello clone project, follow these steps:
 
-Clone this repository to your local machine.
-Install the required dependencies by running npm install in both the client and server directories.
-Start the server by running npm start in the server directory.
-Start the client by running npm start in the client directory.
-Open your browser and navigate to http://localhost:3000 to view the Trello clone.
+1. ...
 
 Thanks for checking out our project!
