@@ -1,0 +1,27 @@
+{
+  "name": "agile-trello-clone",
+  "version": "1.0.0",
+  "description": "Welcome to our Trello clone project! This is a group project created by the cohorts of Parsity's coding bootcamp. We're building a Trello clone using agile development methodology over the course of a four week part-time sprint.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "devStart": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.3",
+    "morgan": "^1.10.0",
+    "validator": "^13.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
