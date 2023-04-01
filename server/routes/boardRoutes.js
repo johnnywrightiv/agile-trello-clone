@@ -7,11 +7,11 @@ const router = express.Router();
 router
   .route('/')
   .get(checkAuth, boardController.getAllBoards)
-  .post(checkAuth,boardController.createBoard);
+  .post(checkAuth,boardController.createBoard)
+  .patch(checkAuth, boardController.updateBoard);
 
 router
-  .route('/:id')
+  .route('/:boardId')
   .get(checkAuth, boardController.getOneBoard)
-  .patch(checkAuth, boardController.updateBoard);
 
   module.exports = router;
