@@ -1,0 +1,321 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Tre-Hello👋
+  description: API for connecting the front and back end of the Parsity Agile Trello Clone project to make a working full stack application.
+host: ??
+basePath: /??
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  User:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+  Board:
+    type: object
+    properties:
+      user:
+        type: string
+      title:
+        type: string
+      columnOrder:
+        type: array
+        items:
+          type: string
+  Column:
+    type: object
+    properties:
+      board:
+        type: string
+      title:
+        type: string
+      columnId:
+        type: string
+      cardIds:
+        type: array
+        items:
+          type: string
+  Card:
+    type: object
+    properties:
+      cardId:
+        type: string
+      title:
+        type: string
+      column:
+        type: string
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      description: Retrieves a list of all users.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+      responses:
+        200:
+          description: A list of users
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        401:
+          description: Unauthorized
+  /users/signup:
+    post:
+      tags:
+        - Users
+      summary: Signup
+      description: Creates a new user account.
+      parameters:
+        - name: body
+          in: body
+          description: The user to create.
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        201:
+          description: User created successfully.
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: Invalid request.
+  /users/login:
+    post:
+      tags:
+        - Users
+      summary: Login
+      description: Logs a user in to the system.
+      parameters:
+        - name: body
+          in: body
+          description: The user login details.
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                description: The email of the user.
+                example: user@example.com
+              password:
+                type: string
+                description: The password of the user.
+                example: password123
+            required:
+              - email
+              - password
+      responses:
+        200:
+          description: User logged in successfully.
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                description: The JWT authentication token.
+                example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZDc1ZTUzZDdjNTJhODAwMTc4NzhlZmMiLCJpYXQiOjE1NzA4OTg1OTYsImV4cCI6MTU3MDk4NjU5Nn0.jLWke6K90U6bKJ5Q5g
+        401:
+          description: Invalid login credentials.
+  /boards:
+    get:
+      tags:
+        - Boards
+      summary: Get all boards
+      description: Retrieves a list of all boards.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+      responses:
+        200:
+          description: A list of boards
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Board"
+        401:
+          description: Unauthorized
+    post:
+      tags:
+        - Boards
+      summary: Create a new board
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: board
+          in: body
+          description: Board object that needs to be added
+          required: true
+          schema:
+            $ref: "#/definitions/Board"
+      responses:
+        201:
+          description: Board created successfully
+          schema:
+            $ref: "#/definitions/Board"
+        400:
+          description: Invalid request
+        401:
+          description: Unauthorized
+  /boards/{boardId}:
+    get:
+      tags:
+        - Boards
+      summary: Get a board by ID
+      description: Retrieves a single board by ID.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: boardId
+          in: path
+          description: ID of the board to get
+          required: true
+          type: string
+      responses:
+        200:
+          description: Board found
+          schema:
+            $ref: "#/definitions/Board"
+        404:
+          description: Board not found
+        401:
+          description: Unauthorized
+    patch:
+      tags:
+        - Boards
+      summary: Update a board by ID
+      description: Updates a single board by ID.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: boardId
+          in: path
+          description: ID of the board to update
+          required: true
+          type: string
+        - name: board
+          in: body
+          description: Board object that needs to be updated
+          required: true
+          schema:
+            $ref: "#/definitions/Board"
+      responses:
+        200:
+          description: Board updated successfully
+          schema:
+            $ref: "#/definitions/Board"
+        400:
+          description: Invalid request
+        401:
+          description: Unauthorized
+        404:
+          description: Board not found
+  /boards/columns/all/{boardId}:
+    get:
+      tags:
+        - Columns
+      summary: Get all columns for a board
+      description: Retrieves a list of all columns for a specific board.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: boardId
+          in: path
+          description: ID of the board to get columns from
+          required: true
+          type: string
+      responses:
+        200:
+          description: A list of columns
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Column"
+        401:
+          description: Unauthorized
+  /boards/columns/column/{columnId}:
+    get:
+      tags:
+        - Columns
+      summary: Get a column by ID
+      description: Retrieves a single column by ID.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: columnId
+          in: path
+          description: ID of the column to get
+          required: true
+          type: string
+      responses:
+        200:
+          description: Column found
+          schema:
+            $ref: "#/definitions/Column"
+        401:
+          description: Unauthorized
+        404:
+          description: Column not found
+  /boards/columns:
+    post:
+      tags:
+        - Columns
+      summary: Create a new column
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: column
+          in: body
+          description: Column object that needs to be added
+          required: true
+          schema:
+            $ref: "#/definitions/Column"
+      responses:
+        201:
+          description: Column created successfully
+          schema:
+            $ref: "#/definitions/Column"
+        400:
+          description: Invalid request
+        401:
+          description: Unauthorized
