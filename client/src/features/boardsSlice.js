@@ -3,16 +3,16 @@ import axios from 'axios';
 
 //action
 export const fetchBoardsAction = createAsyncThunk("boards/fetch", async(userId, rejectWithValue) => {
-  try {
-    const { data } = await axios.get({USERBOARD_GET_METHOD_ADDRESS});
+  // try {
+  //   const { data } = await axios.get({USERBOARD_GET_METHOD_ADDRESS});
 
-    return data;
-  } catch (error) {
-    if (!error?.response) {
-      throw error;
-    }
-    return rejectWithValue(error?.response?.data);
-  }
+  //   return data;
+  // } catch (error) {
+  //   if (!error?.response) {
+  //     throw error;
+  //   }
+  //   return rejectWithValue(error?.response?.data);
+  // }
 });
 
 const initialState = {
