@@ -1,6 +1,6 @@
 const Board = require('./../models/boardModel');
 
-// GET all users boards
+// GET - get all users boards
 exports.getAllBoards = async (req, res) => {
   try {
     const boards = await Board
@@ -24,11 +24,11 @@ exports.getAllBoards = async (req, res) => {
   }
 }
 
-// Get users board by id
+// Get - get users board by id
 exports.getOneBoard = async (req, res) => {
   try {
-    const { id } = req.params;
-    const board = await Board.findOne({ _id: id })
+    const { boardId } = req.params;
+    const board = await Board.findOne({ _id: boardId })
 
     if (!board) {
       return res.status(404).json({ message: 'The board with given id was not found' });
@@ -40,7 +40,7 @@ exports.getOneBoard = async (req, res) => {
   }
 }
 
-// create a new board
+// POST - create a new board
 exports.createBoard = async (req, res) => {
   try {
     const { title } = req.body;
@@ -49,13 +49,13 @@ exports.createBoard = async (req, res) => {
       title,
       columnOrder: [],
     })
-    res.status(201).json({ message:'New board created', newBoard });
+    res.status(201).json({ newBoard: newBoard });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 }
 
-// reorder board columns by id
+// PATCH - reorder board columns by id
 exports.updateBoard = async (req, res) => {
   try {
     const { boardId, newColumnOrder } = req.body;
@@ -77,6 +77,6 @@ exports.updateBoard = async (req, res) => {
       return res.status(500).json({message: err.message});
     }
   } catch (error) {
-    res.status(400).json({message:'Required parameters are missing'});
+    return res.status(400).json({message:'Required parameters are missing'});
   }
 }
