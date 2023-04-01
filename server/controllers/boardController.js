@@ -54,3 +54,29 @@ exports.createBoard = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 }
+
+// reorder board columns by id
+exports.updateBoard = async (req, res) => {
+  try {
+    const { boardId, newColumnOrder } = req.body;
+  if(boardId && newColumnOrder) {
+    console.log(boardId,newColumnOrder);
+    const board = await Board.findOneAndUpdate({
+      _id:boardId
+    }, 
+    { 
+      columnOrder: newColumnOrder
+    })          
+      const updatedColumnOrder = board.columnOrder;
+      console.log(updatedColumnOrder);
+      res.status(200).json({ 
+        message: 'Reorder was successful', 
+        updatedColumnOrder 
+      })
+    } else {
+      return res.status(500).json({message: err.message});
+    }
+  } catch (error) {
+    res.status(400).json({message:'Required parameters are missing'});
+  }
+}

@@ -12,5 +12,6 @@ router
 router
   .route('/:id')
   .get(checkAuth, boardController.getOneBoard)
+  .patch(checkAuth, boardController.updateBoard);
 
   module.exports = router;
