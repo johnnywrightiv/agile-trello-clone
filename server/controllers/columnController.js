@@ -7,16 +7,17 @@ exports.getAllColumns = async (req, res) => {
     const { boardId } = req.params;
 
     const board = await Board.findOne({ _id: boardId })
-      .select('columnOrder')
-      .exec();
+      .select('columnOrder userId title _id')
+
     if (!board) {
       return res
         .status(404)
         .json({ message: 'Board with given id was not found' });
     }
-    const columns = await Column.find({ board: boardId })
-      .select('cardIds title columnId')
-      .exec();
+
+    const columns = await Column.find({ boardId: boardId })
+      .select('cardOrder title _id boardId')
+    
     return res
       .status(200)
       .json({ columns: columns, board: board });
@@ -28,9 +29,9 @@ exports.getAllColumns = async (req, res) => {
 // GET - get column by id
 exports.getOneColumn = async (req, res) => {
   try {
-    const columnId = req.params.columnId;
+    const { columnId } = req.params;
 
-    const column = await Column.findOne({ columnId: columnId });
+    const column = await Column.findOne({ _id: columnId });
 
     if (!column) {
       return res
@@ -47,28 +48,27 @@ exports.getOneColumn = async (req, res) => {
 // POST - create a new column
 exports.createColumn = async (req, res) => {
   try {
-    const { title, boardId, columnId } = req.body;
-    await Column.find().exec();
+    const { title, boardId } = req.body;
+
     const newColumn = new Column({
-      board: boardId,
+      boardId: boardId,
       title,
       cardIds: [],
-      columnId,
     });
 
     const columnResult = await newColumn.save();
-    const board = await Board.findById(boardId).exec();
+    const board = await Board.findById(boardId)
 
     if (!board) {
-      res.status(404).json({ message: 'No Board exists of provided id' });
+      res.status(404).json({ message: 'No Board exists with provided id' });
     } else {
       const newColumnOrder = Array.from(board.columnOrder);
-      newColumnOrder.push(columnResult.columnId);
+      newColumnOrder.push(columnResult._id);
       board.set({ columnOrder: newColumnOrder });
       const boardResult = await board.save();
 
       return res.status(201).json({
-        column: columnResult,
+        newColumn: columnResult,
         board: boardResult,
       });
     }
@@ -82,20 +82,16 @@ exports.changeColumnTitle = async (req, res) => {
   try {
     const { columnId } = req.params;
 
-    if (req.query.title) {
-      const updatedColumn = await Column.findOneAndUpdate(columnId, { title: req.body.title }, { new: true })
-  
-      if (!updatedColumn) {
-        return res
-          .status(404)
-          .json({ message: 'Unable to find the that column' });
-      } else {
-        return res.status(200).json({ data: updatedColumn.title });
-      }
+    const updatedColumn = await Column.findOneAndUpdate({ _id: columnId }, { title: req.body.title }, { new: true })
+
+    if (!updatedColumn) {
+      return res
+        .status(404)
+        .json({ message: 'Unable to find the that column' });
     } else {
-      return res.status(404).json({ message: 'Title not found in the query' });
+      return res.status(200).json({ updatedColumn: updatedColumn });
     }
-  } catch (error) {
+  } catch (err) {
     return res.status(500).json({ message: err.message });
   }
 }

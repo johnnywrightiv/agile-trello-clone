@@ -13,11 +13,8 @@ router
   .get(checkAuth, columnController.getAllColumns);
 
 router
-  .route('/:columnId')
-  .post(checkAuth, columnController.changeColumnTitle);
-
-router
   .route('/column/:columnId')
-  .get(checkAuth, columnController.getOneColumn);
+  .get(checkAuth, columnController.getOneColumn)
+  .patch(checkAuth, columnController.changeColumnTitle);
 
   module.exports = router;

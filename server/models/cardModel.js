@@ -2,7 +2,7 @@ const mongoose = require( "mongoose");
 const Schema = mongoose.Schema;
 
 const CardSchema = new Schema({
-    cardId:{
+    cardOrder:{
       type:String
     },
     title:{
