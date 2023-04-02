@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
     required: [true, "Password required"],
     select: false,
   },
+  organization: {
+    type: String,
+    required: true,
+  }
 });
 
 // pre-save middleware to hash password
@@ -32,4 +36,4 @@ userSchema.methods.correctPassword = async function(comparedPassword, userPasswo
   return await bcrypt.compare(comparedPassword, userPassword)
 }
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Users', userSchema);

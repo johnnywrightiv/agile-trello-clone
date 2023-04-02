@@ -2,7 +2,7 @@ const mongoose = require( "mongoose");
 const Schema = mongoose.Schema;
 
 const boardSchema = new Schema({
-  user: {
+  userId: {
     type: Schema.Types.ObjectId,
     ref: 'users',
   },
@@ -18,4 +18,4 @@ const boardSchema = new Schema({
   ],
 });
 
-module.exports = mongoose.model('Board', boardSchema);
+module.exports = mongoose.model('Boards', boardSchema);

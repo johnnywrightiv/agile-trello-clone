@@ -1,21 +1,15 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken")
 
-// function to create a jwt
-const createToken = id => {
-  return jwt.sign({ id: id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN
-  })
-}
-
+// POST - signs in user
 exports.signup = async (req, res) => {
   try {
 
-    const { email, password } = req.body;
-
+    const { email, password, organization } = req.body;
     const newUser = await User.create({
       email: email,
-      password: password
+      password: password,
+      organization: organization
     });
 
     if (!email || !password) {
@@ -23,22 +17,18 @@ exports.signup = async (req, res) => {
         message: "Please provide an email and password"
       })
     } else {
-      // creates new user
-      const token = createToken(newUser._id);
-    
-      // logs in the user by sending JWT
       return res.status(201).json({
-        token,
         user: newUser,
       })
     }
   } catch (err) {
-    return res.status(404).json({
+    return res.status(500).json({
       message: err.message
     })
   }
 };
 
+// POST - logs user in
 exports.login = async (req, res) => {
   try {
     const {email, password} = req.body;
@@ -55,13 +45,14 @@ exports.login = async (req, res) => {
       });
     }
 
-    const token = createToken(user._id);
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, 
+      { expiresIn: process.env.JWT_EXPIRES_IN })
 
     return res.status(200).json({
       token
     })
   } catch (err) {
-    return res.status(404).json({
+    return res.status(500).json({
       message: err.message
     });
   }

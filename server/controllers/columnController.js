@@ -5,8 +5,6 @@ const Board = require('./../models/boardModel');
 exports.getAllColumns = async (req, res) => {
   try {
     const { boardId } = req.params;
-    console.log(boardId);
-    console.log(req.params)
 
     const board = await Board.findOne({ _id: boardId })
       .select('columnOrder')
@@ -30,8 +28,9 @@ exports.getAllColumns = async (req, res) => {
 // GET - get column by id
 exports.getOneColumn = async (req, res) => {
   try {
-    const columnId = req.params;
-    const column = await Column.findOne({ _id: columnId });
+    const columnId = req.params.columnId;
+
+    const column = await Column.findOne({ columnId: columnId });
 
     if (!column) {
       return res
@@ -69,14 +68,34 @@ exports.createColumn = async (req, res) => {
       const boardResult = await board.save();
 
       return res.status(201).json({
-        // message: 'New Column Added and also updated columnOrder in board',
         column: columnResult,
         board: boardResult,
       });
     }
   } catch (err) {
-       return res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 }
 
-// Post 
+// PATCH - change column title
+exports.changeColumnTitle = async (req, res) => {
+  try {
+    const { columnId } = req.params;
+
+    if (req.query.title) {
+      const updatedColumn = await Column.findOneAndUpdate(columnId, { title: req.body.title }, { new: true })
+  
+      if (!updatedColumn) {
+        return res
+          .status(404)
+          .json({ message: 'Unable to find the that column' });
+      } else {
+        return res.status(200).json({ data: updatedColumn.title });
+      }
+    } else {
+      return res.status(404).json({ message: 'Title not found in the query' });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: err.message });
+  }
+}

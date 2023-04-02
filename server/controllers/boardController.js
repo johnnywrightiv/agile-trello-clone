@@ -5,14 +5,14 @@ exports.getAllBoards = async (req, res) => {
   try {
     const boards = await Board
     .find({ 
-      user: req.userData._id 
+      userId: req.userData._id 
     })
-    .select('columnOrder title _id')
+    .select('columnOrder title _id userId')
   
     if (boards.length === 0) {
       const firstBoard = new Board({
-         user:req.userData._id,
-         title:'',
+         userId:req.userData._id,
+         title:"",
          columnOrder:[]
       });
       return res.status(200).json({ message: 'This user has not created any boards' })
@@ -33,7 +33,7 @@ exports.getOneBoard = async (req, res) => {
     if (!board) {
       return res.status(404).json({ message: 'The board with given id was not found' });
     } else {
-      return res.status(200).json({ details: board })
+      return res.status(200).json({ board: board })
     }
   } catch (err) {
     return res.status(500).json({ message: err });
@@ -45,7 +45,7 @@ exports.createBoard = async (req, res) => {
   try {
     const { title } = req.body;
     const newBoard = await Board.create({
-      user: req.userData._id,
+      userId: req.userData._id,
       title,
       columnOrder: [],
     })
@@ -55,23 +55,38 @@ exports.createBoard = async (req, res) => {
   }
 }
 
-// PATCH - reorder board columns by id
-exports.updateBoard = async (req, res) => {
+// PATCH - change board title
+exports.updateTitle = async (req, res) => {
   try {
-    const { boardId, newColumnOrder } = req.body;
-  if(boardId && newColumnOrder) {
-    console.log(boardId,newColumnOrder);
-    const board = await Board.findOneAndUpdate({
-      _id:boardId
-    }, 
-    { 
-      columnOrder: newColumnOrder
-    })          
-      const updatedColumnOrder = board.columnOrder;
-      console.log(updatedColumnOrder);
+    const { boardId } = req.params;
+      const updatedBoard = await Board.findOneAndUpdate(boardId, { title: req.body.title }, { new: true })
+  
+      if (!updatedBoard) {
+        return res
+          .status(404)
+          .json({ message: 'Unable to find the that board' });
+      } else {
+        return res.status(200).json({ updatedBoard: updatedBoard });
+      }
+  } catch (error) {
+    return res.status(500).json({ message: err.message });
+  }
+}
+
+// PATCH - reorder board columns by board id
+exports.updateColumnOrder = async (req, res) => {
+  try {
+    const { boardId } = req.params;
+    const { newColumnOrder } = req.body;
+
+    if(boardId && newColumnOrder) {
+      const board = await Board.findOneAndUpdate({ _id:boardId }, 
+      { columnOrder: newColumnOrder});
+
+      const updatedBoard = await Board.findOne({ _id: boardId})
+  
       res.status(200).json({ 
-        message: 'Reorder was successful', 
-        updatedColumnOrder 
+        updatedBoard: updatedBoard,
       })
     } else {
       return res.status(500).json({message: err.message});
