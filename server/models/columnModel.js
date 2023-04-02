@@ -2,7 +2,7 @@ const mongoose = require( "mongoose");
 const Schema = mongoose.Schema;
 
 const ColumnSchema = new Schema({
-    board:{
+    boardId:{
       type:Schema.Types.ObjectId, 
       ref:'boards',
     },
@@ -10,11 +10,7 @@ const ColumnSchema = new Schema({
       type:String, 
       required:true,
     },
-    columnId:{
-      type:String,
-      required: true
-    },
-    cardIds:[
+    cardOrder:[
       {
       type:String, 
       ref:'cards',

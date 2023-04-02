@@ -80,7 +80,7 @@ exports.updateColumnOrder = async (req, res) => {
     const { newColumnOrder } = req.body;
 
     if(boardId && newColumnOrder) {
-      const board = await Board.findOneAndUpdate({ _id:boardId }, 
+      const board = await Board.findOneAndUpdate({ _id: boardId }, 
       { columnOrder: newColumnOrder});
 
       const updatedBoard = await Board.findOne({ _id: boardId})
