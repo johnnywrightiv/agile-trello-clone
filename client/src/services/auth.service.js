@@ -8,20 +8,21 @@ const signup = (email, password, org) => {
     password: password,
     organization: org
   }
-  console.log(signUpRequest)
   return axios.post(API_URL + "signup", signUpRequest  
   );
 };
 
 const login = (email, password) => {
-  return axios.post(API_URL + "signin", {
+  return axios.post(API_URL + "login", {
     email: email,
     password: password
   })
   .then((response) => {
-    if (response.data.accessToken) {
+    
+    if (response.data.token) {
       localStorage.setItem("user", JSON.stringinfy(response.data));
     }
+    console.log(response.data)
     return response.data;
   });
 };

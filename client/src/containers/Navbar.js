@@ -2,7 +2,7 @@
 import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import OrgUsers from "./OrgUsers";
-import LoginSignOut from "./LoginSignOut";
+import Login from "./LoginSignOut";
 import SignUp from "./SignUp";
 
 const NavBar = () => {
@@ -17,7 +17,7 @@ const NavBar = () => {
           <Nav>
             <OrgUsers />
             <SignUp />
-            <LoginSignOut />
+            <Login />
           </Nav>
         </Navbar.Collapse>
       </Container>
