@@ -7,8 +7,8 @@ import LoginSignOut from "./LoginSignOut";
 const NavBar = () => {
 
   return (
-    <Container fluid>
-      <Navbar bg="secondary" variant="dark" expand="md" fixed="top">
+    <Navbar bg="secondary" variant="dark" expand="md" fixed="top">
+      <Container fluid>
         <Navbar.Brand href="/">Tre-Hello</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -18,8 +18,8 @@ const NavBar = () => {
             <LoginSignOut />
           </Nav>
         </Navbar.Collapse>
-      </Navbar>
-    </Container>
+      </Container>
+    </Navbar>
   );
 };
 
