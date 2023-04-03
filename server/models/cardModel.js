@@ -2,16 +2,17 @@ const mongoose = require( "mongoose");
 const Schema = mongoose.Schema;
 
 const CardSchema = new Schema({
-    cardOrder:{
-      type:String
+    title: {
+      type: String, 
+      required: true,
     },
-    title:{
-      type:String, 
-      required:true,
+    text: {
+      type: String, 
+      required: true,
     },
-    column:{
-      type:String, 
-      ref:'cards',
+    columnId: {
+      type: Schema.Types.ObjectId,
+      ref: 'columns',
     }
 });
 

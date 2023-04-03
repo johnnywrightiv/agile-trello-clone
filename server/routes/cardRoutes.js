@@ -6,20 +6,31 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(checkAuth, cardController.getAllCards)
   .post(checkAuth, cardController.createCard);
 
 router
+  .route('/:columnId')
+  .get(checkAuth, cardController.getAllCards);
+
+router
   .route('/card/:cardId')
-  .patch(checkAuth, cardController.editCardTitle);
+  .get(checkAuth, cardController.getOneCard);
 
 router
-  .route('/reorder/same-column')
-  .post(checkAuth, cardController.reorderSameColumn);
+  .route('/card/title/:cardId')
+  .patch(checkAuth, cardController.changeCardTitle);
 
 router
-  .route('/reorder/different-column')
-  .post(checkAuth, cardController.reorderDifferentColumn);
+  .route('/card/text/:cardId')
+  .patch(checkAuth, cardController.changeCardText);
+
+// router
+//   .route('/reorder/same-column')
+//   .patch(checkAuth, cardController.reorderSameColumn);
+
+// router
+//   .route('/reorder/different-column')
+//   .patch(checkAuth, cardController.reorderDifferentColumn);
 
   
 
