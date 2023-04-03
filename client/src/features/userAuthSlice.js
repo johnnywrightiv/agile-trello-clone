@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { setMessage } from "./authMessageSlice";
+import { setAuthMessage } from "./authMessageSlice";
 
 import AuthService from "../services/auth.service";
 
@@ -10,7 +10,7 @@ export const signup = createAsyncThunk(
   async({ email, password }, thunkAPI) => {
     try{
       const response = await AuthService.signup(email, password);
-      thunkAPI.dispatch(setMessage(response.data.message));
+      thunkAPI.dispatch(setAuthMessage(response.data.message));
       return response.data
     } catch (error) {
       const message =
@@ -19,7 +19,7 @@ export const signup = createAsyncThunk(
         error.response.data.message) ||
       error.message ||
       error.toString();
-    thunkAPI.dispatch(setMessage(message));
+    thunkAPI.dispatch(setAuthMessage(message));
     return thunkAPI.rejectWithValue();
     }
   }
@@ -38,7 +38,7 @@ export const login = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      thunkAPI.dispatch(setMessage(message));
+      thunkAPI.dispatch(setAuthMessage(message));
       return thunkAPI.rejectWithValue();
     }
   }
