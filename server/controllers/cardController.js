@@ -3,22 +3,42 @@ const Column = require('./../models/columnModel');
 
 // POST - get all cards
 exports.getAllCards = async (req, res) => {
-  const findAllCards = columnId => Card.find({ column: columnId }).select('cardId title');
-
   try {
-    const { columnIds } = req.body;
+    const { columnId } = req.params;
 
-    let totalCards = [];
-    if (columnIds && columnIds.length > 0) {
-      let i = 0;
-      for (const columnId of columnIds) {
-        const cards = await findAllCards(columnId);
+    const column = await Column.findOne({ _id: columnId })
+      .select('cardOrder boardId title _id')
 
-        if (cards.length > 0) {
-          totalCards.push(cards);
-        }
-      }
-      return res.status(200).json({ cards: totalCards });
+    if (!column) {
+      return res
+        .status(404)
+        .json({ message: 'Column with given id was not found' });
+    }
+
+    const cards = await Card.find({ columnId: columnId })
+      .select('text title _id columnId')
+    
+    return res
+      .status(200)
+      .json({ cards: cards, column: column });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+}
+
+// GET - get one card by id
+exports.getOneCard = async (req, res) => {
+  try {
+    const { cardId } = req.params;
+
+    const card = await Card.findOne({ _id: cardId });
+
+    if (!card) {
+      return res
+        .status(404)
+        .json({ message: 'Card with given id was not found' });
+    } else {
+      return res.status(200).json({ card: card });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
@@ -28,105 +48,123 @@ exports.getAllCards = async (req, res) => {
 // POST - create a card
 exports.createCard = async (req, res) => {
   try {
-    const { title, columnId, cardId } = req.body;
-    await Card.find().exec();
+    const { title, text, columnId } = req.body;
+
     const newCard = new Card({
       title,
-      column: columnId,
-      cardId,
+      text,
+      columnId: columnId,
     });
-    const result = await newCard.save();
-    const column = await Column.findOne({ columnId }).exec();
+
+    const cardResult = await newCard.save();
+    const column = await Column.findById(columnId);
+
     if (!column) {
       return res
         .status(404)
-        .json({ message: "Column of provided id doesn't exist" });
+        .json({ message: "Column with provided id does not exist" });
+    } else {
+      const newCardOrder = Array.from(column.cardOrder);
+      newCardOrder.push(cardResult._id);
+      column.set({ cardOrder: newCardOrder });
+      const columnResult = await column.save();
+
+      return res.status(201).json({
+        newCard: cardResult,
+        column: columnResult,
+      });
     }
-    const newCardIds = Array.from(column.cardIds);
-    newCardIds.push(result.cardId);
-    column.set({ cardIds: newCardIds });
-    const result2 = await column.save();
-    return res.status(201).json({
-      card: result,
-      column: result2,
-    });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
 };
 
-// POST - edit card title
-exports.editCardTitle = async (req, res) => {
+// PATCH - change card title
+exports.changeCardTitle = async (req, res) => {
   try {
     const { cardId } = req.params;
 
-    if (req.query.title) {
-      const card = await Card.findOneAndUpdate(cardId, {
-        content: req.body.title,
-      }).exec();
+    const updatedCard = await Card.findOneAndUpdate({ _id: cardId }, { title: req.body.title }, { new: true })
 
-      if (!card) {
-        return res
-          .status(404)
-          .json({ message: 'Unable to find card with provided Id' });
-      }
-      return res
-        .status(201)
-        .json({  data: card.content });
-    }
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
-  }
-}
-
-// 
-exports.reorderSameColumn = async (req, res) => {
-  try {
-    const { sameColumnId, sameColumnCardIds } = req.body;
-    console.log(sameColumnId, sameColumnCardIds);
-    const column = await Column.findOne({ columnId: sameColumnId });
-    if (!column) {
+    if (!updatedCard) {
       return res
         .status(404)
-        .json({ message: 'Unable to find column of provided id' });
+        .json({ message: 'Unable to find the that card' });
+    } else {
+      return res.status(200).json({ updatedCard: updatedCard });
     }
-    column.set({ cardIds: sameColumnCardIds });
-    const savedColumn = await column.save();
-
-    return res
-      .status(200)
-      .json({ message: 'same column reorder success', savedColumn });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
 }
 
-//
-exports.reorderDifferentColumn = async (req, res) => {
+// PATCH - change card text
+exports.changeCardText = async (req, res) => {
   try {
-    const {
-      removedColumnId,
-      addedColumnId,
-      removedColumnCardIds,
-      addedColumnCardIds,
-    } = req.body;
+    const { cardId } = req.params;
 
-    if (!removedColumnId && !addedColumnId && !removedColumnCardIds && !addedColumnCardIds) {
-      return res.status(400).json({ message: 'Some fields are missing' });
+    const updatedCard = await Card.findOneAndUpdate({ _id: cardId }, { text: req.body.text }, { new: true })
+
+    if (!updatedCard) {
+      return res
+        .status(404)
+        .json({ message: 'Unable to find the that card' });
+    } else {
+      return res.status(200).json({ updatedCard: updatedCard });
     }
-
-    const removedcolumn = await Column.findOne({ columnId: removedColumnId });
-    removedcolumn.set({ cardIds: removedColumnCardIds });
-    await removedcolumn.save();
-
-    const addedcolumn = await Column.findOne({ columnId: addedColumnId });
-    addedcolumn.set({ cardIds: addedColumnCardIds });
-    await addedcolumn.save();
-
-    return res
-      .status(200)
-      .json({ message: 'different column reorder success' });
-  } catch (e) {
+  } catch (err) {
     return res.status(500).json({ message: err.message });
   }
 }
+
+// PATCH - reorder cards in the same column
+// exports.reorderSameColumn = async (req, res) => {
+//   try {
+//     const { sameColumnId, sameColumnCardIds } = req.body;
+//     console.log(sameColumnId, sameColumnCardIds);
+//     const column = await Column.findOne({ columnId: sameColumnId });
+//     if (!column) {
+//       return res
+//         .status(404)
+//         .json({ message: 'Unable to find column of provided id' });
+//     }
+//     column.set({ cardIds: sameColumnCardIds });
+//     const savedColumn = await column.save();
+
+//     return res
+//       .status(200)
+//       .json({ message: 'Same column reorder success', savedColumn });
+//   } catch (err) {
+//     return res.status(500).json({ message: err.message });
+//   }
+// }
+
+// PATCH - reorder cards in a different column
+// exports.reorderDifferentColumn = async (req, res) => {
+//   try {
+//     const {
+//       removedColumnId,
+//       addedColumnId,
+//       removedColumnCardIds,
+//       addedColumnCardIds,
+//     } = req.body;
+
+//     if (!removedColumnId && !addedColumnId && !removedColumnCardIds && !addedColumnCardIds) {
+//       return res.status(400).json({ message: 'Some fields are missing' });
+//     }
+
+//     const removedcolumn = await Column.findOne({ columnId: removedColumnId });
+//     removedcolumn.set({ cardIds: removedColumnCardIds });
+//     await removedcolumn.save();
+
+//     const addedcolumn = await Column.findOne({ columnId: addedColumnId });
+//     addedcolumn.set({ cardIds: addedColumnCardIds });
+//     await addedcolumn.save();
+
+//     return res
+//       .status(200)
+//       .json({ message: 'Different column reorder success' });
+//   } catch (err) {
+//     return res.status(500).json({ message: err.message });
+//   }
+// }

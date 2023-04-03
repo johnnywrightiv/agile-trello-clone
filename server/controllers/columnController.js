@@ -26,7 +26,7 @@ exports.getAllColumns = async (req, res) => {
   }
 }
 
-// GET - get column by id
+// GET - get one column by id
 exports.getOneColumn = async (req, res) => {
   try {
     const { columnId } = req.params;
@@ -53,14 +53,14 @@ exports.createColumn = async (req, res) => {
     const newColumn = new Column({
       boardId: boardId,
       title,
-      cardIds: [],
+      cardOrder: [],
     });
 
     const columnResult = await newColumn.save();
     const board = await Board.findById(boardId)
 
     if (!board) {
-      res.status(404).json({ message: 'No Board exists with provided id' });
+      res.status(404).json({ message: 'Board with provided id does not exist' });
     } else {
       const newColumnOrder = Array.from(board.columnOrder);
       newColumnOrder.push(columnResult._id);
