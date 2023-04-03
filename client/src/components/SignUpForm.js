@@ -9,9 +9,8 @@ const SignUpForm = () => {
   const dispatch = useDispatch();
 
   const handleFormSubmit = (data) => {
-    const serverData = JSON.stringify(data);
-    console.log(serverData);
-    dispatch(signup(serverData));
+    console.log(data);
+    dispatch(signup(data));
   }
 
   return (
