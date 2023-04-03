@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import NavBar from './containers/Navbar';
 import HomePage from './components/HomePage';
 import NotFound from './components/NotFound';
+import SignUpForm from './components/SignUpForm';
 
 function App() {
   return (
@@ -18,8 +19,9 @@ function App() {
       <Container className="md-4 mt-5">
         <Router>
           <Routes>
-            <Route exact path="/" element={<HomePage/>} />
-            <Route path="/NotFound" element={<NotFound/>} />
+            <Route exact path="/" element={<HomePage />} />
+            <Route path="/NotFound" element={<NotFound />} />
+            <Route path="/signup" element={<SignUpForm />} />
           </Routes>
         </Router>
         

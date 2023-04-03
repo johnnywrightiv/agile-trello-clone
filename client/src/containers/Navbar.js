@@ -3,6 +3,7 @@ import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import OrgUsers from "./OrgUsers";
 import LoginSignOut from "./LoginSignOut";
+import SignUp from "./SignUp";
 
 const NavBar = () => {
 
@@ -15,6 +16,7 @@ const NavBar = () => {
           <Nav className="me-auto"></Nav>
           <Nav>
             <OrgUsers />
+            <SignUp />
             <LoginSignOut />
           </Nav>
         </Navbar.Collapse>

@@ -5,7 +5,7 @@ dotenv.config({ path: './config.env' });
 
 const app = require('./app');
 
-const port = process.env.PORT || 3001
+const port = 3001
 
 mongoose
   .connect("mongodb://localhost/trello")
