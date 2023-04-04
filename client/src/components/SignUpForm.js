@@ -29,12 +29,12 @@ const SignUpForm = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Control type="password" placeholder="Password" {...register("password")} />
+              <Form.Control type="password" placeholder="Password" {...register("password")} required />
               <Form.Label>Password</Form.Label>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicOrganization">
-              <Form.Control type="text" placeholder="Organization" {...register("organization")} />
+              <Form.Control type="text" placeholder="Organization" {...register("organization")} required />
               <Form.Label>Organization</Form.Label>
             </Form.Group>
             <Button variant="primary" type="submit">Submit</Button>
