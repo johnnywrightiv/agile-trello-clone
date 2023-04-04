@@ -11,11 +11,16 @@ router
 
 router
   .route('/:boardId')
-  .get(checkAuth, boardController.getOneBoard);
+  .get(checkAuth, boardController.getOneBoard)
+  .delete(checkAuth, boardController.deleteOneBoard);
 
 router
   .route('/title/:boardId')
   .patch(checkAuth, boardController.updateTitle);
+
+router
+  .route('/collection/:boardId')
+  .patch(checkAuth, boardController.updateCollection);
 
 router
   .route('/column-order/:boardId')

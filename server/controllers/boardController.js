@@ -3,11 +3,36 @@ const Board = require('./../models/boardModel');
 // GET - get all users boards
 exports.getAllBoards = async (req, res) => {
   try {
+    const { q, sort, collection } = req.query;
+    const sortBoards = {}
+    const boardResults = {};
+
+    if (q) {
+      boardResults.title = new RegExp (q, 'i')  
+    }
+
+    if (sort) {
+      if (sort === 'newest') {
+        sortBoards.createdAt = 'desc'
+      } else if (sort === 'oldest') {
+        sortBoards.createdAt = 'asc';
+      } else if (sort === 'alphabetically') {
+        sortBoards.title = 'asc';
+      } else if (sort === 'reverse-alphabetically') {
+        sortBoards.title = 'desc';
+      }
+    }
+
+    if (collection) {
+      boardResults.category = new RegExp (collection, 'i')  
+    }
+
     const boards = await Board
     .find({ 
       userId: req.userData._id 
     })
-    .select('columnOrder title _id userId')
+    .find(boardResults)
+    .sort(sortBoards)
   
     if (boards.length === 0) {
       const firstBoard = new Board({
@@ -47,6 +72,7 @@ exports.createBoard = async (req, res) => {
     const newBoard = await Board.create({
       userId: req.userData._id,
       title,
+      category: null,
       columnOrder: [],
     })
     res.status(201).json({ newBoard: newBoard });
@@ -60,6 +86,24 @@ exports.updateTitle = async (req, res) => {
   try {
     const { boardId } = req.params;
       const updatedBoard = await Board.findOneAndUpdate(boardId, { title: req.body.title }, { new: true })
+  
+      if (!updatedBoard) {
+        return res
+          .status(404)
+          .json({ message: 'Unable to find the that board' });
+      } else {
+        return res.status(200).json({ updatedBoard: updatedBoard });
+      }
+  } catch (error) {
+    return res.status(500).json({ message: err.message });
+  }
+}
+
+// PATCH - change board category
+exports.updateCollection = async (req, res) => {
+  try {
+    const { boardId } = req.params;
+      const updatedBoard = await Board.findOneAndUpdate(boardId, { category: req.body.category }, { new: true })
   
       if (!updatedBoard) {
         return res
@@ -93,5 +137,21 @@ exports.updateColumnOrder = async (req, res) => {
     }
   } catch (error) {
     return res.status(400).json({message:'Required parameters are missing'});
+  }
+}
+
+// DELETE - delete a board by id
+exports.deleteOneBoard = async (req, res) => {
+  try {
+    const { boardId } = req.params;
+    const board = await Board.findOneAndRemove({ _id: boardId });
+
+    if (!board) {
+      return res.status(404).json({ message: 'The board with given id was not found' });
+    } else {
+      return res.status(200).json({ message: "Board deleted" })
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err });
   }
 }

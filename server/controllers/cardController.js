@@ -7,7 +7,6 @@ exports.getAllCards = async (req, res) => {
     const { columnId } = req.params;
 
     const column = await Column.findOne({ _id: columnId })
-      .select('cardOrder boardId title _id')
 
     if (!column) {
       return res
@@ -16,7 +15,6 @@ exports.getAllCards = async (req, res) => {
     }
 
     const cards = await Card.find({ columnId: columnId })
-      .select('text title _id columnId')
     
     return res
       .status(200)
@@ -54,6 +52,8 @@ exports.createCard = async (req, res) => {
       title,
       text,
       columnId: columnId,
+      label: null,
+      labelColor: null,
     });
 
     const cardResult = await newCard.save();
@@ -104,6 +104,25 @@ exports.changeCardText = async (req, res) => {
     const { cardId } = req.params;
 
     const updatedCard = await Card.findOneAndUpdate({ _id: cardId }, { text: req.body.text }, { new: true })
+
+    if (!updatedCard) {
+      return res
+        .status(404)
+        .json({ message: 'Unable to find the that card' });
+    } else {
+      return res.status(200).json({ updatedCard: updatedCard });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+}
+
+// PATCH - change card label
+exports.changeCardLabel = async (req, res) => {
+  try {
+    const { cardId } = req.params;
+
+    const updatedCard = await Card.findOneAndUpdate({ _id: cardId }, { label: req.body.label, labelColor: req.body.labelColor }, { new: true })
 
     if (!updatedCard) {
       return res
@@ -168,3 +187,22 @@ exports.changeCardText = async (req, res) => {
 //     return res.status(500).json({ message: err.message });
 //   }
 // }
+
+// DELETE - delete one card by id
+exports.deleteOneCard = async (req, res) => {
+  try {
+    const { cardId } = req.params;
+
+    const card = await Card.findOneAndDelete({ _id: cardId });
+
+    if (!card) {
+      return res
+        .status(404)
+        .json({ message: 'Card with given id was not found' });
+    } else {
+      return res.status(200).json({ message: "Card deleted" });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};

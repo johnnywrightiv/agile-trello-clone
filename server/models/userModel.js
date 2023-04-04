@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    required: [true, "Username required!"],
+    required: [true, "Email required!"],
     unique: true,
     lowercase: true,
     validate: [validator.isEmail, "Valid email required"],
@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   }
-});
+}, {timestamps: true});
 
 // pre-save middleware to hash password
 userSchema.pre('save', async function(next) {

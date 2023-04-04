@@ -16,6 +16,6 @@ const ColumnSchema = new Schema ({
       ref: 'cards',
       }
     ]
-});
+}, {timestamps: true});
 
 module.exports = mongoose.model('Columns', ColumnSchema);

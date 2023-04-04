@@ -14,7 +14,7 @@ exports.signup = async (req, res) => {
 
     if (!email || !password) {
       return res.status(400).json({
-        message: "Please provide an email and password"
+        message: "Please provide an email, password, and organization"
       })
     } else {
       return res.status(201).json({
@@ -34,7 +34,7 @@ exports.login = async (req, res) => {
     const {email, password} = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({message: "Please provide an email, and password"});
+      return res.status(400).json({message: "Please provide an email and password"});
     }
 
     const user = await User.findOne({ email: email }).select("+password");

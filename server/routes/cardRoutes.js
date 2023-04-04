@@ -14,7 +14,8 @@ router
 
 router
   .route('/card/:cardId')
-  .get(checkAuth, cardController.getOneCard);
+  .get(checkAuth, cardController.getOneCard)
+  .delete(checkAuth, cardController.deleteOneCard)
 
 router
   .route('/card/title/:cardId')
@@ -23,6 +24,10 @@ router
 router
   .route('/card/text/:cardId')
   .patch(checkAuth, cardController.changeCardText);
+
+router
+  .route('/card/label/:cardId')
+  .patch(checkAuth, cardController.changeCardLabel);
 
 // router
 //   .route('/reorder/same-column')
