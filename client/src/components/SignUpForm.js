@@ -1,16 +1,20 @@
-import { Button, Card, Form} from "react-bootstrap"
-import { useForm } from "react-hook-form"
-import { useDispatch } from "react-redux"
-import { signup } from "../features/userAuthSlice"
+import { Button, Card, Form} from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.css";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { signup } from "../features/userAuthSlice";
+import { useNavigate } from "react-router-dom";
 
 
 const SignUpForm = () => {
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleFormSubmit = (data) => {
-    console.log(data);
     dispatch(signup(data));
+    navigate('/login');
+    reset();
   }
 
   return (

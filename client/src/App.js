@@ -18,15 +18,12 @@ function App() {
 
       {/* Body Container (render components within this container. can just use rows in the components i think)*/}
       <Container className="md-4 mt-5">
-        <Router>
           <Routes>
             <Route exact path="/" element={<HomePage />} />
             <Route path="/NotFound" element={<NotFound />} />
             <Route path="/signup" element={<SignUpForm />} />
-            <Route path="/login" element={<LoginForm />} />
+            <Route exact path="/login" element={<LoginForm />} />
           </Routes>
-        </Router>
-        
       </Container>
     </>
   );

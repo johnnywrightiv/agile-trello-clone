@@ -1,4 +1,5 @@
 import { Button, Card, Form} from "react-bootstrap"
+import "bootstrap/dist/css/bootstrap.css";
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
 import { login } from "../features/userAuthSlice"
@@ -10,6 +11,7 @@ const LoginForm = () => {
 
   const handleFormSubmit = (data) => {
     dispatch(login(data));
+    reset();
   }
 
   return (
