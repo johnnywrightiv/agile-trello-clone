@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import NavBar from './containers/Navbar';
 import HomePage from './components/HomePage';
 import NotFound from './components/NotFound';
+import SignUpForm from './components/SignUpForm';
+import LoginForm from './components/LoginForm';
 
 function App() {
   return (
@@ -16,13 +18,12 @@ function App() {
 
       {/* Body Container (render components within this container. can just use rows in the components i think)*/}
       <Container className="md-4 mt-5">
-        <Router>
           <Routes>
-            <Route exact path="/" element={<HomePage/>} />
-            <Route path="/NotFound" element={<NotFound/>} />
+            <Route exact path="/" element={<HomePage />} />
+            <Route path="/NotFound" element={<NotFound />} />
+            <Route path="/signup" element={<SignUpForm />} />
+            <Route exact path="/login" element={<LoginForm />} />
           </Routes>
-        </Router>
-        
       </Container>
     </>
   );
