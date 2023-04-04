@@ -13,20 +13,20 @@ router
   .get(checkAuth, cardController.getAllCards);
 
 router
-  .route('/card/:cardId')
+  .route('/:cardId')
   .get(checkAuth, cardController.getOneCard)
   .delete(checkAuth, cardController.deleteOneCard)
 
 router
-  .route('/card/title/:cardId')
+  .route('/title/:cardId')
   .patch(checkAuth, cardController.changeCardTitle);
 
 router
-  .route('/card/text/:cardId')
+  .route('/text/:cardId')
   .patch(checkAuth, cardController.changeCardText);
 
 router
-  .route('/card/label/:cardId')
+  .route('/label/:cardId')
   .patch(checkAuth, cardController.changeCardLabel);
 
 // router
