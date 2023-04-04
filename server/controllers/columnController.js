@@ -5,9 +5,22 @@ const Board = require('./../models/boardModel');
 exports.getAllColumns = async (req, res) => {
   try {
     const { boardId } = req.params;
+    const { query, sort } = req.query;
+    const sortColumns = {}
+
+    if (sort) {
+      if (sort === 'newest') {
+        sortColumns.createdAt = 'desc'
+      } else if (sort === 'oldest') {
+        sortColumns.createdAt = 'asc';
+      } else if (sort === 'alphabetically') {
+        sortColumns.title = 'asc';
+      } else if (sort === 'reverse-alphabetically') {
+        sortColumns.title = 'desc';
+      }
+    }
 
     const board = await Board.findOne({ _id: boardId })
-      .select('columnOrder userId title _id')
 
     if (!board) {
       return res
@@ -15,8 +28,7 @@ exports.getAllColumns = async (req, res) => {
         .json({ message: 'Board with given id was not found' });
     }
 
-    const columns = await Column.find({ boardId: boardId })
-      .select('cardOrder title _id boardId')
+    const columns = await Column.find({ boardId: boardId }).sort(sortColumns)
     
     return res
       .status(200)

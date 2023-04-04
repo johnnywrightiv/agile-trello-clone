@@ -13,7 +13,13 @@ const CardSchema = new Schema({
     columnId: {
       type: Schema.Types.ObjectId,
       ref: 'columns',
+    },
+    label: {
+      type: String
+    },
+    labelColor: {
+      type: String
     }
-});
+}, {timestamps: true});
 
 module.exports = mongoose.model('Cards', CardSchema);

@@ -10,12 +10,15 @@ const boardSchema = new Schema({
     type: String, 
     required: true, 
   },
+  category: {
+    type: String
+  },
   columnOrder: [
     { 
     type: String, 
     ref: 'columns',
     }
   ],
-});
+},  {timestamps: true});
 
 module.exports = mongoose.model('Boards', boardSchema);
