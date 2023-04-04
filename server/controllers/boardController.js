@@ -1,4 +1,6 @@
 const Board = require('./../models/boardModel');
+const Column = require('./../models/columnModel');
+const Card = require('./../models/cardModel');
 
 // GET - get all users boards
 exports.getAllBoards = async (req, res) => {
@@ -144,7 +146,10 @@ exports.updateColumnOrder = async (req, res) => {
 exports.deleteOneBoard = async (req, res) => {
   try {
     const { boardId } = req.params;
+    const { columnId } = req.body
     const board = await Board.findOneAndRemove({ _id: boardId });
+    const column = await Column.deleteMany({ boardId: boardId });
+    const card = await Card.deleteMany({ columnId: columnId })
 
     if (!board) {
       return res.status(404).json({ message: 'The board with given id was not found' });
