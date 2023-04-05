@@ -1,5 +1,5 @@
-import AuthView from './AuthView';
-import NonAuthView from './NonAuthView';
+import BoardsView from '../containers/BoardsView';
+
 
 // dummy authentication... should replace with actual authenticaition state
 // switch from true to false to test different views
@@ -13,7 +13,7 @@ function HomePage() {
       <p>* change userAuth boolean in HomePage component to test user authentication and view boards </p>
       <p>* also in NavBar, userAuth is dummy state to change login/sign-out text </p>
 
-      {userAuth ? <AuthView/> : <NonAuthView/>}
+      <BoardsView />
 
     </>
   )

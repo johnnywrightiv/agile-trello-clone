@@ -1,18 +1,36 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
+import authHeader from "../services/auth-header";
+
+const API_URL = 'http://localhost:3001/api/boards'
+
 
 //action
-export const fetchBoardsAction = createAsyncThunk("boards/fetch", async(userId, rejectWithValue) => {
-  // try {
-  //   const { data } = await axios.get({USERBOARD_GET_METHOD_ADDRESS});
+export const fetchBoardsAction = createAsyncThunk("boards/fetch", async(rejectWithValue) => {
+  try {
+    const { data } = await axios.get(API_URL + '/', authHeader());
 
-  //   return data;
-  // } catch (error) {
-  //   if (!error?.response) {
-  //     throw error;
-  //   }
-  //   return rejectWithValue(error?.response?.data);
-  // }
+    return data;
+  } catch (error) {
+    if (!error?.response) {
+      throw error;
+    }
+    return rejectWithValue(error?.response?.data);
+  }
+});
+
+export const addBoardAction = createAsyncThunk("board/add", async(rejectWithValue) => {
+
+  try {
+    const { data } = await axios.post(API_URL + '/', authHeader());
+
+    return data;
+  } catch (error) {
+    if (!error?.response) {
+      throw error;
+    }
+    return rejectWithValue(error?.response?.data);
+  }
 });
 
 const initialState = {
@@ -35,6 +53,19 @@ const boardsSlice = createSlice({
     builder.addCase(fetchBoardsAction.rejected, (state, action) => {
       state.loading = false;
       state.boards = undefined;
+      state.error = action?.payload;
+    });
+    builder.addCase(addBoardAction.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(addBoardAction.fulfilled, (state, action) => {
+      state.boards = [...state.boards, action.payload];
+      state.loading = false;
+      state.error = undefined;
+    });
+    builder.addCase(addBoardAction.rejected, (state, action) => {
+      state.loading = false;
+      state.boards = [...state.boards];
       state.error = action?.payload;
     });
   }

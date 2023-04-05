@@ -7,7 +7,9 @@ import HomePage from './components/HomePage';
 import NotFound from './components/NotFound';
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
-import BoardView from './components/BoardView';
+import BoardsView from './containers/BoardsView';
+
+
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
             <Route path="/NotFound" element={<NotFound />} />
             <Route path="/signup" element={<SignUpForm />} />
             <Route exact path="/login" element={<LoginForm />} />
+            <Route path="/boards" element={<BoardsView />} />
           </Routes>
       </Container>
     </>

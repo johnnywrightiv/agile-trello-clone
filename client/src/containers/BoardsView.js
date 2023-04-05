@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBoardsAction } from '../features/boardsSlice';
 
-function AuthView() {
+const BoardsView = () => {
   // dummy array of board objects
-  const [boards, setBoards] = useState([
-    { id: 1, title: 'Board 1' },
-    { id: 2, title: 'Board 2' },
-    { id: 3, title: 'Board 3' }
-  ]);
+  const boards = useSelector((state) => state.userBoards);
+  const dispatch = useDispatch();
+
+ useEffect(() => {
+  dispatch(fetchBoardsAction());
+ }, []) 
 
   const renderBoards = () => {
     return boards.map((board) => (
@@ -25,12 +28,6 @@ function AuthView() {
   };
 
   const addBoard = () => {
-    const newBoard = {
-      id: boards.length + 1,
-      title: `Board ${boards.length + 1}`,
-    };
-    setBoards([...boards, newBoard]);
-  };
 
   return (
     <Container>
@@ -47,5 +44,6 @@ function AuthView() {
     </Container>
   );
 }
+}
 
-export default AuthView;
+export default BoardsView;
