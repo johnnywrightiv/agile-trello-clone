@@ -1,11 +1,13 @@
-const Column = require('./../models/columnModel');
 const Board = require('./../models/boardModel');
+const Column = require('./../models/columnModel');
+const Card = require('./../models/cardModel');
+
 
 // GET - get all columns of a specific board
 exports.getAllColumns = async (req, res) => {
   try {
     const { boardId } = req.params;
-    const { query, sort } = req.query;
+    const { sort } = req.query;
     const sortColumns = {}
 
     if (sort) {
@@ -107,3 +109,23 @@ exports.changeColumnTitle = async (req, res) => {
     return res.status(500).json({ message: err.message });
   }
 }
+
+// DELETE - delete one card by id
+exports.deleteOneColumn = async (req, res) => {
+  try {
+    const { columnId } = req.params;
+
+    const column = await Column.findOneAndDelete({ _id: columnId });
+    const card = await Card.deleteMany({ columnId: columnId })
+
+    if (!column) {
+      return res
+        .status(404)
+        .json({ message: 'Column with given id was not found' });
+    } else {
+      return res.status(200).json({ message: "Column deleted" });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
