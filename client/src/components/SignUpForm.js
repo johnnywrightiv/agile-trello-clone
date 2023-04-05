@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { signup } from "../features/userAuthSlice";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 
 const SignUpForm = () => {
@@ -41,6 +42,7 @@ const SignUpForm = () => {
           </Form>
         </Card.Body>
       </Card>
+      <ToastContainer />
     </div>
   )
 }

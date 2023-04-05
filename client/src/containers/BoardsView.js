@@ -6,7 +6,7 @@ import { fetchBoardsAction } from '../features/boardsSlice';
 
 const BoardsView = () => {
   // dummy array of board objects
-  const boards = useSelector(state => state.userBoards);
+  const boards = useSelector((state) => state.userBoards);
   const dispatch = useDispatch();
 
  useEffect(() => {

@@ -1,20 +1,25 @@
 import { Button, Card, Form} from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.css";
 import { useForm } from "react-hook-form"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { login } from "../features/userAuthSlice"
 import { useNavigate } from "react-router";
 
 
 const LoginForm = () => {
+  const errorMessage = useSelector(state => state.authMessage.message);
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleFormSubmit = (data) => {
     dispatch(login(data));
-    reset()
-    navigate('/boards');
+    if (errorMessage) {
+      console.log(errorMessage);
+    } else {
+      reset();
+      // navigate('/boards');
+    }
   }
 
   return (
