@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setAuthMessage } from "./authMessageSlice";
 import { toast } from 'react-toastify';
 import AuthService from "../services/auth.service";
+import { fetchBoardsAction } from "./boardsSlice";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
@@ -31,6 +32,7 @@ export const login = createAsyncThunk(
     try {
       const response = await AuthService.login(data.email, data.password);
       thunkAPI.dispatch(setAuthMessage(response.message));
+      thunkAPI.dispatch(fetchBoardsAction());
       return response
     } catch (error) {
       const message =

@@ -8,6 +8,7 @@ import NotFound from './components/NotFound';
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
 import BoardsView from './containers/BoardsView';
+import BoardView from './components/BoardView';
 
 
 

@@ -3,20 +3,24 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoardsAction } from '../features/boardsSlice';
+import AddBoard from '../components/AddBoard';
 
 const BoardsView = () => {
   // dummy array of board objects
-  const boards = useSelector((state) => state.userBoards);
+  const boardsData = useSelector((state) => state.userBoards.boards);
   const dispatch = useDispatch();
+  const boardsArray = boardsData.boards;
+  console.log(boardsArray);
 
  useEffect(() => {
   dispatch(fetchBoardsAction());
  }, []) 
 
   const renderBoards = () => {
-    return boards.map((board) => (
-      <Col sm={4} key={board.id}>
-        <Link to={`/boards/${board.id}`} className="text-decoration-none">
+    if (boardsArray && boardsArray.length > 0) {
+    return boardsData.boards.map((board) => (
+      <Col sm={4} key={board._id}>
+        <Link to={`/boards/${board._id}`} className="text-decoration-none">
           <Card>
             <Card.Body>
               <Card.Title>{board.title}</Card.Title>
@@ -25,25 +29,20 @@ const BoardsView = () => {
         </Link>
       </Col>
     ));
+    } else {
+      return null
+    }
   };
 
-  const addBoard = () => {
-
   return (
-    <Container>
+    <Container className="pt-5">
       <Row xs={1} md={2} lg={3} className="g-4">
         {renderBoards()}
-        <Col sm={4}>
-          <Card onClick={addBoard}>
-            <Card.Body>
-              <Card.Title>+ Add New Board</Card.Title>
-            </Card.Body>
-          </Card>
-        </Col>
+        <AddBoard />
       </Row>
     </Container>
   );
 }
-}
+
 
 export default BoardsView;

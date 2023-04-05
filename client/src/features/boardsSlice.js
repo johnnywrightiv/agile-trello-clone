@@ -9,7 +9,6 @@ const API_URL = 'http://localhost:3001/api/boards'
 export const fetchBoardsAction = createAsyncThunk("boards/fetch", async(rejectWithValue) => {
   try {
     const { data } = await axios.get(API_URL + '/', authHeader());
-
     return data;
   } catch (error) {
     if (!error?.response) {
@@ -59,13 +58,12 @@ const boardsSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(addBoardAction.fulfilled, (state, action) => {
-      state.boards = [...state.boards, action.payload];
+      state.boards.push(action.payload);
       state.loading = false;
       state.error = undefined;
     });
     builder.addCase(addBoardAction.rejected, (state, action) => {
       state.loading = false;
-      state.boards = [...state.boards];
       state.error = action?.payload;
     });
   }
