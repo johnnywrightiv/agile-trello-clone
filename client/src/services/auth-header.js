@@ -4,7 +4,7 @@ export default function authHeader() {
   const bearerToken = { Authorization: 'Bearer ' + user.token };
   console.log(bearerToken);
   if (user && user.token) {
-    return bearerToken;
+    return { headers: bearerToken };
   } else {
     return {};
   }

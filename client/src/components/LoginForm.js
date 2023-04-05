@@ -18,7 +18,7 @@ const LoginForm = () => {
       console.log(errorMessage);
     } else {
       reset();
-      // navigate('/boards');
+      navigate('/boards');
     }
   }
 

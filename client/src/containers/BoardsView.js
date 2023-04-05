@@ -6,15 +6,16 @@ import { fetchBoardsAction } from '../features/boardsSlice';
 
 const BoardsView = () => {
   // dummy array of board objects
-  const boards = useSelector((state) => state.userBoards);
+  const boardsData = useSelector((state) => state.userBoards.boards);
   const dispatch = useDispatch();
+  console.log(boardsData.boards);
 
  useEffect(() => {
   dispatch(fetchBoardsAction());
  }, []) 
 
   const renderBoards = () => {
-    return boards.map((board) => (
+    return boardsData.boards.map((board) => (
       <Col sm={4} key={board.id}>
         <Link to={`/boards/${board.id}`} className="text-decoration-none">
           <Card>
