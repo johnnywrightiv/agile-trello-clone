@@ -3,7 +3,7 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoardsAction } from '../features/boardsSlice';
-import AddBoard from './AddBoard';
+import AddBoard from '../components/AddBoard';
 
 const BoardsView = () => {
   // dummy array of board objects
@@ -17,8 +17,9 @@ const BoardsView = () => {
  }, []) 
 
   const renderBoards = () => {
+    if (boardsArray && boardsArray.length > 0) {
     return boardsData.boards.map((board) => (
-      <Col sm={4} key={board.id}>
+      <Col sm={4} key={board._id}>
         <Link to={`/boards/${board._id}`} className="text-decoration-none">
           <Card>
             <Card.Body>
@@ -28,6 +29,9 @@ const BoardsView = () => {
         </Link>
       </Col>
     ));
+    } else {
+      return null
+    }
   };
 
   return (

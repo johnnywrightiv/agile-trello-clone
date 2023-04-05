@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { login } from "../features/userAuthSlice"
 import { useNavigate } from "react-router";
+import { fetchBoardsAction } from "../features/boardsSlice";
 
 
 const LoginForm = () => {
@@ -17,7 +18,6 @@ const LoginForm = () => {
     if (errorMessage) {
       console.log(errorMessage);
     } else {
-      reset();
       navigate('/boards');
     }
   }

@@ -9,7 +9,6 @@ const API_URL = 'http://localhost:3001/api/boards'
 export const fetchBoardsAction = createAsyncThunk("boards/fetch", async(rejectWithValue) => {
   try {
     const { data } = await axios.get(API_URL + '/', authHeader());
-    console.log(data);
     return data;
   } catch (error) {
     if (!error?.response) {
