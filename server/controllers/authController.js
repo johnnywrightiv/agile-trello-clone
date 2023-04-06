@@ -25,7 +25,7 @@ exports.signup = async (req, res) => {
       })
     } else {
       return res.status(201).json({
-        user: newUser,
+        newUser: newUser,
         token: token,
       })
     }
@@ -56,7 +56,8 @@ exports.login = async (req, res) => {
     const token = createToken(user._id);
 
     return res.status(200).json({
-      token
+      user: user,
+      token: token,
     });
   } catch (err) {
     return res.status(500).json({
