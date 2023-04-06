@@ -2,16 +2,18 @@ import { Card, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { addBoardAction } from "../features/boardsSlice";
+import { addBoardAction, fetchBoardsAction } from "../features/boardsSlice";
+import { setModalClosed } from "../features/modalOpenSlice";
 
 const AddBoardForm = () => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleFormSubmit = (data) => {
-    dispatch(addBoardAction(data.title));
-    navigate('/boards');
+  const handleFormSubmit = async (data) => {
+    await dispatch(addBoardAction(data));
+    await dispatch(fetchBoardsAction());
+    dispatch(setModalClosed());
   }
 
   return (

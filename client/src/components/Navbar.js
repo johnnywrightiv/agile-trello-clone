@@ -1,10 +1,10 @@
 
 import { Navbar, Nav, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
-import OrgUsers from "./OrgUsers";
-import Login from "./LoginSignOut";
+import OrgUsers from "../containers/OrgUsers";
+import Login from "../containers/LoginSignOut";
 import SignUp from "./SignUp";
-import UserLogout from "../components/UserLogout";
+import UserLogout from "./UserLogout";
 
 const NavBar = () => {
 

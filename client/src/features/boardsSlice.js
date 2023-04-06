@@ -8,7 +8,7 @@ const API_URL = 'http://localhost:3001/api/boards'
 //action
 export const fetchBoardsAction = createAsyncThunk("boards/fetch", async(rejectWithValue) => {
   try {
-    const { data } = await axios.get(API_URL + '/', authHeader());
+    const { data } = await axios.get(API_URL, authHeader());
     return data;
   } catch (error) {
     if (!error?.response) {
@@ -18,11 +18,10 @@ export const fetchBoardsAction = createAsyncThunk("boards/fetch", async(rejectWi
   }
 });
 
-export const addBoardAction = createAsyncThunk("board/add", async(rejectWithValue) => {
-
+export const addBoardAction = createAsyncThunk("board/add", async(title, rejectWithValue) => {
   try {
-    const { data } = await axios.post(API_URL + '/', authHeader());
-
+    const { data } = await axios.post(API_URL, title, authHeader());
+    console.log(data)
     return data;
   } catch (error) {
     if (!error?.response) {
@@ -58,7 +57,6 @@ const boardsSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(addBoardAction.fulfilled, (state, action) => {
-      state.boards.push(action.payload);
       state.loading = false;
       state.error = undefined;
     });
