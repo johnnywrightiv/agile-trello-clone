@@ -9,8 +9,8 @@ const UserLogout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    dispatch(logout());
+  const handleClick = async () => {
+    await dispatch(logout());
     navigate('/login');
   }
 

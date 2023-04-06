@@ -5,22 +5,29 @@ import { useDispatch, useSelector } from "react-redux"
 import { login } from "../features/userAuthSlice"
 import { useNavigate } from "react-router";
 import { fetchBoardsAction } from "../features/boardsSlice";
+import { setAuthMessage } from "../features/authMessageSlice";
+import { useEffect } from "react";
 
 
 const LoginForm = () => {
-  const errorMessage = useSelector(state => state.authMessage.message);
-  const { register, handleSubmit, reset } = useForm();
+  const user = useSelector((state) => state.userAuth);
+  const errorMessage = useSelector((state) => state.authMessage);
+  const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleFormSubmit = (data) => {
     dispatch(login(data));
-    if (errorMessage) {
-      console.log(errorMessage);
-    } else {
+  } 
+  
+  useEffect(() => {
+    if (user.isLoggedIn) {
       navigate('/boards');
+    } else {
+      console.log(errorMessage)
     }
-  }
+}, [user, errorMessage]);
+  
 
   return (
     <div className="pt-5">

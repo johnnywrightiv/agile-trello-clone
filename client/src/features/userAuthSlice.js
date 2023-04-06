@@ -31,8 +31,7 @@ export const login = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await AuthService.login(data.email, data.password);
-      thunkAPI.dispatch(setAuthMessage(response.message));
-      thunkAPI.dispatch(fetchBoardsAction());
+      await thunkAPI.dispatch(setAuthMessage(response.message));
       return response
     } catch (error) {
       const message =
@@ -41,8 +40,8 @@ export const login = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      thunkAPI.dispatch(setAuthMessage(message));
-      return thunkAPI.rejectWithValue();
+      await thunkAPI.dispatch(setAuthMessage(message));
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );

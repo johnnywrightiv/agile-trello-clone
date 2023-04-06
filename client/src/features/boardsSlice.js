@@ -51,8 +51,8 @@ const boardsSlice = createSlice({
     });
     builder.addCase(fetchBoardsAction.rejected, (state, action) => {
       state.loading = false;
-      state.boards = undefined;
       state.error = action?.payload;
+      state.boards = null; 
     });
     builder.addCase(addBoardAction.pending, (state, action) => {
       state.loading = true;
