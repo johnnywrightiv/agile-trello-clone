@@ -10,7 +10,6 @@ const BoardsView = () => {
   const boardsData = useSelector((state) => state.userBoards.boards);
   const dispatch = useDispatch();
   const boardsArray = boardsData.boards;
-  console.log(boardsArray);
 
  useEffect(() => {
   dispatch(fetchBoardsAction());
