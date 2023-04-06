@@ -8,7 +8,7 @@ const API_URL = 'http://localhost:3001/api/boards'
 //action
 export const fetchBoardsAction = createAsyncThunk("boards/fetch", async(rejectWithValue) => {
   try {
-    const { data } = await axios.get(API_URL + '/', authHeader());
+    const { data } = await axios.get(API_URL, authHeader());
     return data;
   } catch (error) {
     if (!error?.response) {
@@ -21,7 +21,7 @@ export const fetchBoardsAction = createAsyncThunk("boards/fetch", async(rejectWi
 export const addBoardAction = createAsyncThunk("board/add", async(rejectWithValue) => {
 
   try {
-    const { data } = await axios.post(API_URL + '/', authHeader());
+    const { data } = await axios.post(API_URL, authHeader());
 
     return data;
   } catch (error) {

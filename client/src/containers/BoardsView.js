@@ -3,17 +3,17 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoardsAction } from '../features/boardsSlice';
-import AddBoard from '../components/AddBoard';
+import AddBoard from './AddBoard';
 
 const BoardsView = () => {
-  // dummy array of board objects
   const boardsData = useSelector((state) => state.userBoards.boards);
-  const dispatch = useDispatch();
   const boardsArray = boardsData.boards;
+  const dispatch = useDispatch();
+  
 
  useEffect(() => {
   dispatch(fetchBoardsAction());
- }, []) 
+ }, []); 
 
   const renderBoards = () => {
     if (boardsArray && boardsArray.length > 0) {
