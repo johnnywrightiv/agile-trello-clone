@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { setModalOpen, setModalClosed } from '../features/modalOpenSlice';
 
 const BoardView = () => {
   const [isEditingBoardTitle, setIsEditingBoardTitle] = useState(false);
@@ -20,9 +22,10 @@ const BoardView = () => {
       cards: ['Card 5']
     }
   ]);
-
-  const [showModal, setShowModal] = useState(false);
+  const isOpen = useSelector((state) => state.isModalOpen.open); 
   const [modalText, setModalText] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleBoardTitleChange = (event) => {
     setBoardTitle(event.target.value);
@@ -55,7 +58,7 @@ const BoardView = () => {
   };
 
   const handleModalClose = () => {
-    setShowModal(false);
+    dispatch(setModalClosed());
   };
 
   return (
@@ -85,7 +88,7 @@ const BoardView = () => {
               <Card className="card" key={cardIndex}>
                 <Button variant="link" className="card-title-button" onClick={() => {
                   setModalText(card);
-                  setShowModal(true);
+                  dispatch(setModalOpen());
                 }}>
                   {card}
                 </Button>
@@ -97,7 +100,7 @@ const BoardView = () => {
           <Button variant="primary" className="add-list-button" onClick={handleAddColumn}>+ Add New List</Button>
         </Col>
       </Row>
-      <Modal show={showModal} onHide={handleModalClose}>
+      <Modal show={isOpen} onHide={handleModalClose}>
         <Modal.Header closeButton>
           <Modal.Title>{modalText}</Modal.Title>
         </Modal.Header>
