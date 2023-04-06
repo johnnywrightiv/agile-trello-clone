@@ -6,11 +6,8 @@ const router = express.Router();
 
 router
   .route('/')
+  .get(checkAuth, cardController.getAllCards)
   .post(checkAuth, cardController.createCard);
-
-router
-  .route('/:columnId')
-  .get(checkAuth, cardController.getAllCards);
 
 router
   .route('/:cardId')

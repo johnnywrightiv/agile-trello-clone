@@ -4,7 +4,7 @@ const Column = require('./../models/columnModel');
 // POST - get all cards
 exports.getAllCards = async (req, res) => {
   try {
-    const { columnId } = req.params;
+    const { columnId } = req.body;
 
     const column = await Column.findOne({ _id: columnId })
 

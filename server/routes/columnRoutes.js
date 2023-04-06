@@ -6,12 +6,8 @@ const router = express.Router();
 
 router
   .route('/')
-  .post(checkAuth,columnController.createColumn)
-  .delete(checkAuth,columnController.deleteOneColumn);
-
-router
-  .route('/:boardId')
-  .get(checkAuth, columnController.getAllColumns);
+  .get(checkAuth, columnController.getAllColumns)
+  .post(checkAuth,columnController.createColumn);
 
 router
   .route('/:columnId')

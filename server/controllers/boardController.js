@@ -42,7 +42,7 @@ exports.getAllBoards = async (req, res) => {
          title:"",
          columnOrder:[]
       });
-      return res.status(200).json({ message: 'This user has not created any boards' })
+      return res.status(404).json({ message: 'This user has not created any boards' })
     } else {
       return res.status(200).json({ boards });
     }
@@ -129,7 +129,7 @@ exports.updateColumnOrder = async (req, res) => {
       const board = await Board.findOneAndUpdate({ _id: boardId }, 
       { columnOrder: newColumnOrder});
 
-      const updatedBoard = await Board.findOne({ _id: boardId})
+      const updatedBoard = await Board.findOne({ _id: boardId })
   
       res.status(200).json({ 
         updatedBoard: updatedBoard,
