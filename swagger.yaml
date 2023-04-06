@@ -3,60 +3,14 @@ info:
   version: 1.0.0
   title: Tre-Hello👋
   description: API for connecting the front and back end of the Parsity Agile Trello Clone project to make a working full stack application.
-host: ??
-basePath: /??
+host: localhost:3001
+basePath: /api
 schemes:
-  - https
+  - http
 consumes:
   - application/json
 produces:
   - application/json
-securityDefinitions:
-  Bearer:
-    type: apiKey
-    name: Authorization
-    in: header
-definitions:
-  User:
-    type: object
-    properties:
-      email:
-        type: string
-      password:
-        type: string
-  Board:
-    type: object
-    properties:
-      user:
-        type: string
-      title:
-        type: string
-      columnOrder:
-        type: array
-        items:
-          type: string
-  Column:
-    type: object
-    properties:
-      board:
-        type: string
-      title:
-        type: string
-      columnId:
-        type: string
-      cardIds:
-        type: array
-        items:
-          type: string
-  Card:
-    type: object
-    properties:
-      cardId:
-        type: string
-      title:
-        type: string
-      column:
-        type: string
 paths:
   /users:
     get:
@@ -71,14 +25,28 @@ paths:
           required: true
           type: string
       responses:
-        200:
-          description: A list of users
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/User"
-        401:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "users": [
+                  {
+                    "_id": "642ccfe13ee8d31c0d77d125",
+                    "email": "test@test.com",
+                    "organization": "test",
+                    "createdAt": "2023-04-05T01:33:21.428Z",
+                    "updatedAt": "2023-04-05T01:33:21.428Z",
+                    "__v": 0
+                   }
+                ]
+              }
+        "401":
           description: Unauthorized
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
   /users/signup:
     post:
       tags:
@@ -88,17 +56,47 @@ paths:
       parameters:
         - name: body
           in: body
-          description: The user to create.
+          description: The user's signup information.
           required: true
           schema:
-            $ref: "#/definitions/User"
+            type: object
+            properties:
+              email:
+                type: string
+                description: The email of the user.
+                example: user@example.com
+              password:
+                type: string
+                description: The password of the user.
+                example: password123
+              organization:
+                type: string
+                description: The organization the user is in
+                example: parsity
+            required:
+              - email
+              - password
       responses:
-        201:
-          description: User created successfully.
-          schema:
-            $ref: "#/definitions/User"
-        400:
-          description: Invalid request.
+        "201":
+          description: 201 response
+          examples:
+            application/json: |-
+              {
+                "newUser": {
+                "email": "test@test.com",
+                "password": "$2a$12$fnFWmBKfLdRoIjVKO4j/3u1Soksf4fHGVi3eqEWbBtOwkKgnYtruC",
+                "organization": "test",
+                "_id": "642ccfe13ee8d31c0d77d125",
+                "createdAt": "2023-04-05T01:33:21.428Z",
+                "updatedAt": "2023-04-05T01:33:21.428Z",
+                "__v": 0
+                },
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmNjZmUxM2VlOGQzMWMwZDc3ZDEyNSIsImlhdCI6MTY4MDY1ODQwMSwiZXhwIjoxNjg4NDM0NDAxfQ.g-_bMRP8M3hOgtkYJrPvcTcakez0QHbOgLFYP0TgoC0"
+              }
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
   /users/login:
     post:
       tags:
@@ -125,38 +123,129 @@ paths:
               - email
               - password
       responses:
-        200:
-          description: User logged in successfully.
-          schema:
-            type: object
-            properties:
-              token:
-                type: string
-                description: The JWT authentication token.
-                example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZDc1ZTUzZDdjNTJhODAwMTc4NzhlZmMiLCJpYXQiOjE1NzA4OTg1OTYsImV4cCI6MTU3MDk4NjU5Nn0.jLWke6K90U6bKJ5Q5g
-        401:
-          description: Invalid login credentials.
-  /boards:
-    get:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "user": {
+                "email": "test@test.com",
+                "password": "$2a$12$fnFWmBKfLdRoIjVKO4j/3u1Soksf4fHGVi3eqEWbBtOwkKgnYtruC",
+                "organization": "test",
+                "_id": "642ccfe13ee8d31c0d77d125",
+                "createdAt": "2023-04-05T01:33:21.428Z",
+                "updatedAt": "2023-04-05T01:33:21.428Z",
+                "__v": 0
+                },
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmNjZmUxM2VlOGQzMWMwZDc3ZDEyNSIsImlhdCI6MTY4MDY1ODQwMSwiZXhwIjoxNjg4NDM0NDAxfQ.g-_bMRP8M3hOgtkYJrPvcTcakez0QHbOgLFYP0TgoC0"
+              }
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+  /users/{userId}:
+    patch:
       tags:
-        - Boards
-      summary: Get all boards
-      description: Retrieves a list of all boards.
+        - Users
+      summary: Changes users organization by ID
+      description: Changes the users chosen organization in the database.
       parameters:
         - name: Authorization
           in: header
           description: JWT token for authentication
           required: true
           type: string
-      responses:
-        200:
-          description: A list of boards
+        - name: userId
+          in: path
+          description: ID of the board to delete
+          required: true
+          type: string
+        - name: organization
+          in: body
+          description: Board object that needs to be deleted
+          required: true
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/Board"
-        401:
+            type: object
+            properties:
+              organization:
+                type: string
+                description: The organization the user wishes to join.
+                example: parsity
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "updatedUser": {
+                  "_id": "642ccfe13ee8d31c0d77d125",
+                  "email": "test@test.com",
+                  "organization": "changed organization",
+                  "createdAt": "2023-04-05T01:33:21.428Z",
+                  "updatedAt": "2023-04-05T10:02:59.636Z",
+                  "__v": 0
+                }
+              }
+        "401":
           description: Unauthorized
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /boards:
+    get:
+      tags:
+        - Boards
+      summary: Get all boards
+      description: Retrieves a list of all the users boards.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: Query
+          in: query
+          description: optional query parameter
+          required: false
+          type: string
+        - name: Sort
+          in: query
+          description: optional sort parameter
+          required: false
+          type: string
+        - name: Collection
+          in: query
+          description: optional query parameter
+          required: false
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "boards": [
+                  {
+                    "_id": "642cd1633ee8d31c0d77d12c",
+                    "userId": "642ccfe13ee8d31c0d77d125",
+                    "title": "board 1",
+                    "category": "sharks",
+                    "columnOrder": [],
+                    "createdAt": "2023-04-05T01:39:47.810Z",
+                    "updatedAt": "2023-04-05T01:39:47.810Z",
+                    "__v": 0
+                  }
+                ]
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
     post:
       tags:
         - Boards
@@ -167,21 +256,38 @@ paths:
           description: JWT token for authentication
           required: true
           type: string
-        - name: board
+        - name: title
           in: body
-          description: Board object that needs to be added
+          description: Title of the board that needs to be added
           required: true
           schema:
-            $ref: "#/definitions/Board"
+            type: object
+            properties:
+              title:
+                type: string
+                description: The title of the board created.
+                example: todo
       responses:
-        201:
-          description: Board created successfully
-          schema:
-            $ref: "#/definitions/Board"
-        400:
-          description: Invalid request
-        401:
+        "201":
+          description: 201 response
+          examples:
+            application/json: |-
+              {
+                "newBoard": {
+                "userId": "642ccfe13ee8d31c0d77d125",
+                "title": "todo",
+                "category": null,
+                "columnOrder": [],
+                "_id": "642cd1633ee8d31c0d77d12c",
+                "createdAt": "2023-04-05T01:39:47.810Z",
+                "updatedAt": "2023-04-05T01:39:47.810Z",
+                "__v": 0
+                }
+              }
+        "401":
           description: Unauthorized
+        "500":
+          description: Internal Server Error
   /boards/{boardId}:
     get:
       tags:
@@ -200,19 +306,75 @@ paths:
           required: true
           type: string
       responses:
-        200:
-          description: Board found
-          schema:
-            $ref: "#/definitions/Board"
-        404:
-          description: Board not found
-        401:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "board": {
+                "_id": "642cd1633ee8d31c0d77d12c",
+                "userId": "642ccfe13ee8d31c0d77d125",
+                "title": "board 1",
+                "category": null,
+                "columnOrder": [],
+                "createdAt": "2023-04-05T01:39:47.810Z",
+                "updatedAt": "2023-04-05T01:39:47.810Z",
+                "__v": 0
+                }
+              }
+        "401":
           description: Unauthorized
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+    delete:
+      tags:
+        - Boards
+      summary: Deletes a board by ID
+      description: Deletes a single board by ID including any columns and cards inside.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: boardId
+          in: path
+          description: ID of the board to delete
+          required: true
+          type: string
+        - name: columnId
+          in: body
+          description: Board object that needs to be deleted
+          required: true
+          schema:
+            type: object
+            properties:
+              columnId:
+                type: string
+                description: The column id associated with that board id .
+                example: 642ccfe13ee8d31c0d77d125
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "message": "Board deleted"
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /boards/title/{boardId}:
     patch:
       tags:
         - Boards
-      summary: Update a board by ID
-      description: Updates a single board by ID.
+      summary: Changes board title by ID
+      description: Changes a single boards title by ID.
       parameters:
         - name: Authorization
           in: header
@@ -221,32 +383,223 @@ paths:
           type: string
         - name: boardId
           in: path
-          description: ID of the board to update
+          description: ID of the board to change title
           required: true
           type: string
-        - name: board
+        - name: title
           in: body
-          description: Board object that needs to be updated
+          description: New title object
           required: true
           schema:
-            $ref: "#/definitions/Board"
+            type: object
+            properties:
+              title:
+                type: string
+                example: New Board Title
       responses:
-        200:
-          description: Board updated successfully
-          schema:
-            $ref: "#/definitions/Board"
-        400:
-          description: Invalid request
-        401:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "updatedBoard": {
+                  "_id": "642cd4ff3ee8d31c0d77d13c",
+                  "userId": "642ccfe13ee8d31c0d77d125",
+                  "title": "board 2",
+                  "category": null,
+                  "columnOrder": [],
+                  "createdAt": "2023-04-05T01:55:11.158Z",
+                  "updatedAt": "2023-04-05T01:55:30.816Z",
+                  "__v": 0
+                }
+              }
+        "401":
           description: Unauthorized
-        404:
-          description: Board not found
-  /boards/columns/all/{boardId}:
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /boards/collection/{boardId}:
+    patch:
+      tags:
+        - Boards
+      summary: Changes board collection by ID
+      description: Changes a single boards collection by ID.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: boardId
+          in: path
+          description: ID of the board to change collection
+          required: true
+          type: string
+        - name: collection
+          in: body
+          description: New collection object
+          required: true
+          schema:
+            type: object
+            properties:
+              collection:
+                type: string
+                description: The column id associated with that board id
+                example: New Board Title
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "updatedBoard": {
+                "_id": "642cd4ff3ee8d31c0d77d13c",
+                "userId": "642ccfe13ee8d31c0d77d125",
+                "title": "board 2",
+                "category": "sharks",
+                "columnOrder": [],
+                "createdAt": "2023-04-05T01:55:11.158Z",
+                "updatedAt": "2023-04-05T01:58:27.002Z",
+                "__v": 0
+                }
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /boards/column-order/{boardId}:
+    patch:
+      tags:
+        - Boards
+      summary: Changes board column order by ID
+      description: Changes a single boards column order by ID.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: boardId
+          in: path
+          description: ID of the board to change column order
+          required: true
+          type: string
+        - name: newColumnOrder
+          in: body
+          description: Board object that needs column order changed
+          required: true
+          schema:
+            type: object
+            properties:
+              newColumnOrder:
+                type: array
+                items:
+                  type: string
+                description: The column id associated with that board id .
+                example:
+                  [
+                    "642cd7233ee8d31c0d77d14d",
+                    "642cd71c3ee8d31c0d77d143",
+                    "642cd7203ee8d31c0d77d148",
+                  ]
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "updatedBoard": {
+                "_id": "642cd4ff3ee8d31c0d77d13c",
+                "userId": "642ccfe13ee8d31c0d77d125",
+                "title": "board 2",
+                "category": "sharks",
+                "columnOrder": [
+                  "642cd7233ee8d31c0d77d14d",
+                  "642cd71c3ee8d31c0d77d143",
+                  "642cd7203ee8d31c0d77d148"
+                  ],
+                "createdAt": "2023-04-05T01:55:11.158Z",
+                "updatedAt": "2023-04-05T02:08:06.965Z",
+                "__v": 3
+                }
+              }
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+  /columns:
+    post:
+      tags:
+        - Columns
+      summary: Create a new column
+      description: Cerates a new column in a spcific board
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: title, boardId
+          in: body
+          description: New column title and associated board id
+          required: true
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                description: The title of the column being created.
+                example: New Column
+              boardId:
+                type: string
+                description: The board id associated with that column.
+                example: 642f229bb6d6d71f6fb43a8d
+      responses:
+        "201":
+          description: 201 response
+          examples:
+            application/json: |-
+              {
+              "newColumn": {
+                  "boardId": "642f229bb6d6d71f6fb43a8d",
+                  "title": "column 3",
+                  "cardOrder": [],
+                  "_id": "642f2539b6d6d71f6fb43a9a",
+                  "createdAt": "2023-04-06T20:02:01.386Z",
+                  "updatedAt": "2023-04-06T20:02:01.386Z",
+                  "__v": 0
+              },
+              "board": {
+                  "userId": "642e8e677e546379ab2b23b8",
+                  "title": "board 1",
+                  "category": null,
+                  "columnOrder": [
+                      "642f2531b6d6d71f6fb43a90",
+                      "642f2536b6d6d71f6fb43a95",
+                      "642f2539b6d6d71f6fb43a9a"
+                  ],
+                  "_id": "642f229bb6d6d71f6fb43a8d",
+                  "createdAt": "2023-04-06T19:50:51.601Z",
+                  "updatedAt": "2023-04-06T20:02:01.390Z",
+                  "__v": 3
+                }
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
     get:
       tags:
         - Columns
-      summary: Get all columns for a board
-      description: Retrieves a list of all columns for a specific board.
+      summary: Get all columns for a single board
+      description: Retrieves an array of all columns in a specific board.
       parameters:
         - name: Authorization
           in: header
@@ -254,20 +607,72 @@ paths:
           required: true
           type: string
         - name: boardId
-          in: path
-          description: ID of the board to get columns from
+          in: body
+          description: Board id
           required: true
-          type: string
-      responses:
-        200:
-          description: A list of columns
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/Column"
-        401:
+            type: object
+            properties:
+              boardId:
+                type: string
+                example: 642f229bb6d6d71f6fb43a8d
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "columns": [
+                    {
+                        "_id": "642f2531b6d6d71f6fb43a90",
+                        "boardId": "642f229bb6d6d71f6fb43a8d",
+                        "title": "column 1",
+                        "cardOrder": [],
+                        "createdAt": "2023-04-06T20:01:53.909Z",
+                        "updatedAt": "2023-04-06T20:01:53.909Z",
+                        "__v": 0
+                    },
+                    {
+                        "_id": "642f2536b6d6d71f6fb43a95",
+                        "boardId": "642f229bb6d6d71f6fb43a8d",
+                        "title": "column 2",
+                        "cardOrder": [],
+                        "createdAt": "2023-04-06T20:01:58.212Z",
+                        "updatedAt": "2023-04-06T20:01:58.212Z",
+                        "__v": 0
+                    },
+                    {
+                        "_id": "642f2539b6d6d71f6fb43a9a",
+                        "boardId": "642f229bb6d6d71f6fb43a8d",
+                        "title": "column 3",
+                        "cardOrder": [],
+                        "createdAt": "2023-04-06T20:02:01.386Z",
+                        "updatedAt": "2023-04-06T20:02:01.386Z",
+                        "__v": 0
+                    }
+                ],
+                "board": {
+                    "_id": "642f229bb6d6d71f6fb43a8d",
+                    "userId": "642e8e677e546379ab2b23b8",
+                    "title": "board 1",
+                    "category": null,
+                    "columnOrder": [
+                        "642f2531b6d6d71f6fb43a90",
+                        "642f2536b6d6d71f6fb43a95",
+                        "642f2539b6d6d71f6fb43a9a"
+                    ],
+                    "createdAt": "2023-04-06T19:50:51.601Z",
+                    "updatedAt": "2023-04-06T20:02:01.390Z",
+                    "__v": 3
+                }
+              }
+        "401":
           description: Unauthorized
-  /boards/columns/column/{columnId}:
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /columns/{columnId}:
     get:
       tags:
         - Columns
@@ -285,37 +690,478 @@ paths:
           required: true
           type: string
       responses:
-        200:
-          description: Column found
-          schema:
-            $ref: "#/definitions/Column"
-        401:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "column": {
+                    "_id": "642f2a00b6d6d71f6fb43ab0",
+                    "boardId": "642f29dfb6d6d71f6fb43aad",
+                    "title": "column 1",
+                    "cardOrder": [],
+                    "createdAt": "2023-04-06T20:22:24.752Z",
+                    "updatedAt": "2023-04-06T20:22:24.752Z",
+                    "__v": 0
+                }
+              }
+        "401":
           description: Unauthorized
-        404:
-          description: Column not found
-  /boards/columns:
-    post:
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
+    delete:
       tags:
         - Columns
-      summary: Create a new column
+      summary: Delete a column by ID
+      description: Deletes a single column by ID including any cards within.
       parameters:
         - name: Authorization
           in: header
           description: JWT token for authentication
           required: true
           type: string
-        - name: column
+        - name: columnId
+          in: path
+          description: ID of the column to delete
+          required: true
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "message": "Column deleted"
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
+    patch:
+      tags:
+        - Columns
+      summary: Update the columns title
+      description: Update the column title.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: columnId
+          in: path
+          description: ID of the column to update title
+          required: true
+          type: string
+        - name: title
           in: body
-          description: Column object that needs to be added
+          description: New title object
           required: true
           schema:
-            $ref: "#/definitions/Column"
+            type: object
+            properties:
+              title:
+                type: string
+                example: New Column Title
       responses:
-        201:
-          description: Column created successfully
-          schema:
-            $ref: "#/definitions/Column"
-        400:
-          description: Invalid request
-        401:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "updatedColumn": {
+                    "_id": "642f306cf10ebbcbbee5b850",
+                    "boardId": "642f29dfb6d6d71f6fb43aad",
+                    "title": "New Column Title",
+                    "cardOrder": [],
+                    "createdAt": "2023-04-06T20:49:48.300Z",
+                    "updatedAt": "2023-04-06T20:50:05.458Z",
+                    "__v": 0
+                }
+              }
+        "401":
           description: Unauthorized
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
+  /cards:
+    get:
+      tags:
+        - Cards
+      summary: Get all cards for a single column
+      description: Retrieves an array of all cards in a specific column.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: columnId
+          in: body
+          description: Column id
+          required: true
+          schema:
+            type: object
+            properties:
+              columnId:
+                type: string
+                example: 642f229bb6d6d71f6fb43a8d
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "cards": [
+                    {
+                        "_id": "642f37a17e8613854d2d9f25",
+                        "title": "Card Title",
+                        "text": "Hello World",
+                        "columnId": "642f306cf10ebbcbbee5b850",
+                        "label": null,
+                        "labelColor": null,
+                        "createdAt": "2023-04-06T21:20:33.437Z",
+                        "updatedAt": "2023-04-06T21:20:33.437Z",
+                        "__v": 0
+                    },
+                    {
+                        "_id": "642f37cd7e8613854d2d9f2a",
+                        "title": "Card Title 2",
+                        "text": "Hello World 2",
+                        "columnId": "642f306cf10ebbcbbee5b850",
+                        "label": null,
+                        "labelColor": null,
+                        "createdAt": "2023-04-06T21:21:17.321Z",
+                        "updatedAt": "2023-04-06T21:21:17.321Z",
+                        "__v": 0
+                    },
+                    {
+                        "_id": "642f37d27e8613854d2d9f2f",
+                        "title": "Card Title 3",
+                        "text": "Hello World 3",
+                        "columnId": "642f306cf10ebbcbbee5b850",
+                        "label": null,
+                        "labelColor": null,
+                        "createdAt": "2023-04-06T21:21:22.029Z",
+                        "updatedAt": "2023-04-06T21:21:22.029Z",
+                        "__v": 0
+                    }
+                ],
+                "column": {
+                    "_id": "642f306cf10ebbcbbee5b850",
+                    "boardId": "642f29dfb6d6d71f6fb43aad",
+                    "title": "New Column Title",
+                    "cardOrder": [
+                        "642f37a17e8613854d2d9f25",
+                        "642f37cd7e8613854d2d9f2a",
+                        "642f37d27e8613854d2d9f2f"
+                    ],
+                    "createdAt": "2023-04-06T20:49:48.300Z",
+                    "updatedAt": "2023-04-06T21:21:22.036Z",
+                    "__v": 3
+                }
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+    post:
+      tags:
+        - Cards
+      summary: Create a new card
+      description: Creates a new card in a specific column
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: title, text, columnId
+          in: body
+          description: New column title, text, and associated column id
+          required: true
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                description: The title of the card being created.
+                example: Card
+              text:
+                type: string
+                description: The text you wish the cardto contain.
+                example: Add this new functionality
+              columnId:
+                type: string
+                description: The column id associated with that card.
+                example: 642f229bb6d6d71f6fb43a8d
+      responses:
+        "201":
+          description: 201 response
+          examples:
+            application/json: |-
+              {
+                "newCard": {
+                    "title": "Card Title",
+                    "text": "Hello World",
+                    "columnId": "642f306cf10ebbcbbee5b850",
+                    "label": null,
+                    "labelColor": null,
+                    "_id": "642f37a17e8613854d2d9f25",
+                    "createdAt": "2023-04-06T21:20:33.437Z",
+                    "updatedAt": "2023-04-06T21:20:33.437Z",
+                    "__v": 0
+                },
+                "column": {
+                    "boardId": "642f29dfb6d6d71f6fb43aad",
+                    "title": "New Column Title",
+                    "cardOrder": [
+                        "642f37a17e8613854d2d9f25"
+                    ],
+                    "_id": "642f306cf10ebbcbbee5b850",
+                    "createdAt": "2023-04-06T20:49:48.300Z",
+                    "updatedAt": "2023-04-06T21:20:33.463Z",
+                    "__v": 1
+                }
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /cards/{cardId}:
+    get:
+      tags:
+        - Cards
+      summary: Get a card by ID
+      description: Retrieves a single card by ID.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: cardId
+          in: path
+          description: ID of the card to get
+          required: true
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "card": {
+                    "_id": "642f37a17e8613854d2d9f25",
+                    "title": "Card Title",
+                    "text": "Hello World",
+                    "columnId": "642f306cf10ebbcbbee5b850",
+                    "label": null,
+                    "labelColor": null,
+                    "createdAt": "2023-04-06T21:20:33.437Z",
+                    "updatedAt": "2023-04-06T21:20:33.437Z",
+                    "__v": 0
+                }
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
+    delete:
+      tags:
+        - Cards
+      summary: Delete a card by Id
+      description: Deletes a single card by Id.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: cardId
+          in: path
+          description: ID of the card to delete
+          required: true
+          type: string
+
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "message": "Card deleted"
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
+  /cards/title/{cardId}:
+    patch:
+      tags:
+        - Cards
+      summary: Updates the cards title
+      description: Updates the cards title.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: cardId
+          in: path
+          description: ID of the card to update
+          required: true
+          type: string
+        - name: title
+          in: body
+          description: New title object
+          required: true
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+                example: New Card Title
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "updatedCard": {
+                    "_id": "642f37cd7e8613854d2d9f2a",
+                    "title": "New Card Title",
+                    "text": "Hello World 2",
+                    "columnId": "642f306cf10ebbcbbee5b850",
+                    "label": null,
+                    "labelColor": null,
+                    "createdAt": "2023-04-06T21:21:17.321Z",
+                    "updatedAt": "2023-04-06T22:00:20.997Z",
+                    "__v": 0
+                }
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
+  /cards/text/{cardId}:
+    patch:
+      tags:
+        - Cards
+      summary: Updates the cards text
+      description: Updates the cards text
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: cardId
+          in: path
+          description: ID of the card to update
+          required: true
+          type: string
+        - name: text
+          in: body
+          description: New text object
+          required: true
+          schema:
+            type: object
+            properties:
+              text:
+                type: string
+                example: New Card Text
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+              "updatedCard": {
+                  "_id": "642f37cd7e8613854d2d9f2a",
+                  "title": "New Card Title",
+                  "text": "New Card Text",
+                  "columnId": "642f306cf10ebbcbbee5b850",
+                  "label": null,
+                  "labelColor": null,
+                  "createdAt": "2023-04-06T21:21:17.321Z",
+                  "updatedAt": "2023-04-06T22:01:07.343Z",
+                  "__v": 0
+                }
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
+  /cards/label/{cardId}:
+    patch:
+      tags:
+        - Cards
+      summary: Updates the cards label and label color
+      description: Updates the cards label and label color
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: cardId
+          in: path
+          description: ID of the card
+          required: true
+          type: string
+        - name: label, labelColor
+          in: body
+          description: New label and label color object
+          required: true
+          schema:
+            type: object
+            properties:
+              label:
+                type: string
+                example: New Card Label
+              labelColor:
+                type: string
+                example: Blue
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "updatedCard": {
+                    "_id": "642f37cd7e8613854d2d9f2a",
+                    "title": "New Card Title",
+                    "text": "New Card Text",
+                    "columnId": "642f306cf10ebbcbbee5b850",
+                    "label": "New Card Label",
+                    "labelColor": "Blue",
+                    "createdAt": "2023-04-06T21:21:17.321Z",
+                    "updatedAt": "2023-04-06T22:03:27.205Z",
+                    "__v": 0
+                }
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
