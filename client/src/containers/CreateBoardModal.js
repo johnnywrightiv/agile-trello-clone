@@ -1,4 +1,4 @@
-import AddBoardForm from "./AddBoardForm";
+import CreateBoardForm from "./CreateBoardForm";
 import ReactModal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { setModalClosed } from "../features/modalOpenSlice";
@@ -17,7 +17,7 @@ const CreateBoardModal = () => {
     <Modal show={isOpen} onHide={handleModalClose}>
       <Modal.Header closeButton>Create Board</Modal.Header>
       <Modal.Body>
-        <AddBoardForm />
+        <CreateBoardForm />
       </Modal.Body>
     </Modal>
   )

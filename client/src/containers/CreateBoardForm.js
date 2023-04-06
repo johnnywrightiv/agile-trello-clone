@@ -4,10 +4,12 @@ import { useDispatch } from "react-redux";
 import { addBoardAction, fetchBoardsAction } from "../features/boardsSlice";
 import { setModalClosed } from "../features/modalOpenSlice";
 
-const AddBoardForm = () => {
+// Form to Ceate Board for User
+const CreateBoardForm = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
 
+  // When User Submits form request is sent to server to 
   const handleFormSubmit = async (data) => {
     await dispatch(addBoardAction(data));
     await dispatch(fetchBoardsAction());
@@ -24,4 +26,4 @@ const AddBoardForm = () => {
   )
 }
 
-export default AddBoardForm;
+export default CreateBoardForm;
