@@ -54,6 +54,7 @@ exports.createCard = async (req, res) => {
       columnId: columnId,
       label: null,
       labelColor: null,
+      description: null,
     });
 
     const cardResult = await newCard.save();
