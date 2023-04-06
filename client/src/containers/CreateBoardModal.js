@@ -15,8 +15,10 @@ const CreateBoardModal = () => {
   }
   return (
     <Modal show={isOpen} onHide={handleModalClose}>
-    <Modal.Header closeButton>Create Board</Modal.Header>
-      <AddBoardForm />
+      <Modal.Header closeButton>Create Board</Modal.Header>
+      <Modal.Body>
+        <AddBoardForm />
+      </Modal.Body>
     </Modal>
   )
 }
