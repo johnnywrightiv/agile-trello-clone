@@ -19,6 +19,12 @@ const CardSchema = new Schema({
     },
     labelColor: {
       type: String
+    },
+    description: {
+      type: String
+    },
+    comments: {
+      type: [String]
     }
 }, {timestamps: true});
 

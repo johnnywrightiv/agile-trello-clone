@@ -5,12 +5,12 @@ const Card = require('./../models/cardModel');
 // GET - get all users boards
 exports.getAllBoards = async (req, res) => {
   try {
-    const { q, sort, collection } = req.query;
+    const { query, sort, collection } = req.query;
     const sortBoards = {}
     const boardResults = {};
 
-    if (q) {
-      boardResults.title = new RegExp (q, 'i')  
+    if (query) {
+      boardResults.title = new RegExp (query, 'i')  
     }
 
     if (sort) {
