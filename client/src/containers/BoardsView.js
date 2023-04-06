@@ -3,7 +3,7 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoardsAction } from '../features/boardsSlice';
-import AddBoard from './AddBoard';
+import AddBoard from '../components/AddBoard';
 
 const BoardsView = () => {
   const boardsData = useSelector((state) => state.userBoards.boards);
