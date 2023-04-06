@@ -8,7 +8,6 @@ import { setModalOpen } from "../features/modalOpenSlice";
 const AddBoard = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.isModalOpen.open);
-  console.log(isOpen);
 
   const handleClick = () => {
     dispatch(setModalOpen());

@@ -8,6 +8,7 @@ import AddBoard from './AddBoard';
 const BoardsView = () => {
   const boardsData = useSelector((state) => state.userBoards.boards);
   const boardsArray = boardsData.boards;
+
   const dispatch = useDispatch();
   
 
