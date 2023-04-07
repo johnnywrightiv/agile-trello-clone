@@ -26,6 +26,10 @@ router
   .route('/label/:cardId')
   .patch(checkAuth, cardController.changeCardLabel);
 
+router
+  .route('/description/:cardId')
+  .patch(checkAuth, cardController.changeCardDescription);
+
 // router
 //   .route('/reorder/same-column')
 //   .patch(checkAuth, cardController.reorderSameColumn);
@@ -34,6 +38,5 @@ router
 //   .route('/reorder/different-column')
 //   .patch(checkAuth, cardController.reorderDifferentColumn);
 
-  
 
   module.exports = router;

@@ -208,17 +208,17 @@ paths:
           type: string
         - name: Query
           in: query
-          description: optional query parameter
+          description: optional query parameter (must specify ?query={query})
           required: false
           type: string
         - name: Sort
           in: query
-          description: optional sort parameter
+          description: optional sort parameter (must specify ?sort=newest, ?sort=oldest, ?sort=alphabetically, or ?sort=reverse-alphabetically)
           required: false
           type: string
         - name: Collection
           in: query
-          description: optional query parameter
+          description: optional collection parameter (must specify ?collection={category})
           required: false
           type: string
       responses:
@@ -616,6 +616,11 @@ paths:
               boardId:
                 type: string
                 example: 642f229bb6d6d71f6fb43a8d
+        - name: Sort
+          in: query
+          description: optional sort parameter (must specify ?sort=newest, ?sort=oldest, ?sort=alphabetically, or ?sort=reverse-alphabetically)
+          required: false
+          type: string
       responses:
         "200":
           description: 200 response
@@ -825,6 +830,7 @@ paths:
                         "columnId": "642f306cf10ebbcbbee5b850",
                         "label": null,
                         "labelColor": null,
+                        "description": null,
                         "createdAt": "2023-04-06T21:20:33.437Z",
                         "updatedAt": "2023-04-06T21:20:33.437Z",
                         "__v": 0
@@ -836,6 +842,7 @@ paths:
                         "columnId": "642f306cf10ebbcbbee5b850",
                         "label": null,
                         "labelColor": null,
+                        "description": null,
                         "createdAt": "2023-04-06T21:21:17.321Z",
                         "updatedAt": "2023-04-06T21:21:17.321Z",
                         "__v": 0
@@ -847,6 +854,7 @@ paths:
                         "columnId": "642f306cf10ebbcbbee5b850",
                         "label": null,
                         "labelColor": null,
+                        "description": null,
                         "createdAt": "2023-04-06T21:21:22.029Z",
                         "updatedAt": "2023-04-06T21:21:22.029Z",
                         "__v": 0
@@ -914,6 +922,7 @@ paths:
                     "columnId": "642f306cf10ebbcbbee5b850",
                     "label": null,
                     "labelColor": null,
+                    "description": null,
                     "_id": "642f37a17e8613854d2d9f25",
                     "createdAt": "2023-04-06T21:20:33.437Z",
                     "updatedAt": "2023-04-06T21:20:33.437Z",
@@ -967,6 +976,7 @@ paths:
                     "columnId": "642f306cf10ebbcbbee5b850",
                     "label": null,
                     "labelColor": null,
+                    "description": null,
                     "createdAt": "2023-04-06T21:20:33.437Z",
                     "updatedAt": "2023-04-06T21:20:33.437Z",
                     "__v": 0
@@ -1049,6 +1059,7 @@ paths:
                     "columnId": "642f306cf10ebbcbbee5b850",
                     "label": null,
                     "labelColor": null,
+                    "description": null,
                     "createdAt": "2023-04-06T21:21:17.321Z",
                     "updatedAt": "2023-04-06T22:00:20.997Z",
                     "__v": 0
@@ -1100,6 +1111,7 @@ paths:
                   "columnId": "642f306cf10ebbcbbee5b850",
                   "label": null,
                   "labelColor": null,
+                  "description": null,
                   "createdAt": "2023-04-06T21:21:17.321Z",
                   "updatedAt": "2023-04-06T22:01:07.343Z",
                   "__v": 0
@@ -1154,6 +1166,59 @@ paths:
                     "columnId": "642f306cf10ebbcbbee5b850",
                     "label": "New Card Label",
                     "labelColor": "Blue",
+                    "description": null,
+                    "createdAt": "2023-04-06T21:21:17.321Z",
+                    "updatedAt": "2023-04-06T22:03:27.205Z",
+                    "__v": 0
+                }
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
+  /cards/description/{cardId}:
+    patch:
+      tags:
+        - Cards
+      summary: Updates the cards description
+      description: Updates the cards description
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: cardId
+          in: path
+          description: ID of the card
+          required: true
+          type: string
+        - name: description
+          in: body
+          description: New label and label color object
+          required: true
+          schema:
+            type: object
+            properties:
+              description:
+                type: string
+                example: This card is one cool card
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "updatedCard": {
+                    "_id": "642f37cd7e8613854d2d9f2a",
+                    "title": "New Card Title",
+                    "text": "New Card Text",
+                    "columnId": "642f306cf10ebbcbbee5b850",
+                    "label": "New Card Label",
+                    "labelColor": "Blue",
+                    "description": null,
                     "createdAt": "2023-04-06T21:21:17.321Z",
                     "updatedAt": "2023-04-06T22:03:27.205Z",
                     "__v": 0
