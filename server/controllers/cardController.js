@@ -137,6 +137,25 @@ exports.changeCardLabel = async (req, res) => {
   }
 }
 
+// PATCH - change card title
+exports.changeCardDescription = async (req, res) => {
+  try {
+    const { cardId } = req.params;
+
+    const updatedCard = await Card.findOneAndUpdate({ _id: cardId }, { description: req.body.description }, { new: true })
+
+    if (!updatedCard) {
+      return res
+        .status(404)
+        .json({ message: 'Unable to find the that card' });
+    } else {
+      return res.status(200).json({ updatedCard: updatedCard });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+}
+
 // PATCH - reorder cards in the same column
 // exports.reorderSameColumn = async (req, res) => {
 //   try {

@@ -42,7 +42,7 @@ exports.getAllBoards = async (req, res) => {
          title:"",
          columnOrder:[]
       });
-      return res.status(404).json({ message: 'This user has not created any boards' })
+      return res.status(200).json({ message: 'This user has not created any boards' })
     } else {
       return res.status(200).json({ boards });
     }
@@ -129,7 +129,7 @@ exports.updateColumnOrder = async (req, res) => {
       const board = await Board.findOneAndUpdate({ _id: boardId }, 
       { columnOrder: newColumnOrder});
 
-      const updatedBoard = await Board.findOne({ _id: boardId })
+      const updatedBoard = await Board.findOne({ _id: boardId})
   
       res.status(200).json({ 
         updatedBoard: updatedBoard,
@@ -148,8 +148,8 @@ exports.deleteOneBoard = async (req, res) => {
     const { boardId } = req.params;
     const { columnId } = req.body
     const board = await Board.findOneAndRemove({ _id: boardId });
-    const column = await Column.deleteMany({ boardId: boardId });
-    const card = await Card.deleteMany({ columnId: columnId })
+    const columns = await Column.deleteMany({ boardId: boardId });
+    const cards = await Card.deleteMany({ columnId: columnId })
 
     if (!board) {
       return res.status(404).json({ message: 'The board with given id was not found' });
