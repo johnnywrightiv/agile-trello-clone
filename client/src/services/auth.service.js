@@ -20,10 +20,9 @@ const login = (email, password) => {
   .then((response) => {
     
     if (response.data.token) {
-      const token = { token: response.data.token }
-      localStorage.setItem("user", JSON.stringify(token));
+      localStorage.setItem("user", JSON.stringify(response.data));
     }
-    return response.data;
+    return response.data.user;
   });
 };
 

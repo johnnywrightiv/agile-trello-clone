@@ -20,7 +20,7 @@ const LoginForm = () => {
   
   useEffect(() => {
     if (user.isLoggedIn) {
-      navigate('/boards');
+      navigate('/');
     } else {
       console.log(errorMessage)
     }

@@ -1,20 +1,24 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoardsAction } from '../features/boardsSlice';
 import CreateBoard from '../components/AddBoard';
 
+
 const BoardsView = () => {
   const boardsData = useSelector((state) => state.userBoards.boards);
   const boardsArray = boardsData.boards;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
 
- useEffect(() => {
-  dispatch(fetchBoardsAction());
- }, []); 
+  useEffect(() => {
+    dispatch(fetchBoardsAction());
+  }, []); 
+
+ 
 
   const renderBoards = () => {
     if (boardsArray && boardsArray.length > 0) {

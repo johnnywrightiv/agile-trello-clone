@@ -10,8 +10,6 @@ import { useSelector } from "react-redux";
 const NavBar = () => {
   const userIsLoggedIn = useSelector((state) => state.userAuth.isLoggedIn)
   const userEmail = useSelector((state) => state.userAuth.user)
-  console.log(userIsLoggedIn);
-  console.log(userEmail);
 
   const renderLinks = () => {
     if (userIsLoggedIn) {

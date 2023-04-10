@@ -28,7 +28,6 @@ function App() {
             <Route path="/NotFound" element={<NotFound />} />
             <Route path="/signup" element={<SignUpForm />} />
             <Route exact path="/login" element={<LoginForm />} />
-            <Route path="/boards" element={<BoardsView />} />
           </Routes>
       </Container>
     </>

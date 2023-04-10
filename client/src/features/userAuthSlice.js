@@ -2,9 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setAuthMessage } from "./authMessageSlice";
 import { toast } from 'react-toastify';
 import AuthService from "../services/auth.service";
-import { fetchBoardsAction } from "./boardsSlice";
 
-const user = JSON.parse(localStorage.getItem("user"));
+const userData = JSON.parse(localStorage.getItem("user"));
+const user = userData.user.email;
+
 
 export const signup = createAsyncThunk(
   "auth/signup",
@@ -67,7 +68,7 @@ const userAuthSlice = createSlice({
     });
     builder.addCase(login.fulfilled, (state, action) => {
       state.isLoggedIn = true;
-      state.user = action.payload.user.email;
+      state.user = action.payload.email;
     });
     builder.addCase(login.rejected, (state, action) => {
       state.isLoggedIn = false;

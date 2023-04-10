@@ -22,6 +22,8 @@ const BoardView = () => {
       cards: ['Card 5']
     }
   ]);
+
+  // const columns = useSelector((state) => state.boardById)
   const isOpen = useSelector((state) => state.isModalOpen.open); 
   const [modalText, setModalText] = useState('');
 
