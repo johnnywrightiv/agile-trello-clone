@@ -4,7 +4,8 @@ import { toast } from 'react-toastify';
 import AuthService from "../services/auth.service";
 
 const userData = JSON.parse(localStorage.getItem("user"));
-const user = userData.user.email;
+
+const user = userData ? userData.user.email : null
 
 
 export const signup = createAsyncThunk(
@@ -53,7 +54,7 @@ export const logout = createAsyncThunk("auth/logout", async () => {
 
 const initialState = user 
   ? { isLoggedIn: true, user } 
-  : { isLoggedIn: false, user: null };
+  : { isLoggedIn: false };
 
 const userAuthSlice = createSlice({
   name: "userAuth",
