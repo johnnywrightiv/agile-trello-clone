@@ -6,7 +6,7 @@ const Card = require('./../models/cardModel');
 // GET - get all columns of a specific board
 exports.getAllColumns = async (req, res) => {
   try {
-    const { boardId } = req.body;
+    const { boardId } = req.params;
     const { sort } = req.query;
     const sortColumns = {}
 
