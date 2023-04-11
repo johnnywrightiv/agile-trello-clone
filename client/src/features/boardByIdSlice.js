@@ -29,7 +29,7 @@ const boardByIdSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchBoardByIdAction.fulfilled, (state, action) => {
-      state.boards = action?.payload;
+      state.board = action?.payload;
       state.loading = false;
       state.error = undefined;
     });
