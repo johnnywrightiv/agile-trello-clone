@@ -16,13 +16,15 @@ const LoginForm = () => {
 
   const handleFormSubmit = (data) => {
     dispatch(login(data));
-  } 
+  }
   
   useEffect(() => {
     if (user.isLoggedIn) {
       navigate('/');
     } else {
+      if (errorMessage.message) {
       console.log(errorMessage)
+      }
     }
 }, [user, errorMessage]);
   

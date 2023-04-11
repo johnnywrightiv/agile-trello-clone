@@ -1,11 +1,43 @@
+import { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import RenderCards from "./RenderCards";
 
 
 
 const RenderColumns = () => {
-  const columns = useSelector((state) => state.columns);
+  const [isEditingColumnTitle, setIsEditingColumnTitle] = useState(false);
+  const [editingColumnIndex, setEditingColumnIndex] = useState(null);
+  const columns = useSelector((state) => state.boardColumns.columns);
   console.log(columns);
+
+
+  const handleColumnTitleChange = (event, columnIndex) => {
+    // const newColumns = [...columns];
+    // newColumns[columnIndex].title = event.target.value;
+    // setColumns(newColumns);
+  };
+
+  const handleColumnTitleBlur = () => {
+    setIsEditingColumnTitle(false);
+    setEditingColumnIndex(null);
+  };
+
+  const handleColumnTitleClick = (columnIndex) => {
+    setIsEditingColumnTitle(true);
+    setEditingColumnIndex(columnIndex);
+  };
+
+  const handleAddCard = (columnIndex) => {
+    // const newColumns = [...columns];
+    // newColumns[columnIndex].cards.push(`Card ${newColumns[columnIndex].cards.length + 1}`);
+    // setColumns(newColumns);
+  };
+
+  const handleAddColumn = () => {
+    // setColumns([...columns, { title: `Column ${columns.length + 1}`, cards: [] }]);
+  };
+
 
   return (
       <>
@@ -21,20 +53,11 @@ const RenderColumns = () => {
               )}
               <Button variant="light" size="sm" onClick={() => handleAddCard(columnIndex)}>+ Add New Card</Button>
             </div>
-            {column.cards.map((card, cardIndex) => (
-              <Card className="card" key={cardIndex}>
-                <Button variant="link" className="card-title-button" onClick={() => {
-                  setModalText(card);
-                  dispatch(setModalOpen());
-                }}>
-                  {card}
-                </Button>
-              </Card>
-            ))}
+            <RenderCards />  
           </Col>
         ))}
-        <Col className="add-list-column" xs={4} md={3}>
-          <Button variant="primary" className="add-list-button" onClick={handleAddColumn}>+ Add New List</Button>
+        <Col className="add-column" xs={4} md={3}>
+          <Button variant="primary" className="add-column-button" onClick={handleAddColumn}>+ Add New Column</Button>
         </Col>
       </>
   )
