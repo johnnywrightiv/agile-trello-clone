@@ -5,42 +5,52 @@ import { useParams } from 'react-router-dom';
 import RenderColumns from './RenderColumns';
 import { fetchBoardByIdAction, updateBoardTitleAction } from '../features/boardByIdSlice';
 import NonAuthView from '../components/NonAuthView';
+import { fetchColumnsAction } from '../features/columnsSlice';
 
 const BoardView = () => {
-  const boardData = useSelector((state) => state.boardById);
+  // connections to the redux store
+  const boardData = useSelector((state) => state.boardById.board);
   const userIsLoggedIn = useSelector((state) => state.userAuth.isLoggedIn);
-  const [ boardTitle, setBoardTitle ] = useState(boardData.board.title)
+
+  // local state
+  const [ boardTitle, setBoardTitle ] = useState(boardData.title)
   const [isEditingBoardTitle, setIsEditingBoardTitle] = useState(false);
 
+  // retrieve boardId from url parameters
   const { boardId } = useParams();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function fetchBoard() {
-      const response = await dispatch(fetchBoardByIdAction(boardId));
-      return response
-    }
-    fetchBoard();
-  }, []);
   
+  useEffect(() => {
+    const refresh = async () => {
+    await dispatch(fetchBoardByIdAction(boardId));
+    await dispatch(fetchColumnsAction(boardId));
+    console.log(boardData.title)
+    setBoardTitle(boardData.title);
+    console.log(boardTitle)
+    }
+    refresh();
+  }, [ ]);
+  
+  console.log(boardTitle)
 
+  // function that alters isEditingBoardTitle state to true - causes input box to appear for user to edit the title of the board
   const handleBoardTitleClick = () => {
     setIsEditingBoardTitle(true);
   }
-
+  // function that sets local state as user changes the title
   const handleBoardTitleChange = async (event) => {
     setBoardTitle(event.target.value);
   };
 
-   const handleBoardTitleChangeClick = async () => {
+  // function that closes the edit box and dipatches the patch function to update the title of the board.  It also fetches the boardById in order to update the redux store with the new information.
+  const handleBoardTitleChangeClick = async () => {
     setIsEditingBoardTitle(false);
     const bodyRequest = {
       id: boardId,
       title: boardTitle
     }
-    console.log(bodyRequest)
     await dispatch(updateBoardTitleAction(bodyRequest));
-    dispatch(fetchBoardByIdAction(boardId));
+    await dispatch(fetchBoardByIdAction(boardId));
    }
   
   return (
@@ -61,12 +71,4 @@ const BoardView = () => {
   )
 };
 
-
-// {isEditingColumnTitle && editingColumnIndex === columnIndex ? (
-//   <input type="text" value={column.title} onChange={(event) => handleColumnTitleChange(event, columnIndex)} onBlur={handleColumnTitleBlur} style={{ width: '50%' }}/>
-// ) : (
-//   <h3 className="column-title" onClick={() => handleColumnTitleClick(columnIndex)}>
-//     {column.title}
-//   </h3>
-// )}
 export default BoardView;

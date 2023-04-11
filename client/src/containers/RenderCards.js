@@ -6,7 +6,7 @@ import { setModalOpen } from "../features/modalOpenSlice";
 
 const RenderCards = () => {
   const cards = useSelector((state) => state.cards);
-  console.log(cards)
+  // console.log(cards)
 
   const dispatch = useDispatch();
 
