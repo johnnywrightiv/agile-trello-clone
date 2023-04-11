@@ -595,88 +595,6 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
-    get:
-      tags:
-        - Columns
-      summary: Get all columns for a single board
-      description: Retrieves an array of all columns in a specific board.
-      parameters:
-        - name: Authorization
-          in: header
-          description: JWT token for authentication
-          required: true
-          type: string
-        - name: boardId
-          in: body
-          description: Board id
-          required: true
-          schema:
-            type: object
-            properties:
-              boardId:
-                type: string
-                example: 642f229bb6d6d71f6fb43a8d
-        - name: Sort
-          in: query
-          description: optional sort parameter (must specify ?sort=newest, ?sort=oldest, ?sort=alphabetically, or ?sort=reverse-alphabetically)
-          required: false
-          type: string
-      responses:
-        "200":
-          description: 200 response
-          examples:
-            application/json: |-
-              {
-                "columns": [
-                    {
-                        "_id": "642f2531b6d6d71f6fb43a90",
-                        "boardId": "642f229bb6d6d71f6fb43a8d",
-                        "title": "column 1",
-                        "cardOrder": [],
-                        "createdAt": "2023-04-06T20:01:53.909Z",
-                        "updatedAt": "2023-04-06T20:01:53.909Z",
-                        "__v": 0
-                    },
-                    {
-                        "_id": "642f2536b6d6d71f6fb43a95",
-                        "boardId": "642f229bb6d6d71f6fb43a8d",
-                        "title": "column 2",
-                        "cardOrder": [],
-                        "createdAt": "2023-04-06T20:01:58.212Z",
-                        "updatedAt": "2023-04-06T20:01:58.212Z",
-                        "__v": 0
-                    },
-                    {
-                        "_id": "642f2539b6d6d71f6fb43a9a",
-                        "boardId": "642f229bb6d6d71f6fb43a8d",
-                        "title": "column 3",
-                        "cardOrder": [],
-                        "createdAt": "2023-04-06T20:02:01.386Z",
-                        "updatedAt": "2023-04-06T20:02:01.386Z",
-                        "__v": 0
-                    }
-                ],
-                "board": {
-                    "_id": "642f229bb6d6d71f6fb43a8d",
-                    "userId": "642e8e677e546379ab2b23b8",
-                    "title": "board 1",
-                    "category": null,
-                    "columnOrder": [
-                        "642f2531b6d6d71f6fb43a90",
-                        "642f2536b6d6d71f6fb43a95",
-                        "642f2539b6d6d71f6fb43a9a"
-                    ],
-                    "createdAt": "2023-04-06T19:50:51.601Z",
-                    "updatedAt": "2023-04-06T20:02:01.390Z",
-                    "__v": 3
-                }
-              }
-        "401":
-          description: Unauthorized
-        "404":
-          description: Not Found
-        "500":
-          description: Internal Server Error
   /columns/{columnId}:
     get:
       tags:
@@ -794,83 +712,75 @@ paths:
           description: Not found
         "500":
           description: Internal Server Error
-  /cards:
+  /columns/all/{boardId}:
     get:
       tags:
-        - Cards
-      summary: Get all cards for a single column
-      description: Retrieves an array of all cards in a specific column.
+        - Columns
+      summary: Get all columns for a single board
+      description: Retrieves an array of all columns in a specific board.
       parameters:
         - name: Authorization
           in: header
           description: JWT token for authentication
           required: true
           type: string
-        - name: columnId
-          in: body
-          description: Column id
+        - name: boardId
+          in: path
+          description: ID of the board you are getting columns from
           required: true
-          schema:
-            type: object
-            properties:
-              columnId:
-                type: string
-                example: 642f229bb6d6d71f6fb43a8d
+          type: string
+        - name: Sort
+          in: query
+          description: optional sort parameter (must specify ?sort=newest, ?sort=oldest, ?sort=alphabetically, or ?sort=reverse-alphabetically)
+          required: false
+          type: string
       responses:
         "200":
           description: 200 response
           examples:
             application/json: |-
               {
-                "cards": [
+                "columns": [
                     {
-                        "_id": "642f37a17e8613854d2d9f25",
-                        "title": "Card Title",
-                        "text": "Hello World",
-                        "columnId": "642f306cf10ebbcbbee5b850",
-                        "label": null,
-                        "labelColor": null,
-                        "description": null,
-                        "createdAt": "2023-04-06T21:20:33.437Z",
-                        "updatedAt": "2023-04-06T21:20:33.437Z",
+                        "_id": "642f2531b6d6d71f6fb43a90",
+                        "boardId": "642f229bb6d6d71f6fb43a8d",
+                        "title": "column 1",
+                        "cardOrder": [],
+                        "createdAt": "2023-04-06T20:01:53.909Z",
+                        "updatedAt": "2023-04-06T20:01:53.909Z",
                         "__v": 0
                     },
                     {
-                        "_id": "642f37cd7e8613854d2d9f2a",
-                        "title": "Card Title 2",
-                        "text": "Hello World 2",
-                        "columnId": "642f306cf10ebbcbbee5b850",
-                        "label": null,
-                        "labelColor": null,
-                        "description": null,
-                        "createdAt": "2023-04-06T21:21:17.321Z",
-                        "updatedAt": "2023-04-06T21:21:17.321Z",
+                        "_id": "642f2536b6d6d71f6fb43a95",
+                        "boardId": "642f229bb6d6d71f6fb43a8d",
+                        "title": "column 2",
+                        "cardOrder": [],
+                        "createdAt": "2023-04-06T20:01:58.212Z",
+                        "updatedAt": "2023-04-06T20:01:58.212Z",
                         "__v": 0
                     },
                     {
-                        "_id": "642f37d27e8613854d2d9f2f",
-                        "title": "Card Title 3",
-                        "text": "Hello World 3",
-                        "columnId": "642f306cf10ebbcbbee5b850",
-                        "label": null,
-                        "labelColor": null,
-                        "description": null,
-                        "createdAt": "2023-04-06T21:21:22.029Z",
-                        "updatedAt": "2023-04-06T21:21:22.029Z",
+                        "_id": "642f2539b6d6d71f6fb43a9a",
+                        "boardId": "642f229bb6d6d71f6fb43a8d",
+                        "title": "column 3",
+                        "cardOrder": [],
+                        "createdAt": "2023-04-06T20:02:01.386Z",
+                        "updatedAt": "2023-04-06T20:02:01.386Z",
                         "__v": 0
                     }
                 ],
-                "column": {
-                    "_id": "642f306cf10ebbcbbee5b850",
-                    "boardId": "642f29dfb6d6d71f6fb43aad",
-                    "title": "New Column Title",
-                    "cardOrder": [
-                        "642f37a17e8613854d2d9f25",
-                        "642f37cd7e8613854d2d9f2a",
-                        "642f37d27e8613854d2d9f2f"
+                "board": {
+                    "_id": "642f229bb6d6d71f6fb43a8d",
+                    "userId": "642e8e677e546379ab2b23b8",
+                    "title": "board 1",
+                    "category": null,
+                    "columnOrder": [
+                        "642f2531b6d6d71f6fb43a90",
+                        "642f2536b6d6d71f6fb43a95",
+                        "642f2539b6d6d71f6fb43a9a"
                     ],
-                    "createdAt": "2023-04-06T20:49:48.300Z",
-                    "updatedAt": "2023-04-06T21:21:22.036Z",
+                    "createdAt": "2023-04-06T19:50:51.601Z",
+                    "updatedAt": "2023-04-06T20:02:01.390Z",
                     "__v": 3
                 }
               }
@@ -880,6 +790,7 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
+  /cards:
     post:
       tags:
         - Cards
@@ -1017,6 +928,87 @@ paths:
           description: Unauthorized
         "404":
           description: Not found
+        "500":
+          description: Internal Server Error
+  /cards/all/{columnId}:
+    get:
+      tags:
+        - Cards
+      summary: Get all cards for a single column
+      description: Retrieves an array of all cards in a specific column.
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: columnId
+          in: path
+          description: ID of the column you are getting cards from
+          required: true
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "cards": [
+                    {
+                        "_id": "642f37a17e8613854d2d9f25",
+                        "title": "Card Title",
+                        "text": "Hello World",
+                        "columnId": "642f306cf10ebbcbbee5b850",
+                        "label": null,
+                        "labelColor": null,
+                        "description": null,
+                        "createdAt": "2023-04-06T21:20:33.437Z",
+                        "updatedAt": "2023-04-06T21:20:33.437Z",
+                        "__v": 0
+                    },
+                    {
+                        "_id": "642f37cd7e8613854d2d9f2a",
+                        "title": "Card Title 2",
+                        "text": "Hello World 2",
+                        "columnId": "642f306cf10ebbcbbee5b850",
+                        "label": null,
+                        "labelColor": null,
+                        "description": null,
+                        "createdAt": "2023-04-06T21:21:17.321Z",
+                        "updatedAt": "2023-04-06T21:21:17.321Z",
+                        "__v": 0
+                    },
+                    {
+                        "_id": "642f37d27e8613854d2d9f2f",
+                        "title": "Card Title 3",
+                        "text": "Hello World 3",
+                        "columnId": "642f306cf10ebbcbbee5b850",
+                        "label": null,
+                        "labelColor": null,
+                        "description": null,
+                        "createdAt": "2023-04-06T21:21:22.029Z",
+                        "updatedAt": "2023-04-06T21:21:22.029Z",
+                        "__v": 0
+                    }
+                ],
+                "column": {
+                    "_id": "642f306cf10ebbcbbee5b850",
+                    "boardId": "642f29dfb6d6d71f6fb43aad",
+                    "title": "New Column Title",
+                    "cardOrder": [
+                        "642f37a17e8613854d2d9f25",
+                        "642f37cd7e8613854d2d9f2a",
+                        "642f37d27e8613854d2d9f2f"
+                    ],
+                    "createdAt": "2023-04-06T20:49:48.300Z",
+                    "updatedAt": "2023-04-06T21:21:22.036Z",
+                    "__v": 3
+                }
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
         "500":
           description: Internal Server Error
   /cards/title/{cardId}:
