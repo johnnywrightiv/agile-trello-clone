@@ -9,8 +9,6 @@ const RenderColumns = () => {
   const [isEditingColumnTitle, setIsEditingColumnTitle] = useState(false);
   const [editingColumnIndex, setEditingColumnIndex] = useState(null);
   const columns = useSelector((state) => state.boardColumns.columns);
-  console.log(columns);
-
 
   const handleColumnTitleChange = (event, columnIndex) => {
     // const newColumns = [...columns];
