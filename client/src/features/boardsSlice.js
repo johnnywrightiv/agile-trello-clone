@@ -44,7 +44,7 @@ const boardsSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchBoardsAction.fulfilled, (state, action) => {
-      state.boards = action?.payload;
+      state.boards = action?.payload.boards;
       state.loading = false;
       state.error = undefined;
     });

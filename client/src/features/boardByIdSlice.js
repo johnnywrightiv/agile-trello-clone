@@ -16,6 +16,21 @@ export const fetchBoardByIdAction = createAsyncThunk("board/fetch", async(id, re
   }
 });
 
+export const updateBoardTitleAction = createAsyncThunk("boardTitle/update", async({id, title}, rejectWithValue) => {
+  console.log(id)
+  console.log(title)
+  try {
+    const { data } = await axios.patch(API_URL + 'title/' + id, { title: title}, authHeader());
+    console.log(data);
+    return data;
+  } catch (error) {
+    if (!error?.response) {
+      throw error;
+    }
+    return rejectWithValue(error?.response?.data);
+  }
+})
+
 const initialState = {
   board: {}
 };
@@ -29,7 +44,7 @@ const boardByIdSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchBoardByIdAction.fulfilled, (state, action) => {
-      state.boards = action?.payload;
+      state.board = action?.payload.board;
       state.loading = false;
       state.error = undefined;
     });
