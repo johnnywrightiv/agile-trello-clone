@@ -10,7 +10,7 @@ router
 
 router
   .route('/all/:boardId')
-  .get(checkAuth, columnController.getAllColumns)
+  .get(checkAuth, columnController.getAllColumns);
 
 router
   .route('/:columnId')
