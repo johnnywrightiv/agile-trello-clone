@@ -6,11 +6,13 @@ import { fetchBoardsAction } from '../features/boardsSlice';
 import CreateBoard from '../components/AddBoard';
 import { fetchBoardByIdAction } from '../features/boardByIdSlice';
 import { fetchColumnsAction } from '../features/columnsSlice';
+import NonAuthView from '../components/NonAuthView';
 
 
 const BoardsView = () => {
-  const boardsData = useSelector((state) => state.userBoards.boards);
-  const boardsArray = boardsData.boards;
+  const boardsArray = useSelector((state) => state.userBoards.boards);
+  const userIsLoggedIn = useSelector((state) => state.userAuth.isLoggedIn);
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,7 +31,7 @@ const BoardsView = () => {
 
   const renderBoards = () => {
     if (boardsArray && boardsArray.length > 0) {
-    return boardsData.boards.map((board) => (
+    return boardsArray.map((board) => (
       <Col sm={4} key={board._id} id={board._id} onClick={handleClick}>
         <Card>
           <Card.Body>
@@ -44,12 +46,15 @@ const BoardsView = () => {
   };
 
   return (
-    <Container className="pt-5">
+    <>
+    { userIsLoggedIn ? <Container className="pt-5">
       <Row xs={1} md={2} lg={3} className="g-4">
         {renderBoards()}
         <CreateBoard />
       </Row>
-    </Container>
+    </Container> : <NonAuthView />}
+    </>
+    
   );
 }
 

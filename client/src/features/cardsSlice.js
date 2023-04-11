@@ -2,11 +2,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
 import authHeader from "../services/auth-header";
 
-const API_URL = 'http://localhost:3001/api/columns/'
+const API_URL = 'http://localhost:3001/api/cards/'
 
 
 //action
-export const fetchColumnsAction = createAsyncThunk("columns/fetch", async(id, rejectWithValue) => {
+export const fetchCardsAction = createAsyncThunk("cards/fetch", async(id, rejectWithValue) => {
 
   try {
     const { data } = await axios.get(API_URL + 'all/' + id, authHeader());
@@ -20,7 +20,7 @@ export const fetchColumnsAction = createAsyncThunk("columns/fetch", async(id, re
   }
 });
 
-export const addColumnAction = createAsyncThunk("column/add", async(body, rejectWithValue) => {
+export const addCardAction = createAsyncThunk("card/add", async(body, rejectWithValue) => {
   try {
     const { data } = await axios.post(API_URL, body, authHeader());
 
@@ -34,39 +34,39 @@ export const addColumnAction = createAsyncThunk("column/add", async(body, reject
 });
 
 const initialState = {
-  columns: [],
+  cards: [],
 };
 
-const columnsSlice = createSlice({
-  name: "boardColumns",
+const cardsSlice = createSlice({
+  name: "columnCards",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchColumnsAction.pending, (state, action) => {
+    builder.addCase(fetchCardsAction.pending, (state, action) => {
       state.loading = true;
     });
-    builder.addCase(fetchColumnsAction.fulfilled, (state, action) => {
-      state.columns = action?.payload.columns;
+    builder.addCase(fetchCardsAction.fulfilled, (state, action) => {
+      state.cards = action?.payload;
       state.loading = false;
       state.error = undefined;
     });
-    builder.addCase(fetchColumnsAction.rejected, (state, action) => {
+    builder.addCase(fetchCardsAction.rejected, (state, action) => {
       state.loading = false;
       state.error = action?.payload;
-      state.columns = null; 
+      state.cards = null; 
     });
-    builder.addCase(addColumnAction.pending, (state, action) => {
+    builder.addCase(addCardAction.pending, (state, action) => {
       state.loading = true;
     });
-    builder.addCase(addColumnAction.fulfilled, (state, action) => {
+    builder.addCase(addCardAction.fulfilled, (state, action) => {
       state.loading = false;
       state.error = undefined;
     });
-    builder.addCase(addColumnAction.rejected, (state, action) => {
+    builder.addCase(addCardAction.rejected, (state, action) => {
       state.loading = false;
       state.error = action?.payload;
     });
   }
 });
 
-export default columnsSlice.reducer
+export default cardsSlice.reducer

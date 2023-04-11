@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import RenderColumns from '../containers/RenderColumns';
+import RenderColumns from './RenderColumns';
 import { fetchBoardByIdAction } from '../features/boardByIdSlice';
 import { setModalOpen, setModalClosed } from '../features/modalOpenSlice';
+import NonAuthView from '../components/NonAuthView';
 
 const BoardView = () => {
   const [isEditingBoardTitle, setIsEditingBoardTitle] = useState(false);
@@ -27,8 +28,8 @@ const BoardView = () => {
   // ]);
 
   const boardData = useSelector((state) => state.boardById.board)
+  const userIsLoggedIn = useSelector((state) => state.userAuth.isLoggedIn);
   const isOpen = useSelector((state) => state.isModalOpen.open); 
-  console.log(boardData)
   const { boardId } = useParams();
  
   const boardTitle = boardData.board.title;
@@ -36,8 +37,12 @@ const BoardView = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchBoardByIdAction(boardId));
-  }, [boardId]);
+    async function fetchBoard() {
+      const response = await dispatch(fetchBoardByIdAction(boardId));
+      return response
+    }
+    fetchBoard();
+  }, []);
   
 
  
@@ -78,7 +83,8 @@ const BoardView = () => {
   
   
   return (
-   <Container className="board-view pt-5">
+    <>
+    { userIsLoggedIn ? <Container className="board-view pt-5">
     <h2 className="board-title">
      {boardTitle}
     </h2>
@@ -95,7 +101,9 @@ const BoardView = () => {
         <p>Card detail view goes here</p>
       </Modal.Body>
     </Modal>
-  </Container>    
+  </Container>  : <NonAuthView />  }
+    </>
+   
   )
 };
 
