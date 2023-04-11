@@ -56,7 +56,7 @@ const BoardView = () => {
   return (
     <>
     { userIsLoggedIn ? <Container className="board-view pt-5">
-      {isEditingBoardTitle ? <input type="text" value={boardTitle} onChange={(event) => handleBoardTitleChange(event)} onClick={handleBoardTitleChangeClick} /> : <h2 className="board-title" onClick={handleBoardTitleClick}>
+      {isEditingBoardTitle ? <input type="text" value={boardTitle} onChange={(event) => handleBoardTitleChange(event)} onBlur={handleBoardTitleChangeClick} /> : <h2 className="board-title" onClick={handleBoardTitleClick}>
      {boardTitle}
     </h2>}
    
