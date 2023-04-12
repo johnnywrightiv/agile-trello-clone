@@ -119,13 +119,22 @@ exports.deleteOneColumn = async (req, res) => {
     const column = await Column.findOneAndDelete({ _id: columnId });
     const cards = await Card.deleteMany({ columnId: columnId });
     const board = await Board.findOne({_id: boardId});
+    board.set({columnOrder: board.columnOrder.filter((column) => {
+      return column !== columnId;
+    })});
+
+    const updatedColumns = await Column.find({boardId: boardId});
+    
+    const updatedBoard = await board.save()
     
     if (!column) {
       return res
         .status(404)
         .json({ message: 'Column with given id was not found' });
     } else {
-      return res.status(200).json({ message: "Column deleted", board });
+      
+
+      return res.status(200).json({ message: "Column deleted", updatedBoard: updatedBoard, updatedColumns: updatedColumns });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });

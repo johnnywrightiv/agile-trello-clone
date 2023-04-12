@@ -214,16 +214,25 @@ exports.reorderSameColumn = async (req, res) => {
 // DELETE - delete one card by id
 exports.deleteOneCard = async (req, res) => {
   try {
-    const { cardId } = req.params;
+    const { cardId, columnId } = req.params;
 
     const card = await Card.findOneAndDelete({ _id: cardId });
+    const column = await Column.findOne({_id: columnId});
+
+    column.set({cardOrder: column.cardOrder.filter((card) => {
+      return card !== cardId;
+    })});
+
+    const updatedCards = await Card.find({columnId: columnId});
+    
+    const updatedColumn = await column.save()
 
     if (!card) {
       return res
         .status(404)
         .json({ message: 'Card with given id was not found' });
     } else {
-      return res.status(200).json({ message: "Card deleted" });
+      return res.status(200).json({ message: "Card deleted", updatedColumn: updatedColumn, updatedCards: updatedCards });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
