@@ -18,6 +18,10 @@ router
   .delete(checkAuth, cardController.deleteOneCard)
 
 router
+  .route('/:sameColumnId/same-column-reorder')
+  .patch(checkAuth, cardController.reorderSameColumn)
+
+router
   .route('/title/:cardId')
   .patch(checkAuth, cardController.changeCardTitle);
 

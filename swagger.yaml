@@ -1006,6 +1006,58 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
+  /cards/{sameColumnId}/same-column-reorder:
+    patch:
+      tags:
+        - Cards
+      summary: Reorders cards within the same column
+      description: Reorders cards within the same column
+      parameters:
+        - name: Authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: sameColumnId
+          in: path
+          description: ID of the column you are getting cards from
+          required: true
+          type: string
+        - name: sameColumnCardIds
+          in: body
+          description: New array of card ids within current column
+          required: true
+          schema:
+            type: object
+            properties:
+              sameColumnCardIds:
+                example:
+                  ["64370e1ecf7ac0a757e784e2", "64370e12cf7ac0a757e784dd"]
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "updatedColumn": {
+                    "_id": "64370d5180eec739f8fd5996",
+                    "boardId": "64370d0e80eec739f8fd5993",
+                    "title": "column 1",
+                    "cardOrder": [
+                        "64370e1ecf7ac0a757e784e2",
+                        "64370e12cf7ac0a757e784dd"
+                    ],
+                    "createdAt": "2023-04-12T19:58:09.078Z",
+                    "updatedAt": "2023-04-12T20:11:33.275Z",
+                    "__v": 5
+                }
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
   /cards/title/{cardId}:
     patch:
       tags:

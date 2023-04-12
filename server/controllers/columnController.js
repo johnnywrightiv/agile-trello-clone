@@ -101,7 +101,7 @@ exports.changeColumnTitle = async (req, res) => {
     if (!updatedColumn) {
       return res
         .status(404)
-        .json({ message: 'Unable to find that column' });
+        .json({ message: 'Column with given id was not found' });
     } else {
       return res.status(200).json({ updatedColumn: updatedColumn });
     }
