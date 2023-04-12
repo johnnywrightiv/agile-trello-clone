@@ -87,7 +87,7 @@ exports.createBoard = async (req, res) => {
 exports.updateTitle = async (req, res) => {
   try {
     const { boardId } = req.params;
-      const updatedBoard = await Board.findOneAndUpdate(boardId, { title: req.body.title }, { new: true })
+      const updatedBoard = await Board.findOneAndUpdate({ _id: boardId }, { title: req.body.title }, { new: true })
   
       if (!updatedBoard) {
         return res

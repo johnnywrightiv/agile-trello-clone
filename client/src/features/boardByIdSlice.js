@@ -17,7 +17,7 @@ export const fetchBoardByIdAction = createAsyncThunk("board/fetch", async(id, re
 });
 
 export const updateBoardTitleAction = createAsyncThunk("boardTitle/update", async({id, title}, rejectWithValue) => {
-
+  console.log(id);
   try {
     const { data } = await axios.patch(API_URL + 'title/' + id, { title: title}, authHeader());
     console.log(data);
