@@ -46,13 +46,14 @@ exports.getOneColumn = async (req, res) => {
     const { columnId } = req.params;
 
     const column = await Column.findOne({ _id: columnId });
+    const cards = await Card.find({columnId: columnId})
 
     if (!column) {
       return res
         .status(404)
         .json({ message: 'Column with given id was not found' });
     } else {
-      return res.status(200).json({ column: column });
+      return res.status(200).json({ column: column, cards: cards });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
@@ -113,10 +114,11 @@ exports.changeColumnTitle = async (req, res) => {
 // DELETE - delete one card by id
 exports.deleteOneColumn = async (req, res) => {
   try {
-    const { columnId } = req.params;
+    const { columnId, boardId } = req.params;
 
     const column = await Column.findOneAndDelete({ _id: columnId });
     const cards = await Card.deleteMany({ columnId: columnId });
+    const board = await Board.findOne({_id: boardId});
     
     if (!column) {
       return res

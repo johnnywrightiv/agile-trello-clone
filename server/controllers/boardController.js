@@ -55,12 +55,13 @@ exports.getAllBoards = async (req, res) => {
 exports.getOneBoard = async (req, res) => {
   try {
     const { boardId } = req.params;
-    const board = await Board.findOne({ _id: boardId })
+    const board = await Board.findOne({ _id: boardId });
+    const columns = await Column.find({boardId: boardId});
 
     if (!board) {
       return res.status(404).json({ message: 'The board with given id was not found' });
     } else {
-      return res.status(200).json({ board: board })
+      return res.status(200).json({ board: board, columns: columns })
     }
   } catch (err) {
     return res.status(500).json({ message: err });
@@ -87,7 +88,7 @@ exports.createBoard = async (req, res) => {
 exports.updateTitle = async (req, res) => {
   try {
     const { boardId } = req.params;
-      const updatedBoard = await Board.findOneAndUpdate({_id: boardId}, { title: req.body.title }, { new: true })
+      const updatedBoard = await Board.findOneAndUpdate(boardId, { title: req.body.title }, { new: true })
   
       if (!updatedBoard) {
         return res
@@ -105,7 +106,7 @@ exports.updateTitle = async (req, res) => {
 exports.updateCollection = async (req, res) => {
   try {
     const { boardId } = req.params;
-      const updatedBoard = await Board.findOneAndUpdate({_id: boardId}, { category: req.body.category }, { new: true })
+      const updatedBoard = await Board.findOneAndUpdate(boardId, { category: req.body.category }, { new: true })
   
       if (!updatedBoard) {
         return res
@@ -145,7 +146,8 @@ exports.updateColumnOrder = async (req, res) => {
 // DELETE - delete a board by id
 exports.deleteOneBoard = async (req, res) => {
   try {
-    const { boardId, columnId } = req.params;
+    const { columnId, boardId } = req.params;
+    // const { columnId } = req.body
     const board = await Board.findOneAndRemove({ _id: boardId });
     const columns = await Column.deleteMany({ boardId: boardId });
     const cards = await Card.deleteMany({ columnId: columnId })

@@ -38,10 +38,6 @@ router
   .patch(checkAuth, cardController.changeCardDescription);
 
 // router
-//   .route('/reorder/same-column')
-//   .patch(checkAuth, cardController.reorderSameColumn);
-
-// router
 //   .route('/reorder/different-column')
 //   .patch(checkAuth, cardController.reorderDifferentColumn);
 
