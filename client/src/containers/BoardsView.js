@@ -3,10 +3,12 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoardsAction } from '../features/boardsSlice';
-import CreateBoard from '../components/AddBoard';
+import CreateBoard from '../components/CreateBoardButton';
 import { fetchBoardByIdAction } from '../features/boardByIdSlice';
 import { fetchColumnsAction } from '../features/columnsSlice';
 import NonAuthView from '../components/NonAuthView';
+import { fetchCardsAction } from '../features/cardsSlice';
+import CreateBoardButton from '../components/CreateBoardButton';
 
 
 const BoardsView = () => {
@@ -50,7 +52,7 @@ const BoardsView = () => {
     { userIsLoggedIn ? <Container className="pt-5">
       <Row xs={1} md={2} lg={3} className="g-4">
         {renderBoards()}
-        <CreateBoard />
+        <CreateBoardButton />
       </Row>
     </Container> : <NonAuthView />}
     </>

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setModalOpen } from "../features/modalOpenSlice";
 import CreateBoardModal from "../containers/CreateBoardModal";
 
-const CreateBoard = () => {
+const CreateBoardButton = () => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
@@ -18,4 +18,4 @@ const CreateBoard = () => {
     </Col>
 )}
 
-export default CreateBoard;
+export default CreateBoardButton;

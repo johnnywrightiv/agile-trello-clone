@@ -21,6 +21,7 @@ export const fetchColumnsAction = createAsyncThunk("columns/fetch", async(id, re
 });
 
 export const addColumnAction = createAsyncThunk("column/add", async(body, rejectWithValue) => {
+  // console.log(body);
   try {
     const { data } = await axios.post(API_URL, body, authHeader());
 

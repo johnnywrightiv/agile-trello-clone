@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import CreateColumnButton from "../components/CreateColumnButton";
 import RenderCards from "./RenderCards";
 
 
@@ -55,7 +56,7 @@ const RenderColumns = () => {
           </Col>
         ))}
         <Col className="add-column" xs={4} md={3}>
-          <Button variant="primary" className="add-column-button" onClick={handleAddColumn}>+ Add New Column</Button>
+          <CreateColumnButton />
         </Col>
       </>
   )
