@@ -16,6 +16,20 @@ export const fetchBoardByIdAction = createAsyncThunk("board/fetch", async(id, re
   }
 });
 
+export const updateBoardTitleAction = createAsyncThunk("boardTitle/update", async({id, title}, rejectWithValue) => {
+  console.log(id);
+  try {
+    const { data } = await axios.patch(API_URL + 'title/' + id, { title: title}, authHeader());
+    console.log(data);
+    return data;
+  } catch (error) {
+    if (!error?.response) {
+      throw error;
+    }
+    return rejectWithValue(error?.response?.data);
+  }
+})
+
 const initialState = {
   board: {}
 };
@@ -29,7 +43,7 @@ const boardByIdSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchBoardByIdAction.fulfilled, (state, action) => {
-      state.boards = action?.payload;
+      state.board = action?.payload.board;
       state.loading = false;
       state.error = undefined;
     });
@@ -38,17 +52,17 @@ const boardByIdSlice = createSlice({
       state.error = action?.payload;
       state.boards = null; 
     });
-    // builder.addCase(addBoardAction.pending, (state, action) => {
-    //   state.loading = true;
-    // });
-    // builder.addCase(addBoardAction.fulfilled, (state, action) => {
-    //   state.loading = false;
-    //   state.error = undefined;
-    // });
-    // builder.addCase(addBoardAction.rejected, (state, action) => {
-    //   state.loading = false;
-    //   state.error = action?.payload;
-    // });
+    builder.addCase(updateBoardTitleAction.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(updateBoardTitleAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = undefined;
+    });
+    builder.addCase(updateBoardTitleAction.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action?.payload;
+    });
   }
 });
 

@@ -1,10 +1,9 @@
-import CreateBoardForm from "./CreateBoardForm";
+import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { setModalClosed } from "../features/modalOpenSlice";
-import { Modal } from "react-bootstrap";
 
-  
-const CreateBoardModal = () => {
+
+const CardModal = () => {
   const isOpen = useSelector((state) => state.isModalOpen.open);
 
   const dispatch = useDispatch();
@@ -14,12 +13,14 @@ const CreateBoardModal = () => {
   }
   return (
     <Modal show={isOpen} onHide={handleModalClose}>
-      <Modal.Header closeButton>Create Board</Modal.Header>
+      <Modal.Header closeButton>
+        <Modal.Title>Test</Modal.Title>
+      </Modal.Header>
       <Modal.Body>
-        <CreateBoardForm />
+        <p>Card detail view goes here</p>
       </Modal.Body>
     </Modal>
   )
 }
 
-export default CreateBoardModal;
+export default CardModal;

@@ -1,10 +1,10 @@
-import CreateBoardForm from "./CreateBoardForm";
 import { useDispatch, useSelector } from "react-redux";
 import { setModalClosed } from "../features/modalOpenSlice";
 import { Modal } from "react-bootstrap";
+import CreateColumnForm from "./CreateColumnForm";
 
   
-const CreateBoardModal = () => {
+const CreateColumnModal = () => {
   const isOpen = useSelector((state) => state.isModalOpen.open);
 
   const dispatch = useDispatch();
@@ -14,12 +14,12 @@ const CreateBoardModal = () => {
   }
   return (
     <Modal show={isOpen} onHide={handleModalClose}>
-      <Modal.Header closeButton>Create Board</Modal.Header>
+      <Modal.Header closeButton>Create Column</Modal.Header>
       <Modal.Body>
-        <CreateBoardForm />
+        <CreateColumnForm />
       </Modal.Body>
     </Modal>
   )
 }
 
-export default CreateBoardModal;
+export default CreateColumnModal;
