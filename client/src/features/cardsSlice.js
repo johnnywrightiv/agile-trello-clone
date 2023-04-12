@@ -9,7 +9,7 @@ const API_URL = 'http://localhost:3001/api/cards/'
 export const fetchCardsAction = createAsyncThunk("cards/fetch", async(id, rejectWithValue) => {
 
   try {
-    const { data } = await axios.get(API_URL + 'all/' + id, authHeader());
+    const { data } = await axios.get(API_URL + 'all/' + id,  authHeader());
 
     return data;
   } catch (error) {

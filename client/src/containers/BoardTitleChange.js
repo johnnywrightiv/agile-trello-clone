@@ -9,7 +9,7 @@ const BoardTitleChange = () => {
 
   // local state
   const [ boardTitle, setBoardTitle ] = useState(boardData.title)
-  const [isEditingBoardTitle, setIsEditingBoardTitle] = useState(false);
+  const [ isEditingBoardTitle, setIsEditingBoardTitle ] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ const BoardTitleChange = () => {
   };
 
   // function that closes the edit box and dipatches the patch function to update the title of the board.  It also fetches the boardById in order to update the redux store with the new information.
-  const handleBoardTitleChangeClick = async () => {
+  const handleBoardTitleBlur = async () => {
     setIsEditingBoardTitle(false);
     const bodyRequest = {
       id: boardData._id,
@@ -36,7 +36,7 @@ const BoardTitleChange = () => {
 
    return (
     <>
-      {isEditingBoardTitle ? <input type="text" value={boardTitle} onChange={(event) => handleBoardTitleChange(event)} onBlur={handleBoardTitleChangeClick} /> : 
+      {isEditingBoardTitle ? <input type="text" value={boardTitle} onChange={(event) => handleBoardTitleChange(event)} onBlur={handleBoardTitleBlur} /> : 
       <h2 className="board-title" onClick={handleBoardTitleClick}>
         {boardTitle}
       </h2>}
