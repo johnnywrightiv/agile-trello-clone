@@ -33,11 +33,6 @@ const RenderColumns = () => {
     // setColumns(newColumns);
   };
 
-  const handleAddColumn = () => {
-    // setColumns([...columns, { title: `Column ${columns.length + 1}`, cards: [] }]);
-  };
-
-
   return (
       <>
         {columns.map((column, columnIndex) => (
