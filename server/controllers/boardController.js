@@ -87,7 +87,7 @@ exports.createBoard = async (req, res) => {
 exports.updateTitle = async (req, res) => {
   try {
     const { boardId } = req.params;
-      const updatedBoard = await Board.findOneAndUpdate({ _id: boardId }, { title: req.body.title }, { new: true })
+      const updatedBoard = await Board.findOneAndUpdate({_id: boardId}, { title: req.body.title }, { new: true })
   
       if (!updatedBoard) {
         return res
@@ -105,7 +105,7 @@ exports.updateTitle = async (req, res) => {
 exports.updateCollection = async (req, res) => {
   try {
     const { boardId } = req.params;
-      const updatedBoard = await Board.findOneAndUpdate(boardId, { category: req.body.category }, { new: true })
+      const updatedBoard = await Board.findOneAndUpdate({_id: boardId}, { category: req.body.category }, { new: true })
   
       if (!updatedBoard) {
         return res
@@ -145,8 +145,7 @@ exports.updateColumnOrder = async (req, res) => {
 // DELETE - delete a board by id
 exports.deleteOneBoard = async (req, res) => {
   try {
-    const { boardId } = req.params;
-    const { columnId } = req.body
+    const { boardId, columnId } = req.params;
     const board = await Board.findOneAndRemove({ _id: boardId });
     const columns = await Column.deleteMany({ boardId: boardId });
     const cards = await Card.deleteMany({ columnId: columnId })
