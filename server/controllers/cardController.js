@@ -157,26 +157,29 @@ exports.changeCardDescription = async (req, res) => {
 }
 
 // PATCH - reorder cards in the same column
-// exports.reorderSameColumn = async (req, res) => {
-//   try {
-//     const { sameColumnId, sameColumnCardIds } = req.body;
-//     console.log(sameColumnId, sameColumnCardIds);
-//     const column = await Column.findOne({ columnId: sameColumnId });
-//     if (!column) {
-//       return res
-//         .status(404)
-//         .json({ message: 'Unable to find column of provided id' });
-//     }
-//     column.set({ cardIds: sameColumnCardIds });
-//     const savedColumn = await column.save();
+exports.reorderSameColumn = async (req, res) => {
+  try {
+    const { sameColumnId } = req.params;
+    const { sameColumnCardIds } = req.body;
+    console.log(sameColumnId, sameColumnCardIds);
+    const column = await Column.findOne({ _id: sameColumnId });
+    if (!column) {
+      return res
+        .status(404)
+        .json({ message: 'Column with given id was not found' });
+    }
+    column.set({ cardOrder: sameColumnCardIds });
+    const savedColumn = await column.save();
 
-//     return res
-//       .status(200)
-//       .json({ message: 'Same column reorder success', savedColumn });
-//   } catch (err) {
-//     return res.status(500).json({ message: err.message });
-//   }
-// }
+    const updatedColumn = await Column.findOne({_id :sameColumnId})
+
+    return res
+      .status(200)
+      .json({ updatedColumn: updatedColumn });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+}
 
 // PATCH - reorder cards in a different column
 // exports.reorderDifferentColumn = async (req, res) => {
