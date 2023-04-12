@@ -15,7 +15,10 @@ router
 router
   .route('/:columnId')
   .get(checkAuth, columnController.getOneColumn)
-  .patch(checkAuth, columnController.changeColumnTitle)
+  .patch(checkAuth, columnController.changeColumnTitle);
+
+router
+  .route('/:columnId/:boardId')
   .delete(checkAuth, columnController.deleteOneColumn);
 
   module.exports = router;
