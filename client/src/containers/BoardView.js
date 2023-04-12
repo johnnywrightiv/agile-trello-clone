@@ -24,14 +24,14 @@ const BoardView = () => {
     const refresh = async () => {
     await dispatch(fetchBoardByIdAction(boardId));
     await dispatch(fetchColumnsAction(boardId));
-    console.log(boardData.title)
+    // console.log(boardData.title)
     setBoardTitle(boardData.title);
-    console.log(boardTitle)
+    // console.log(boardTitle)
     }
     refresh();
   }, [ ]);
   
-  console.log(boardTitle)
+  // console.log(boardTitle)
 
   // function that alters isEditingBoardTitle state to true - causes input box to appear for user to edit the title of the board
   const handleBoardTitleClick = () => {
@@ -46,7 +46,7 @@ const BoardView = () => {
   const handleBoardTitleChangeClick = async () => {
     setIsEditingBoardTitle(false);
     const bodyRequest = {
-      id: boardId,
+      id: boardData._id,
       title: boardTitle
     }
     await dispatch(updateBoardTitleAction(bodyRequest));
@@ -56,7 +56,7 @@ const BoardView = () => {
   return (
     <>
     { userIsLoggedIn ? <Container className="board-view pt-5">
-      {isEditingBoardTitle ? <input type="text" value={boardTitle} onChange={(event) => handleBoardTitleChange(event)} onClick={handleBoardTitleChangeClick} /> : <h2 className="board-title" onClick={handleBoardTitleClick}>
+      {isEditingBoardTitle ? <input type="text" value={boardTitle} onChange={(event) => handleBoardTitleChange(event)} onBlur={handleBoardTitleChangeClick} /> : <h2 className="board-title" onClick={handleBoardTitleClick}>
      {boardTitle}
     </h2>}
    
