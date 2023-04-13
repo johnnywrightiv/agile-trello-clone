@@ -14,7 +14,7 @@ router
   .get(checkAuth, boardController.getOneBoard);
 
   router
-  .route('/:boardId/:columnId')
+  .route('/:boardId')
   .delete(checkAuth, boardController.deleteOneBoard);
 
 router
@@ -26,7 +26,7 @@ router
   .patch(checkAuth, boardController.updateCollection);
 
 router
-  .route('/column-order/:boardId')
+  .route('/column-reorder/:boardId')
   .patch(checkAuth, boardController.updateColumnOrder);
 
   module.exports = router;
