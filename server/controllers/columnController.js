@@ -30,7 +30,7 @@ exports.getAllColumns = async (req, res) => {
         .json({ message: 'Board with given id was not found' });
     }
 
-    const columns = await Column.find({ boardId: boardId }).populate('cardInfo').sort(sortColumns)
+    const columns = await Column.find({ boardId: boardId }).populate('cardOrder').sort(sortColumns)
     
     return res
       .status(200)

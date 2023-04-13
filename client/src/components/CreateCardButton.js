@@ -1,8 +1,25 @@
 import { Button } from "react-bootstrap"
+import { useDispatch } from "react-redux";
+import CreateCardModal from "../containers/CreateCardModal";
+import { setColumnIndex } from "../features/columnIndexSlice";
+import { setSecondModalOpen } from "../features/modalOpenSlice";
 
 
-const CreateCardButton = () => {
+const CreateCardButton = (columnIndex) => {
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    console.log(columnIndex);
+    dispatch(setColumnIndex(columnIndex));
+    dispatch(setSecondModalOpen());
+  }
+
   return (
-  <Button variant="light" size="sm" onClick={() => handleAddCard(columnIndex)}>+ Add New Card</Button>
+  <>
+    <Button variant="light" size="sm" onClick={() => handleClick()}>+ Add New Card</Button>
+    <CreateCardModal />
+  </>
   )
 }
+
+export default CreateCardButton;
