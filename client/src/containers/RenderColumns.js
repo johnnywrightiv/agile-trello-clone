@@ -1,20 +1,23 @@
 import { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CreateColumnButton from "../components/CreateColumnButton";
+import { fetchCardsAction } from "../features/cardsSlice";
 import RenderCards from "./RenderCards";
 
 
 
 const RenderColumns = () => {
-  const [isEditingColumnTitle, setIsEditingColumnTitle] = useState(false);
-  const [editingColumnIndex, setEditingColumnIndex] = useState(null);
+  const [ isEditingColumnTitle, setIsEditingColumnTitle ] = useState(false);
+  const [ editingColumnIndex, setEditingColumnIndex ] = useState(null);
+  const [ columnTitle, setColumnTitle ] = useState();
   const columns = useSelector((state) => state.boardColumns.columns);
 
+  const dispatch = useDispatch();
+
   const handleColumnTitleChange = (event, columnIndex) => {
-    // const newColumns = [...columns];
-    // newColumns[columnIndex].title = event.target.value;
-    // setColumns(newColumns);
+    setColumnTitle(event.target.value);
+    console.log(columnTitle);
   };
 
   const handleColumnTitleBlur = () => {
@@ -25,6 +28,7 @@ const RenderColumns = () => {
   const handleColumnTitleClick = (columnIndex) => {
     setIsEditingColumnTitle(true);
     setEditingColumnIndex(columnIndex);
+    // setColumnTitle(columns[columnIndex].title);
   };
 
   const handleAddCard = (columnIndex) => {
@@ -32,11 +36,6 @@ const RenderColumns = () => {
     // newColumns[columnIndex].cards.push(`Card ${newColumns[columnIndex].cards.length + 1}`);
     // setColumns(newColumns);
   };
-
-  const handleAddColumn = () => {
-    // setColumns([...columns, { title: `Column ${columns.length + 1}`, cards: [] }]);
-  };
-
 
   return (
       <>
@@ -52,7 +51,7 @@ const RenderColumns = () => {
               )}
               <Button variant="light" size="sm" onClick={() => handleAddCard(columnIndex)}>+ Add New Card</Button>
             </div>
-            <RenderCards />  
+            <RenderCards index={columnIndex} id={column._id}/>  
           </Col>
         ))}
         <Col className="add-column" xs={4} md={3}>
