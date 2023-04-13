@@ -21,10 +21,6 @@ router
   .delete(checkAuth, cardController.deleteOneCard);
 
 router
-  .route('/:sameColumnId/same-column-reorder')
-  .patch(checkAuth, cardController.reorderSameColumn)
-
-router
   .route('/title/:cardId')
   .patch(checkAuth, cardController.changeCardTitle);
 
@@ -39,10 +35,14 @@ router
 router
   .route('/description/:cardId')
   .patch(checkAuth, cardController.changeCardDescription);
+  
+router
+  .route('/same-column-reorder')
+  .patch(checkAuth, cardController.reorderSameColumn)
 
-// router
-//   .route('/reorder/different-column')
-//   .patch(checkAuth, cardController.reorderDifferentColumn);
+router
+  .route('/different-column-reorder')
+  .patch(checkAuth, cardController.reorderDifferentColumn);
 
 
   module.exports = router;

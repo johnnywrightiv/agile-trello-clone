@@ -18,7 +18,7 @@ exports.getAllCards = async (req, res) => {
     
     return res
       .status(200)
-      .json({ cards: cards, column: column });
+      .json({ cards });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
@@ -36,7 +36,7 @@ exports.getOneCard = async (req, res) => {
         .status(404)
         .json({ message: 'Card with given id was not found' });
     } else {
-      return res.status(200).json({ card: card });
+      return res.status(200).json({ card });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
@@ -57,7 +57,6 @@ exports.createCard = async (req, res) => {
       description: null,
     });
 
-    const cardResult = await newCard.save();
     const column = await Column.findById(columnId);
 
     if (!column) {
@@ -65,19 +64,15 @@ exports.createCard = async (req, res) => {
         .status(404)
         .json({ message: "Column with provided id does not exist" });
     } else {
-      const newCardOrder = Array.from(column.cardOrder);
-      newCardOrder.push(cardResult._id);
-      column.set({ cardOrder: newCardOrder });
-
+      
       const newCardInfo = Array.from(column.cardInfo);
-      newCardInfo.push(cardResult._id);
+      newCardInfo.push(newCard._id);
       column.set({ cardInfo: newCardInfo });
 
       const columnResult = await column.save();
 
       return res.status(201).json({
-        newCard: cardResult,
-        column: columnResult,
+        newCard
       });
     }
   } catch (err) {
@@ -97,7 +92,7 @@ exports.changeCardTitle = async (req, res) => {
         .status(404)
         .json({ message: 'Unable to find the that card' });
     } else {
-      return res.status(200).json({ updatedCard: updatedCard });
+      return res.status(200).json({ updatedCard });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
@@ -116,7 +111,7 @@ exports.changeCardText = async (req, res) => {
         .status(404)
         .json({ message: 'Unable to find the that card' });
     } else {
-      return res.status(200).json({ updatedCard: updatedCard });
+      return res.status(200).json({ updatedCard });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
@@ -135,7 +130,7 @@ exports.changeCardLabel = async (req, res) => {
         .status(404)
         .json({ message: 'Unable to find the that card' });
     } else {
-      return res.status(200).json({ updatedCard: updatedCard });
+      return res.status(200).json({ updatedCard });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
@@ -154,7 +149,7 @@ exports.changeCardDescription = async (req, res) => {
         .status(404)
         .json({ message: 'Unable to find the that card' });
     } else {
-      return res.status(200).json({ updatedCard: updatedCard });
+      return res.status(200).json({ updatedCard });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
@@ -164,8 +159,7 @@ exports.changeCardDescription = async (req, res) => {
 // PATCH - reorder cards in the same column
 exports.reorderSameColumn = async (req, res) => {
   try {
-    const { sameColumnId } = req.params;
-    const { sameColumnCardIds } = req.body;
+    const { sameColumnId, sameColumnCardIds } = req.body;
   
     const column = await Column.findOne({ _id: sameColumnId });
     if (!column) {
@@ -173,8 +167,8 @@ exports.reorderSameColumn = async (req, res) => {
         .status(404)
         .json({ message: 'Column with given id was not found' });
     }
-    console.log(sameColumnCardIds);
-    column.set({ cardOrder: sameColumnCardIds });
+  
+    column.set({ cardInfo: sameColumnCardIds, cardInfo: sameColumnCardIds });
   
     const savedColumn = await column.save();
 
@@ -182,41 +176,38 @@ exports.reorderSameColumn = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: 'Column reorder successful', updatedColumn: updatedColumn });
+      .json({ message: 'Column reorder successful', updatedColumn });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
 }
 
 // PATCH - reorder cards in a different column
-// exports.reorderDifferentColumn = async (req, res) => {
-//   try {
-//     const {
-//       removedColumnId,
-//       addedColumnId,
-//       removedColumnCardIds,
-//       addedColumnCardIds,
-//     } = req.body;
+exports.reorderDifferentColumn = async (req, res) => {
+  try {
+    const {
+      removedColumnId,
+      addedColumnId,
+      removedColumnCardIds,
+      addedColumnCardIds,
+    } = req.body;
 
-//     if (!removedColumnId && !addedColumnId && !removedColumnCardIds && !addedColumnCardIds) {
-//       return res.status(400).json({ message: 'Fields are missing' });
-//     }
+    if (!removedColumnId && !addedColumnId && !removedColumnCardIds && !addedColumnCardIds) {
+      return res.status(400).json({ message: 'Fields are missing' });
+    }
 
-//     const removedcolumn = await Column.findOne({ columnId: removedColumnId });
-//     removedcolumn.set({ cardIds: removedColumnCardIds });
-//     await removedcolumn.save();
+    const addedColumn = await Column.findOne({ _id: addedColumnId }).populate('cardInfo');
+    const removedColumn = await Column.findOne({ _id: removedColumnId }).populate('cardInfo');
 
-//     const addedcolumn = await Column.findOne({ columnId: addedColumnId });
-//     addedcolumn.set({ cardIds: addedColumnCardIds });
-//     await addedcolumn.save();
+    removedColumn.set({ cardInfo: removedColumnCardIds });
 
-//     return res
-//       .status(200)
-//       .json({ message: 'Column reorder successful' });
-//   } catch (err) {
-//     return res.status(500).json({ message: err.message });
-//   }
-// }
+    return res
+      .status(200)
+      .json({ message: 'Column reorder successful', removedColumn, addedColumn });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+}
 
 // DELETE - delete one card by id
 exports.deleteOneCard = async (req, res) => {
@@ -226,20 +217,18 @@ exports.deleteOneCard = async (req, res) => {
     const card = await Card.findOneAndDelete({ _id: cardId });
     const column = await Column.findOne({_id: columnId});
 
-    column.set({cardOrder: column.cardOrder.filter((card) => {
+    column.set({cardInfo: column.cardInfo.filter((card) => {
       return card !== cardId;
     })});
-
-    const updatedCards = await Card.find({columnId: columnId});
     
-    const updatedColumn = await column.save()
+    const updatedColumn = await Column.findOne({_id: columnId}).populate('cardInfo');
 
     if (!card) {
       return res
         .status(404)
         .json({ message: 'Card with given id was not found' });
     } else {
-      return res.status(200).json({ message: "Card deleted", updatedColumn: updatedColumn, updatedCards: updatedCards });
+      return res.status(200).json({ message: "Card deleted", updatedColumn });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });

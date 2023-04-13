@@ -10,13 +10,7 @@ const ColumnSchema = new Schema ({
       type: String, 
       required: true,
     },
-    cardOrder:[
-      {
-      type: String, 
-      ref: 'Cards',
-      }
-    ],
-    cardInfo:[
+    cardInfo: [
       {
       type: String, 
       ref: 'Cards',

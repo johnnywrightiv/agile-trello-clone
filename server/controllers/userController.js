@@ -28,7 +28,7 @@ exports.updateOrganization = async (req, res) => {
       if (!updatedUser) {
         return res
           .status(404)
-          .json({ message: 'Unable to find the that user' });
+          .json({ message: 'Unable to find user' });
       } else {
         return res.status(200).json({ updatedUser: updatedUser });
       }

@@ -30,11 +30,11 @@ exports.getAllColumns = async (req, res) => {
         .json({ message: 'Board with given id was not found' });
     }
 
-    const columns = await Column.find({ boardId: boardId }).populate('cardOrder').sort(sortColumns)
+    const columns = await Column.find({ boardId: boardId }).populate('cardInfo').sort(sortColumns)
     
     return res
       .status(200)
-      .json({ columns: columns, board: board });
+      .json({ columns: columns });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
@@ -45,7 +45,7 @@ exports.getOneColumn = async (req, res) => {
   try {
     const { columnId } = req.params;
 
-    const column = await Column.findOne({ _id: columnId });
+    const column = await Column.findOne({ _id: columnId }).populate('cardInfo');
     const cards = await Card.find({columnId: columnId})
 
     if (!column) {
@@ -53,7 +53,7 @@ exports.getOneColumn = async (req, res) => {
         .status(404)
         .json({ message: 'Column with given id was not found' });
     } else {
-      return res.status(200).json({ column: column, cards: cards });
+      return res.status(200).json({ column: column });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
@@ -69,28 +69,19 @@ exports.createColumn = async (req, res) => {
       boardId: boardId,
       title,
       cardInfo: [],
-      cardOrder: [],
     });
 
-    const columnResult = await newColumn.save();
     const board = await Board.findById(boardId)
 
     if (!board) {
       res.status(404).json({ message: 'Board with provided id does not exist' });
     } else {
-      const newColumnOrder = Array.from(board.columnOrder);
-      newColumnOrder.push(columnResult._id);
-      board.set({ columnOrder: newColumnOrder });
-
       const newColumnInfo = Array.from(board.columnInfo);
-      newColumnInfo.push(columnResult._id);
+      newColumnInfo.push(newColumn._id);
       board.set({ columnInfo: newColumnInfo });
 
-      const boardResult = await board.save();
-
       return res.status(201).json({
-        newColumn: columnResult,
-        board: boardResult,
+        newColumn
       });
     }
   } catch (err) {
@@ -103,7 +94,7 @@ exports.changeColumnTitle = async (req, res) => {
   try {
     const { columnId } = req.params;
 
-    const updatedColumn = await Column.findOneAndUpdate({ _id: columnId }, { title: req.body.title }, { new: true })
+    const updatedColumn = await Column.findOneAndUpdate({ _id: columnId }, { title: req.body.title }, { new: true }).populate('cardInfo');
 
     if (!updatedColumn) {
       return res
@@ -125,13 +116,12 @@ exports.deleteOneColumn = async (req, res) => {
     const column = await Column.findOneAndDelete({ _id: columnId });
     const cards = await Card.deleteMany({ columnId: columnId });
     const board = await Board.findOne({_id: boardId});
-    board.set({columnOrder: board.columnOrder.filter((column) => {
+
+    board.set({columnInfo: board.columnInfo.filter((column) => {
       return column !== columnId;
     })});
-
-    const updatedColumns = await Column.find({boardId: boardId});
     
-    const updatedBoard = await board.save()
+    const updatedBoard = await Board.findOne({_id: boardId}).populate('columnInfo');
     
     if (!column) {
       return res
@@ -140,7 +130,7 @@ exports.deleteOneColumn = async (req, res) => {
     } else {
       
 
-      return res.status(200).json({ message: "Column deleted", updatedBoard: updatedBoard, updatedColumns: updatedColumns });
+      return res.status(200).json({ message: "Column deleted", updatedBoard: updatedBoard });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
