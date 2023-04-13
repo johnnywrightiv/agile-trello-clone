@@ -68,6 +68,11 @@ exports.createCard = async (req, res) => {
       const newCardOrder = Array.from(column.cardOrder);
       newCardOrder.push(cardResult._id);
       column.set({ cardOrder: newCardOrder });
+
+      const newCardInfo = Array.from(column.cardInfo);
+      newCardInfo.push(cardResult._id);
+      column.set({ cardInfo: newCardInfo });
+
       const columnResult = await column.save();
 
       return res.status(201).json({
@@ -161,7 +166,7 @@ exports.reorderSameColumn = async (req, res) => {
   try {
     const { sameColumnId } = req.params;
     const { sameColumnCardIds } = req.body;
-    console.log(sameColumnId, sameColumnCardIds);
+  
     const column = await Column.findOne({ _id: sameColumnId });
     if (!column) {
       return res

@@ -23,9 +23,6 @@ const CardSchema = new Schema({
     description: {
       type: String
     },
-    // comments: {
-    //   type: Array
-    // }
 }, {timestamps: true});
 
 module.exports = mongoose.model('Cards', CardSchema);

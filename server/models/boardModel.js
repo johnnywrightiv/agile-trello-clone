@@ -19,6 +19,12 @@ const boardSchema = new Schema({
     ref: 'Columns',
     }
   ],
+  columnInfo: [
+    { 
+    type: String, 
+    ref: 'Columns',
+    }
+  ]
 },  {timestamps: true});
 
 module.exports = mongoose.model('Boards', boardSchema);
