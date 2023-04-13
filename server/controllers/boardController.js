@@ -35,11 +35,13 @@ exports.getAllBoards = async (req, res) => {
     })
     .find(boardResults)
     .sort(sortBoards)
+    .populate('columnInfo')
   
     if (boards.length === 0) {
       const firstBoard = new Board({
          userId:req.userData._id,
          title:"",
+         columnInfo: [],
          columnOrder:[]
       });
       return res.status(200).json({ message: 'This user has not created any boards' })
@@ -76,8 +78,10 @@ exports.createBoard = async (req, res) => {
       userId: req.userData._id,
       title,
       category: null,
+      columnInfo: [],
       columnOrder: [],
     })
+
     res.status(201).json({ newBoard: newBoard });
   } catch (err) {
     return res.status(500).json({ message: err.message });

@@ -15,6 +15,12 @@ const ColumnSchema = new Schema ({
       type: String, 
       ref: 'Cards',
       }
+    ],
+    cardInfo:[
+      {
+      type: Object, 
+      ref: 'Cards',
+      }
     ]
 }, {timestamps: true});
 
