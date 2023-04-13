@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import CreateCardButton from "../components/CreateCardButton";
 import CreateColumnButton from "../components/CreateColumnButton";
 import { fetchCardsAction } from "../features/cardsSlice";
 import RenderCards from "./RenderCards";
@@ -31,12 +32,6 @@ const RenderColumns = () => {
     // setColumnTitle(columns[columnIndex].title);
   };
 
-  const handleAddCard = (columnIndex) => {
-    // const newColumns = [...columns];
-    // newColumns[columnIndex].cards.push(`Card ${newColumns[columnIndex].cards.length + 1}`);
-    // setColumns(newColumns);
-  };
-
   return (
       <>
         {columns.map((column, columnIndex) => (
@@ -45,11 +40,11 @@ const RenderColumns = () => {
               {isEditingColumnTitle && editingColumnIndex === columnIndex ? (
                 <input type="text" value={column.title} onChange={(event) => handleColumnTitleChange(event, columnIndex)} onBlur={handleColumnTitleBlur} style={{ width: '50%' }}/>
               ) : (
-                <h3 className="column-title" onClick={() => handleColumnTitleClick(columnIndex)}>
+                <h3 className="column-title" style={{"cursor": "pointer"}} onClick={() => handleColumnTitleClick(columnIndex)}>
                   {column.title}
                 </h3>
               )}
-              <Button variant="light" size="sm" onClick={() => handleAddCard(columnIndex)}>+ Add New Card</Button>
+              <CreateCardButton columnIndex={columnIndex}/>
             </div>
             <RenderCards index={columnIndex} id={column._id}/>  
           </Col>

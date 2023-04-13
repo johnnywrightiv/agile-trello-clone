@@ -173,7 +173,9 @@ exports.reorderSameColumn = async (req, res) => {
         .status(404)
         .json({ message: 'Column with given id was not found' });
     }
+    console.log(sameColumnCardIds);
     column.set({ cardOrder: sameColumnCardIds });
+  
     const savedColumn = await column.save();
 
     const updatedColumn = await Column.findOne({_id :sameColumnId})

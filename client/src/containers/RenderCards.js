@@ -1,50 +1,32 @@
-import { useMemo, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux"
-import { fetchCardsAction } from "../features/cardsSlice";
 import { setModalOpen } from "../features/modalOpenSlice";
 
 
 
 const RenderCards = ({ index, id }) => {
-  const cards = useSelector((state) => state.columnCards.cards);
-  // console.log(cards);
+  const columns = useSelector((state) => state.boardColumns.columns);
+  const cards = columns[index].cardOrder;
+  console.log(cards)
   // console.log("index: " + index + "| id: " + id);
-  const [ isLoading, setIsLoading ] = useState(true);
+  // const [ isLoading, setIsLoading ] = useState(true);
 
   const dispatch = useDispatch();
 
-  useMemo(() => {
-    dispatch(fetchCardsAction(id))
-    setIsLoading(false);
-  }, []);
-
-  const mapCards = () => {
-    console.log(cards);
-    if (cards.length > 0) {
-      return (
-        <>
-          {cards.map((card, cardIndex) => (
-            <Card className="card" key={cardIndex}>
-              <Button variant="link" className="card-title-button" onClick={() => {
-                // setModalText(card);
-                dispatch(setModalOpen());
-              }}>
-                {card}
-              </Button>
-            </Card>
-          ))}
-        </>
-      )
-    } else {
-      return (<h2>No Cards</h2>)
-    }
+  const handleClick = () => {
+    console.log('click');
   }
-
 
   return (
     <>
-      { isLoading ? {mapCards} : <h2>Loading</h2> }
+      { cards ? <>{cards.map((card, cardIndex) => (
+        <Card className="card mb-3" key={cardIndex}>
+          <Card.Header className="card-title" style={{"cursor": "pointer"}} onClick={handleClick} >{card.title}</Card.Header>
+          <Card.Body>
+            {card.text}
+          </Card.Body>
+        </Card>
+      ))} </>: <div></div>}
     </>
   )
 }

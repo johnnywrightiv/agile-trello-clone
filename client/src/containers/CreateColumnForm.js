@@ -1,7 +1,6 @@
 import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { addBoardAction, fetchBoardsAction } from "../features/boardsSlice";
 import { addColumnAction, fetchColumnsAction } from "../features/columnsSlice";
 import { setModalClosed } from "../features/modalOpenSlice";
 

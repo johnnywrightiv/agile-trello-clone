@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-  open: false
+  open: false,
+  secondOpen: false
 }
 
 const modalOpenSlice = createSlice({
@@ -15,10 +16,16 @@ const modalOpenSlice = createSlice({
     setModalClosed: (state, action) => {
       state.open = false;
     },
+    setSecondModalOpen: (state, action) => {
+      state.secondOpen = true;
+    },
+    setSecondModalClosed: (state, action) => {
+      state.secondOpen = false;
+    },
   },
 });
 
 const { reducer, actions } = modalOpenSlice;
 
-export const { setModalOpen, setModalClosed } = actions;
+export const { setModalOpen, setModalClosed, setSecondModalOpen, setSecondModalClosed } = actions;
 export default reducer;

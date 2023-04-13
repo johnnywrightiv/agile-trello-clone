@@ -37,7 +37,7 @@ const BoardTitleChange = () => {
    return (
     <>
       {isEditingBoardTitle ? <input type="text" value={boardTitle} onChange={(event) => handleBoardTitleChange(event)} onBlur={handleBoardTitleBlur} /> : 
-      <h2 className="board-title" onClick={handleBoardTitleClick}>
+      <h2 className="board-title" style={{"cursor": "pointer"}} onClick={handleBoardTitleClick}>
         {boardTitle}
       </h2>}
     </>
