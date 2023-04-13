@@ -12,7 +12,7 @@ const CardSchema = new Schema({
     },
     columnId: {
       type: Schema.Types.ObjectId,
-      ref: 'columns',
+      ref: 'Columns',
     },
     label: {
       type: String

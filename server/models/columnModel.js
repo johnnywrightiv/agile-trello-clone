@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const ColumnSchema = new Schema ({
     boardId: {
       type: Schema.Types.ObjectId, 
-      ref: 'boards',
+      ref: 'Boards',
     },
     title: {
       type: String, 
@@ -13,7 +13,7 @@ const ColumnSchema = new Schema ({
     cardOrder:[
       {
       type: String, 
-      ref: 'cards',
+      ref: 'Cards',
       }
     ]
 }, {timestamps: true});

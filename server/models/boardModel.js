@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const boardSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
-    ref: 'users',
+    ref: 'Users',
   },
   title: { 
     type: String, 
@@ -16,7 +16,7 @@ const boardSchema = new Schema({
   columnOrder: [
     { 
     type: String, 
-    ref: 'columns',
+    ref: 'Columns',
     }
   ],
 },  {timestamps: true});
