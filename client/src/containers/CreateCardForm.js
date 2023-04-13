@@ -20,8 +20,6 @@ const CreateCardForm = () => {
       text: data.text,
       columnId: columnIds[columnIndex]
     }
-    console.log(requestData);
-    console.log(boardData._id);
     await dispatch(addCardAction(requestData));
     await dispatch(fetchColumnsAction(boardData._id));
     dispatch(setSecondModalClosed());

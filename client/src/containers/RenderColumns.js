@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Card, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import CreateCardButton from "../components/CreateCardButton";
 import CreateColumnButton from "../components/CreateColumnButton";
@@ -35,8 +35,8 @@ const RenderColumns = () => {
   return (
       <>
         {columns.map((column, columnIndex) => (
-          <Col className="card-column m-2" xs={4} md={3} key={columnIndex}>
-            <div className="d-flex justify-content-between align-items-center mb-2">
+          <Card className="card-column m-2" style={{ width: "20rem" }}  key={columnIndex}>
+            <Card.Header className="d-flex justify-content-between align-items-center mb-2">
               {isEditingColumnTitle && editingColumnIndex === columnIndex ? (
                 <input type="text" value={column.title} onChange={(event) => handleColumnTitleChange(event, columnIndex)} onBlur={handleColumnTitleBlur} style={{ width: '50%' }}/>
               ) : (
@@ -45,9 +45,9 @@ const RenderColumns = () => {
                 </h3>
               )}
               <CreateCardButton columnIndex={columnIndex}/>
-            </div>
+            </Card.Header>
             <RenderCards index={columnIndex} id={column._id}/>  
-          </Col>
+          </Card>
         ))}
         <Col className="add-column" xs={4} md={3}>
           <CreateColumnButton />
