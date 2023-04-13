@@ -18,7 +18,7 @@ const ColumnSchema = new Schema ({
     ],
     cardInfo:[
       {
-      type: Object, 
+      type: String, 
       ref: 'Cards',
       }
     ]
