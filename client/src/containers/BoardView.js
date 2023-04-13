@@ -32,7 +32,7 @@ const BoardView = () => {
       <Container className="board-view pt-5">
         <BoardTitleChange />
         <hr className="board-divider" />
-        <Row className="column-row flex-nowrap overflow-auto" style={{ height: 'calc(100vh - 120px)' }}>
+        <Row className="column-row flex-nowrap overflow-auto" >
           <RenderColumns />
         </Row> 
       </Container>  : <NonAuthView />  }

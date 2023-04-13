@@ -1,4 +1,4 @@
-import { Button, Card, Form} from "react-bootstrap"
+import { Button, Card, Form, FloatingLabel} from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.css";
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
@@ -31,22 +31,29 @@ const LoginForm = () => {
 
   return (
     <div className="pt-5">
-      <Card style={{ width: '18rem', marginRight: 'auto', marginLeft: 'auto' }} className="col=4 text-center">
+      <Card className="col-3 offset-5 text-center">
         <Card.Header>Login</Card.Header>
-        <Card.Body>
-          <Form onSubmit={handleSubmit(handleFormSubmit)}> 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control type="email" placeholder="Enter Email" {...register("email")} required />
-              <Form.Label>Email Address</Form.Label>
-            </Form.Group>
+          <Card.Body>
+            <Form onSubmit={handleSubmit(handleFormSubmit)}> 
+              <FloatingLabel controlId="formBasicEmail" className="mb-3" label={
+                <span>
+                  <span className="red-required">* </span>
+                  Email Address
+                </span>}>
+                <Form.Control type="email" placeholder="Enter Email" {...register("email")} required />
+              </FloatingLabel>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Control type="password" placeholder="Password" {...register("password")} required />
-              <Form.Label>Password</Form.Label>
-            </Form.Group>
-            <Button variant="primary" type="submit">Submit</Button>
-          </Form>
-        </Card.Body>
+              <FloatingLabel controlId="formBasicPassword" className="mb-3" label={
+                <span>
+                  <span className="red-required">* </span>
+                  Password
+                </span>}>
+                <Form.Control type="password" placeholder="Password" {...register("password")} required />
+              </FloatingLabel>
+              <Button variant="primary" type="submit">Login</Button>
+            </Form>
+          </Card.Body>
+
       </Card>
     </div>
   )

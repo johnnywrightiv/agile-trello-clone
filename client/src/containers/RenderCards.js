@@ -21,7 +21,7 @@ const RenderCards = ({ index, id }) => {
     <>
       { cards ? <>{cards.map((card, cardIndex) => (
         <Card className="card mb-3" key={cardIndex}>
-          <Card.Header className="card-title" style={{"cursor": "pointer"}} onClick={handleClick} >{card.title}</Card.Header>
+          <Card.Header className="card-title" onClick={handleClick} >{card.title}</Card.Header>
           <Card.Body>
             {card.text}
           </Card.Body>

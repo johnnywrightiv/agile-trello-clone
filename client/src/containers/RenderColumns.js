@@ -35,12 +35,12 @@ const RenderColumns = () => {
   return (
       <>
         {columns.map((column, columnIndex) => (
-          <Card className="card-column m-2" style={{ width: "20rem" }}  key={columnIndex}>
-            <Card.Header className="d-flex justify-content-between align-items-center mb-2">
+          <Card className="card-column m-2" key={columnIndex}>
+            <Card.Header className="d-flex justify-content-between align-items-center mb-2 column-header">
               {isEditingColumnTitle && editingColumnIndex === columnIndex ? (
-                <input type="text" value={column.title} onChange={(event) => handleColumnTitleChange(event, columnIndex)} onBlur={handleColumnTitleBlur} style={{ width: '50%' }}/>
+                <input type="text" value={column.title} onChange={(event) => handleColumnTitleChange(event, columnIndex)} onBlur={handleColumnTitleBlur} />
               ) : (
-                <h3 className="column-title" style={{"cursor": "pointer"}} onClick={() => handleColumnTitleClick(columnIndex)}>
+                <h3 className="column-title" onClick={() => handleColumnTitleClick(columnIndex)}>
                   {column.title}
                 </h3>
               )}

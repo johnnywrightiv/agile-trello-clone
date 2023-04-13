@@ -17,3 +17,21 @@ code {
   border-radius: 5px;
   padding: 10px;
 }
+
+.red-required {
+  color: red;
+}
+
+.board-title,
+.card-title,
+.column-header {
+  cursor: pointer;
+}
+
+.column-row {
+  height: calc(100vh - 120px);
+}
+
+.card-column {
+  width: 20rem;
+}
