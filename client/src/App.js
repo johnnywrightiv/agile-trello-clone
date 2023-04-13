@@ -20,6 +20,8 @@ function App() {
         <NavBar />
       </Container>
 
+    <br />
+    
       {/* Body Container (render components within this container. can just use rows in the components i think)*/}
       <Container className="md-4 mt-5">
           <Routes>

@@ -1,4 +1,4 @@
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, FloatingLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { addColumnAction, fetchColumnsAction } from "../features/columnsSlice";
@@ -24,7 +24,14 @@ const CreateColumnForm = () => {
   return (
     <Form onSubmit={handleSubmit(handleFormSubmit)}> 
       <Form.Group className="mb-3" controlId="formBasicTitle">
-        <Form.Control type="text" placeholder="Enter Column Title" {...register("title")} />
+        <FloatingLabel controlId="formBasicTitle" label={
+          <span>
+            <span className="red-required">* </span>
+            Column Title
+          </span>
+        }>
+          <Form.Control type="text" placeholder="Enter Column Title" {...register("title")} required/>
+        </FloatingLabel>
       </Form.Group>
       <Button variant="primary" type="submit">Submit</Button>
     </Form>

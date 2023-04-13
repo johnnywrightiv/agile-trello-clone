@@ -1,4 +1,4 @@
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, FloatingLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addBoardAction, fetchBoardsAction } from "../features/boardsSlice";
@@ -18,9 +18,13 @@ const CreateBoardForm = () => {
 
   return (
     <Form onSubmit={handleSubmit(handleFormSubmit)}> 
-      <Form.Group className="mb-3" controlId="formBasicTitle">
-        <Form.Control type="text" placeholder="Enter Board Title" {...register("title")} />
-      </Form.Group>
+      <FloatingLabel controlId="formBasicTitle" label={
+        <span>
+          <span className="red-required">* </span>
+          Board Title
+        </span>}>
+        <Form.Control type="text" placeholder="Enter Board Title" className="mb-3" {...register("title")} required/>
+      </FloatingLabel>
       <Button variant="primary" type="submit">Submit</Button>
     </Form>
   )

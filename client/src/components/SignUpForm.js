@@ -1,4 +1,4 @@
-import { Button, Card, Form} from "react-bootstrap";
+import { Button, Card, Form, FloatingLabel} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -20,25 +20,38 @@ const SignUpForm = () => {
 
   return (
     <div className="pt-5">
-      <Card style={{ width: '18rem', marginRight: 'auto', marginLeft: 'auto' }} className="col=4  text-center">
+      <Card className="col-3 offset-5 text-center">
         <Card.Header>Sign Up</Card.Header>
         <Card.Body>
           <Form onSubmit={handleSubmit(handleFormSubmit)}> 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control type="email" placeholder="Enter Email" {...register("email")} />
-              <Form.Label>Email Address</Form.Label>
-            </Form.Group>
+            <FloatingLabel controlId="formBasicEmail" className="mb-3" label={
+              <span>
+                <span className="red-required">* </span>
+                Email Address
+              </span>
+            }>
+              <Form.Control type="email" placeholder="Enter Email" {...register("email")} required />
+            </FloatingLabel>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <FloatingLabel controlId="formBasicPassword" className="mb-3" label={
+              <span>
+                <span className="red-required">* </span>
+                Password
+              </span>
+            }>
               <Form.Control type="password" placeholder="Password" {...register("password")} required />
-              <Form.Label>Password</Form.Label>
-            </Form.Group>
+            </FloatingLabel>
 
-            <Form.Group className="mb-3" controlId="formBasicOrganization">
+            <FloatingLabel controlId="formBasicOrganization" className="mb-3" label={
+              <span>
+                <span className="red-required">* </span>
+                Organization
+              </span>
+            }>
               <Form.Control type="text" placeholder="Organization" {...register("organization")} required />
-              <Form.Label>Organization</Form.Label>
-            </Form.Group>
-            <Button variant="primary" type="submit">Submit</Button>
+            </FloatingLabel>
+
+            <Button variant="primary" type="submit">Sign Up</Button>
           </Form>
         </Card.Body>
       </Card>
