@@ -175,7 +175,7 @@ exports.reorderSameColumn = async (req, res) => {
 
     return res
       .status(200)
-      .json({ updatedColumn: updatedColumn });
+      .json({ message: 'Column reorder successful', updatedColumn: updatedColumn });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
@@ -192,7 +192,7 @@ exports.reorderSameColumn = async (req, res) => {
 //     } = req.body;
 
 //     if (!removedColumnId && !addedColumnId && !removedColumnCardIds && !addedColumnCardIds) {
-//       return res.status(400).json({ message: 'Some fields are missing' });
+//       return res.status(400).json({ message: 'Fields are missing' });
 //     }
 
 //     const removedcolumn = await Column.findOne({ columnId: removedColumnId });
@@ -205,7 +205,7 @@ exports.reorderSameColumn = async (req, res) => {
 
 //     return res
 //       .status(200)
-//       .json({ message: 'Different column reorder success' });
+//       .json({ message: 'Column reorder successful' });
 //   } catch (err) {
 //     return res.status(500).json({ message: err.message });
 //   }
