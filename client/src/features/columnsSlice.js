@@ -34,12 +34,27 @@ export const addColumnAction = createAsyncThunk("column/add", async(body, reject
   }
 });
 
+export const updateColumnTitleAction = createAsyncThunk("columnTitle/update", async({id, title}, rejectWithValue) => {
+  console.log(id);
+  console.log(title)
+  try {
+    const { data } = await axios.patch(API_URL + id, { title: title }, authHeader());
+    console.log(data);
+    return data;
+  } catch (error) {
+    if (!error?.response) {
+      throw error;
+    }
+    return rejectWithValue(error?.response?.data);
+  }
+})
+
 const initialState = {
   columns: [],
 };
 
 const columnsSlice = createSlice({
-  name: "boardColumns",
+  name: "ColumnColumns",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -64,6 +79,17 @@ const columnsSlice = createSlice({
       state.error = undefined;
     });
     builder.addCase(addColumnAction.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action?.payload;
+    });
+    builder.addCase(updateColumnTitleAction.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(updateColumnTitleAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = undefined;
+    });
+    builder.addCase(updateColumnTitleAction.rejected, (state, action) => {
       state.loading = false;
       state.error = action?.payload;
     });

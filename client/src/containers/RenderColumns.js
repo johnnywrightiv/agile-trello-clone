@@ -1,30 +1,37 @@
 import { useState } from "react";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Form } from "react-bootstrap";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import CreateCardButton from "../components/CreateCardButton";
 import CreateColumnButton from "../components/CreateColumnButton";
-import { fetchCardsAction } from "../features/cardsSlice";
+import { fetchColumnsAction, updateColumnTitleAction } from "../features/columnsSlice";
 import RenderCards from "./RenderCards";
 
 
-
-const RenderColumns = () => {
+// Renders in BoardView the id of the board is passed down as a prop
+const RenderColumns = (boardId) => {
   const [ isEditingColumnTitle, setIsEditingColumnTitle ] = useState(false);
   const [ editingColumnIndex, setEditingColumnIndex ] = useState(null);
-  const [ columnTitle, setColumnTitle ] = useState();
+  // const [ columnTitle, setColumnTitle ] = useState();
+  const { register, handleSubmit, reset } = useForm();
   const columns = useSelector((state) => state.boardColumns.columns);
 
   const dispatch = useDispatch();
 
-  const handleColumnTitleChange = (event, columnIndex) => {
-    setColumnTitle(event.target.value);
-    console.log(columnTitle);
-  };
 
-  const handleColumnTitleBlur = () => {
+  const handleFormSubmit = async (data) => {
+    const columnId = columns[editingColumnIndex]._id;
+    const newTitle = data.title;
+    const requestBody = {
+      id: columnId,
+      title: newTitle
+    }
+    const board = boardId.boardId
+    await dispatch(updateColumnTitleAction(requestBody));
+    await dispatch(fetchColumnsAction(board));
     setIsEditingColumnTitle(false);
-    setEditingColumnIndex(null);
-  };
+    reset();
+  }
 
   const handleColumnTitleClick = (columnIndex) => {
     setIsEditingColumnTitle(true);
@@ -38,15 +45,21 @@ const RenderColumns = () => {
           <Card className="card-column m-2" key={columnIndex}>
             <Card.Header className="d-flex justify-content-between align-items-center mb-2 column-header">
               {isEditingColumnTitle && editingColumnIndex === columnIndex ? (
-                <input type="text" value={column.title} onChange={(event) => handleColumnTitleChange(event, columnIndex)} onBlur={handleColumnTitleBlur} />
+                <Form onBlur={handleSubmit(handleFormSubmit)}>
+                    <Form.Control className="mb-3" type="text" placeholder={column.title} {...register("title")} />
+                </Form>
+
+                // <input type="text" value={column.title} onChange={(event) => handleColumnTitleChange(event, columnIndex)} onBlur={handleColumnTitleBlur} />
               ) : (
-                <h3 className="column-title" onClick={() => handleColumnTitleClick(columnIndex)}>
+                <Card.Title onClick={() => handleColumnTitleClick(columnIndex)}>
                   {column.title}
-                </h3>
+                </Card.Title>
               )}
-              <CreateCardButton columnIndex={columnIndex}/>
             </Card.Header>
             <RenderCards index={columnIndex} id={column._id}/>  
+            <Card.Footer>
+              <CreateCardButton columnIndex={columnIndex}/> 
+            </Card.Footer>
           </Card>
         ))}
         <Col className="add-column" xs={4} md={3}>
