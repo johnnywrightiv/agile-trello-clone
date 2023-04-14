@@ -106,7 +106,15 @@ exports.createBoard = async (req, res) => {
 exports.updateTitle = async (req, res) => {
   try {
     const { boardId } = req.params;
-      const updatedBoard = await Board.findOneAndUpdate(boardId, { title: req.body.title }, { new: true }).populate('columnInfo');
+      const updatedBoard = await Board.findOneAndUpdate({_id: boardId}, { title: req.body.title }, { new: true }).populate({
+        path: "columnInfo", 
+        populate: [
+          {
+          path: 'cardInfo',
+          model: "Cards"
+          }
+        ]
+      });
   
       if (!updatedBoard) {
         return res
@@ -124,7 +132,15 @@ exports.updateTitle = async (req, res) => {
 exports.updateCollection = async (req, res) => {
   try {
     const { boardId } = req.params;
-      const updatedBoard = await Board.findOneAndUpdate(boardId, { category: req.body.category }, { new: true }).populate('columnInfo');
+      const updatedBoard = await Board.findOneAndUpdate({_id: boardId}, { category: req.body.category }, { new: true }).populate({
+        path: "columnInfo", 
+        populate: [
+          {
+          path: 'cardInfo',
+          model: "Cards"
+          }
+        ]
+      });
   
       if (!updatedBoard) {
         return res

@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 
+// GET all users in database
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
@@ -19,11 +20,11 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-// PATCH - change board title
+// PATCH - change user organization
 exports.updateOrganization = async (req, res) => {
   try {
     const { userId } = req.params;
-      const updatedUser = await User.findOneAndUpdate(userId, { organization: req.body.organization }, { new: true })
+      const updatedUser = await User.findOneAndUpdate({_id: userId}, { organization: req.body.organization }, { new: true })
   
       if (!updatedUser) {
         return res

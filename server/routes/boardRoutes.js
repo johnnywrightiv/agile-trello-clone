@@ -11,10 +11,7 @@ router
 
 router
   .route('/:boardId')
-  .get(checkAuth, boardController.getOneBoard);
-
-  router
-  .route('/:boardId')
+  .get(checkAuth, boardController.getOneBoard)
   .delete(checkAuth, boardController.deleteOneBoard);
 
 router

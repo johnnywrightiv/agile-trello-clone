@@ -17,7 +17,7 @@ paths:
       tags:
         - Users
       summary: Get all users
-      description: Retrieves a list of all users.
+      description: Retrieves a list of all users
       parameters:
         - name: Authorization
           in: header
@@ -31,14 +31,30 @@ paths:
             application/json: |-
               {
                 "users": [
-                  {
-                    "_id": "642ccfe13ee8d31c0d77d125",
-                    "email": "test@test.com",
-                    "organization": "test",
-                    "createdAt": "2023-04-05T01:33:21.428Z",
-                    "updatedAt": "2023-04-05T01:33:21.428Z",
-                    "__v": 0
-                   }
+                    {
+                        "_id": "64370cdb80eec739f8fd598d",
+                        "email": "mike@test.com",
+                        "organization": "parsity",
+                        "createdAt": "2023-04-12T19:56:11.019Z",
+                        "updatedAt": "2023-04-12T19:56:11.019Z",
+                        "__v": 0
+                    },
+                    {
+                        "_id": "643974f1d11d2d91dea8d458",
+                        "email": "nils@test.com",
+                        "organization": "parsity",
+                        "createdAt": "2023-04-14T15:44:49.855Z",
+                        "updatedAt": "2023-04-14T15:44:49.855Z",
+                        "__v": 0
+                    },
+                    {
+                        "_id": "643974fad11d2d91dea8d45a",
+                        "email": "johnny@test.com",
+                        "organization": "parsity",
+                        "createdAt": "2023-04-14T15:44:58.254Z",
+                        "updatedAt": "2023-04-14T15:44:58.254Z",
+                        "__v": 0
+                    }
                 ]
               }
         "401":
@@ -51,31 +67,32 @@ paths:
     post:
       tags:
         - Users
-      summary: Signup
-      description: Creates a new user account.
+      summary: User Signup
+      description: Creates a new user account
       parameters:
         - name: body
           in: body
-          description: The user's signup information.
+          description: The user's signup information
           required: true
           schema:
             type: object
             properties:
               email:
                 type: string
-                description: The email of the user.
-                example: user@example.com
+                description: The email of the user
+                example: johnny@test.com
               password:
                 type: string
-                description: The password of the user.
+                description: The password of the user
                 example: password123
               organization:
                 type: string
-                description: The organization the user is in
+                description: The organization the user is a part of
                 example: parsity
             required:
               - email
               - password
+              - organization
       responses:
         "201":
           description: 201 response
@@ -83,15 +100,15 @@ paths:
             application/json: |-
               {
                 "newUser": {
-                "email": "test@test.com",
-                "password": "$2a$12$fnFWmBKfLdRoIjVKO4j/3u1Soksf4fHGVi3eqEWbBtOwkKgnYtruC",
-                "organization": "test",
-                "_id": "642ccfe13ee8d31c0d77d125",
-                "createdAt": "2023-04-05T01:33:21.428Z",
-                "updatedAt": "2023-04-05T01:33:21.428Z",
-                "__v": 0
+                    "email": "johnny@test.com",
+                    "password": "$2a$12$9OQi7GOTy6qwjdNMj4hFmuxIkvupXjRUNbZWNZLPHvQdgYknRgMK.",
+                    "organization": "parsity",
+                    "_id": "643974fad11d2d91dea8d45a",
+                    "createdAt": "2023-04-14T15:44:58.254Z",
+                    "updatedAt": "2023-04-14T15:44:58.254Z",
+                    "__v": 0
                 },
-                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmNjZmUxM2VlOGQzMWMwZDc3ZDEyNSIsImlhdCI6MTY4MDY1ODQwMSwiZXhwIjoxNjg4NDM0NDAxfQ.g-_bMRP8M3hOgtkYJrPvcTcakez0QHbOgLFYP0TgoC0"
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0Mzk3NGZhZDExZDJkOTFkZWE4ZDQ1YSIsImlhdCI6MTY4MTQ4NzA5OCwiZXhwIjoxNjg5MjYzMDk4fQ.TfKl5j-hWZpbmYuJjw1BvLV2CFEZcJ7YN7BkPyXvQmU"
               }
         "400":
           description: Bad Request
@@ -101,23 +118,23 @@ paths:
     post:
       tags:
         - Users
-      summary: Login
-      description: Logs a user in to the system.
+      summary: User Login
+      description: Logs a user into the system
       parameters:
         - name: body
           in: body
-          description: The user login details.
+          description: The users login information
           required: true
           schema:
             type: object
             properties:
               email:
                 type: string
-                description: The email of the user.
-                example: user@example.com
+                description: The email of the user
+                example: johnny@test.com
               password:
                 type: string
-                description: The password of the user.
+                description: The password of the user
                 example: password123
             required:
               - email
@@ -129,15 +146,15 @@ paths:
             application/json: |-
               {
                 "user": {
-                "email": "test@test.com",
-                "password": "$2a$12$fnFWmBKfLdRoIjVKO4j/3u1Soksf4fHGVi3eqEWbBtOwkKgnYtruC",
-                "organization": "test",
-                "_id": "642ccfe13ee8d31c0d77d125",
-                "createdAt": "2023-04-05T01:33:21.428Z",
-                "updatedAt": "2023-04-05T01:33:21.428Z",
-                "__v": 0
+                    "_id": "643974fad11d2d91dea8d45a",
+                    "email": "johnny@test.com",
+                    "password": "$2a$12$9OQi7GOTy6qwjdNMj4hFmuxIkvupXjRUNbZWNZLPHvQdgYknRgMK.",
+                    "organization": "parsity",
+                    "createdAt": "2023-04-14T15:44:58.254Z",
+                    "updatedAt": "2023-04-14T15:44:58.254Z",
+                    "__v": 0
                 },
-                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmNjZmUxM2VlOGQzMWMwZDc3ZDEyNSIsImlhdCI6MTY4MDY1ODQwMSwiZXhwIjoxNjg4NDM0NDAxfQ.g-_bMRP8M3hOgtkYJrPvcTcakez0QHbOgLFYP0TgoC0"
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0Mzk3NGZhZDExZDJkOTFkZWE4ZDQ1YSIsImlhdCI6MTY4MTQ4NzQ1OSwiZXhwIjoxNjg5MjYzNDU5fQ.KJiooKVTEcuhVUkj1UV5HH8mAySLfocTz1jodNB8nz8"
               }
         "400":
           description: Bad Request
@@ -149,8 +166,8 @@ paths:
     patch:
       tags:
         - Users
-      summary: Changes users organization by ID
-      description: Changes the users chosen organization in the database.
+      summary: Change users organization
+      description: Changes the users organization by userId
       parameters:
         - name: Authorization
           in: header
@@ -159,20 +176,20 @@ paths:
           type: string
         - name: userId
           in: path
-          description: ID of the board to delete
+          description: ID of the user
           required: true
           type: string
         - name: organization
           in: body
-          description: Board object that needs to be deleted
+          description: Users current organization
           required: true
           schema:
             type: object
             properties:
               organization:
                 type: string
-                description: The organization the user wishes to join.
-                example: parsity
+                description: The organization the user wishes to change to
+                example: google
       responses:
         "200":
           description: 200 response
@@ -180,12 +197,12 @@ paths:
             application/json: |-
               {
                 "updatedUser": {
-                  "_id": "642ccfe13ee8d31c0d77d125",
-                  "email": "test@test.com",
-                  "organization": "changed organization",
-                  "createdAt": "2023-04-05T01:33:21.428Z",
-                  "updatedAt": "2023-04-05T10:02:59.636Z",
-                  "__v": 0
+                    "_id": "643974fad11d2d91dea8d45a",
+                    "email": "johnny@test.com",
+                    "organization": "google",
+                    "createdAt": "2023-04-14T15:44:58.254Z",
+                    "updatedAt": "2023-04-14T15:57:17.812Z",
+                    "__v": 0
                 }
               }
         "401":
@@ -199,7 +216,7 @@ paths:
       tags:
         - Boards
       summary: Get all boards
-      description: Retrieves a list of all the users boards.
+      description: Retrieves a list of all the users boards
       parameters:
         - name: Authorization
           in: header
@@ -208,17 +225,17 @@ paths:
           type: string
         - name: Query
           in: query
-          description: optional query parameter (must specify ?query={query})
+          description: Optional query parameter (must specify ?query={query})
           required: false
           type: string
         - name: Sort
           in: query
-          description: optional sort parameter (must specify ?sort=newest, ?sort=oldest, ?sort=alphabetically, or ?sort=reverse-alphabetically)
+          description: Optional sort parameter (must specify ?sort=newest, ?sort=oldest, ?sort=alphabetically, or ?sort=reverse-alphabetically)
           required: false
           type: string
         - name: Collection
           in: query
-          description: optional collection parameter (must specify ?collection={category})
+          description: Optional collection parameter (must specify ?collection={category})
           required: false
           type: string
       responses:
@@ -228,16 +245,73 @@ paths:
             application/json: |-
               {
                 "boards": [
-                  {
-                    "_id": "642cd1633ee8d31c0d77d12c",
-                    "userId": "642ccfe13ee8d31c0d77d125",
-                    "title": "board 1",
-                    "category": "sharks",
-                    "columnOrder": [],
-                    "createdAt": "2023-04-05T01:39:47.810Z",
-                    "updatedAt": "2023-04-05T01:39:47.810Z",
-                    "__v": 0
-                  }
+                    {
+                        "_id": "64396f635a3681dae75be086",
+                        "userId": "64370cdb80eec739f8fd598d",
+                        "title": "board 1",
+                        "category": null,
+                        "columnInfo": [
+                            {
+                                "_id": "64396f7c5a3681dae75be089",
+                                "boardId": "64396f635a3681dae75be086",
+                                "title": "column 1",
+                                "cardInfo": [
+                                    {
+                                        "_id": "64396fb75a3681dae75be091",
+                                        "title": "card 1",
+                                        "text": "Coding is dificult",
+                                        "columnId": "64396f7c5a3681dae75be089",
+                                        "label": null,
+                                        "labelColor": null,
+                                        "description": null,
+                                        "createdAt": "2023-04-14T15:22:31.789Z",
+                                        "updatedAt": "2023-04-14T15:22:31.789Z",
+                                        "__v": 0
+                                    },
+                                    {
+                                        "_id": "64396fbb5a3681dae75be096",
+                                        "title": "card 2",
+                                        "text": "Coding is dificult",
+                                        "columnId": "64396f7c5a3681dae75be089",
+                                        "label": null,
+                                        "labelColor": null,
+                                        "description": null,
+                                        "createdAt": "2023-04-14T15:22:35.262Z",
+                                        "updatedAt": "2023-04-14T15:22:35.262Z",
+                                        "__v": 0
+                                    },
+                                    {
+                                        "_id": "64396fbe5a3681dae75be09b",
+                                        "title": "card 3",
+                                        "text": "Coding is dificult",
+                                        "columnId": "64396f7c5a3681dae75be089",
+                                        "label": null,
+                                        "labelColor": null,
+                                        "description": null,
+                                        "createdAt": "2023-04-14T15:22:38.091Z",
+                                        "updatedAt": "2023-04-14T15:22:38.091Z",
+                                        "__v": 0
+                                    }
+                                ],
+                                "createdAt": "2023-04-14T15:21:32.831Z",
+                                "updatedAt": "2023-04-14T15:22:38.097Z",
+                                "__v": 3
+                            }
+                        ],
+                        "createdAt": "2023-04-14T15:21:07.211Z",
+                        "updatedAt": "2023-04-14T15:21:32.836Z",
+                        "__v": 1
+                    },
+                    {
+                        "_id": "64397c693953c18e36998a4d",
+                        "userId": "64370cdb80eec739f8fd598d",
+                        "title": "board 2",
+                        "category": null,
+                        "columnInfo": [],
+                        "createdAt": "2023-04-14T16:16:41.674Z",
+                        "updatedAt": "2023-04-14T16:16:41.674Z",
+                        "__v": 0
+                    }
                 ]
               }
         "401":
@@ -250,6 +324,7 @@ paths:
       tags:
         - Boards
       summary: Create a new board
+      description: Creates a new board for the user
       parameters:
         - name: Authorization
           in: header
@@ -266,7 +341,7 @@ paths:
               title:
                 type: string
                 description: The title of the board created.
-                example: todo
+                example: board 2
       responses:
         "201":
           description: 201 response
@@ -274,14 +349,14 @@ paths:
             application/json: |-
               {
                 "newBoard": {
-                "userId": "642ccfe13ee8d31c0d77d125",
-                "title": "todo",
-                "category": null,
-                "columnOrder": [],
-                "_id": "642cd1633ee8d31c0d77d12c",
-                "createdAt": "2023-04-05T01:39:47.810Z",
-                "updatedAt": "2023-04-05T01:39:47.810Z",
-                "__v": 0
+                    "userId": "64370cdb80eec739f8fd598d",
+                    "title": "board 2",
+                    "category": null,
+                    "columnInfo": [],
+                    "_id": "64397d363953c18e36998a58",
+                    "createdAt": "2023-04-14T16:20:06.131Z",
+                    "updatedAt": "2023-04-14T16:20:06.131Z",
+                    "__v": 0
                 }
               }
         "401":
@@ -292,8 +367,8 @@ paths:
     get:
       tags:
         - Boards
-      summary: Get a board by ID
-      description: Retrieves a single board by ID.
+      summary: Get a users board
+      description: Retrieves a users board by ID.
       parameters:
         - name: Authorization
           in: header
@@ -302,7 +377,7 @@ paths:
           type: string
         - name: boardId
           in: path
-          description: ID of the board to get
+          description: ID of the board to retrieve
           required: true
           type: string
       responses:
@@ -312,14 +387,61 @@ paths:
             application/json: |-
               {
                 "board": {
-                "_id": "642cd1633ee8d31c0d77d12c",
-                "userId": "642ccfe13ee8d31c0d77d125",
-                "title": "board 1",
-                "category": null,
-                "columnOrder": [],
-                "createdAt": "2023-04-05T01:39:47.810Z",
-                "updatedAt": "2023-04-05T01:39:47.810Z",
-                "__v": 0
+                    "_id": "64396f635a3681dae75be086",
+                    "userId": "64370cdb80eec739f8fd598d",
+                    "title": "board 1",
+                    "category": null,
+                    "columnInfo": [
+                        {
+                            "_id": "64396f7c5a3681dae75be089",
+                            "boardId": "64396f635a3681dae75be086",
+                            "title": "column 1",
+                            "cardInfo": [
+                                {
+                                    "_id": "64396fb75a3681dae75be091",
+                                    "title": "card 1",
+                                    "text": "Coding is dificult",
+                                    "columnId": "64396f7c5a3681dae75be089",
+                                    "label": null,
+                                    "labelColor": null,
+                                    "description": null,
+                                    "createdAt": "2023-04-14T15:22:31.789Z",
+                                    "updatedAt": "2023-04-14T15:22:31.789Z",
+                                    "__v": 0
+                                },
+                                {
+                                    "_id": "64396fbb5a3681dae75be096",
+                                    "title": "card 2",
+                                    "text": "Coding is dificult",
+                                    "columnId": "64396f7c5a3681dae75be089",
+                                    "label": null,
+                                    "labelColor": null,
+                                    "description": null,
+                                    "createdAt": "2023-04-14T15:22:35.262Z",
+                                    "updatedAt": "2023-04-14T15:22:35.262Z",
+                                    "__v": 0
+                                },
+                                {
+                                    "_id": "64396fbe5a3681dae75be09b",
+                                    "title": "card 3",
+                                    "text": "Coding is dificult",
+                                    "columnId": "64396f7c5a3681dae75be089",
+                                    "label": null,
+                                    "labelColor": null,
+                                    "description": null,
+                                    "createdAt": "2023-04-14T15:22:38.091Z",
+                                    "updatedAt": "2023-04-14T15:22:38.091Z",
+                                    "__v": 0
+                                }
+                            ],
+                            "createdAt": "2023-04-14T15:21:32.831Z",
+                            "updatedAt": "2023-04-14T15:22:38.097Z",
+                            "__v": 3
+                        }
+                    ],
+                    "createdAt": "2023-04-14T15:21:07.211Z",
+                    "updatedAt": "2023-04-14T15:21:32.836Z",
+                    "__v": 1
                 }
               }
         "401":
@@ -328,12 +450,11 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
-  /boards/{boardId}/{columnId}:
     delete:
       tags:
         - Boards
-      summary: Deletes a board by ID
-      description: Deletes a single board by ID including any columns and cards inside.
+      summary: Deletes a users board
+      description: Deletes a users board by ID
       parameters:
         - name: Authorization
           in: header
@@ -343,11 +464,6 @@ paths:
         - name: boardId
           in: path
           description: ID of the board to delete
-          required: true
-          type: string
-        - name: columnId
-          in: path
-          description: ID of the column in the board to delete
           required: true
           type: string
       responses:
@@ -368,7 +484,7 @@ paths:
     patch:
       tags:
         - Boards
-      summary: Changes board title by ID
+      summary: Changes board title
       description: Changes a single boards title by ID.
       parameters:
         - name: Authorization
@@ -390,7 +506,7 @@ paths:
             properties:
               title:
                 type: string
-                example: New Board Title
+                example: new board title
       responses:
         "200":
           description: 200 response
@@ -398,14 +514,61 @@ paths:
             application/json: |-
               {
                 "updatedBoard": {
-                  "_id": "642cd4ff3ee8d31c0d77d13c",
-                  "userId": "642ccfe13ee8d31c0d77d125",
-                  "title": "board 2",
-                  "category": null,
-                  "columnOrder": [],
-                  "createdAt": "2023-04-05T01:55:11.158Z",
-                  "updatedAt": "2023-04-05T01:55:30.816Z",
-                  "__v": 0
+                    "_id": "64396f635a3681dae75be086",
+                    "userId": "64370cdb80eec739f8fd598d",
+                    "title": "new board title",
+                    "category": null,
+                    "columnInfo": [
+                        {
+                            "_id": "64396f7c5a3681dae75be089",
+                            "boardId": "64396f635a3681dae75be086",
+                            "title": "column 1",
+                            "cardInfo": [
+                                {
+                                    "_id": "64396fb75a3681dae75be091",
+                                    "title": "card 1",
+                                    "text": "Coding is dificult",
+                                    "columnId": "64396f7c5a3681dae75be089",
+                                    "label": null,
+                                    "labelColor": null,
+                                    "description": null,
+                                    "createdAt": "2023-04-14T15:22:31.789Z",
+                                    "updatedAt": "2023-04-14T15:22:31.789Z",
+                                    "__v": 0
+                                },
+                                {
+                                    "_id": "64396fbb5a3681dae75be096",
+                                    "title": "card 2",
+                                    "text": "Coding is dificult",
+                                    "columnId": "64396f7c5a3681dae75be089",
+                                    "label": null,
+                                    "labelColor": null,
+                                    "description": null,
+                                    "createdAt": "2023-04-14T15:22:35.262Z",
+                                    "updatedAt": "2023-04-14T15:22:35.262Z",
+                                    "__v": 0
+                                },
+                                {
+                                    "_id": "64396fbe5a3681dae75be09b",
+                                    "title": "card 3",
+                                    "text": "Coding is dificult",
+                                    "columnId": "64396f7c5a3681dae75be089",
+                                    "label": null,
+                                    "labelColor": null,
+                                    "description": null,
+                                    "createdAt": "2023-04-14T15:22:38.091Z",
+                                    "updatedAt": "2023-04-14T15:22:38.091Z",
+                                    "__v": 0
+                                }
+                            ],
+                            "createdAt": "2023-04-14T15:21:32.831Z",
+                            "updatedAt": "2023-04-14T15:22:38.097Z",
+                            "__v": 3
+                        }
+                    ],
+                    "createdAt": "2023-04-14T15:21:07.211Z",
+                    "updatedAt": "2023-04-14T16:41:15.795Z",
+                    "__v": 1
                 }
               }
         "401":
@@ -418,8 +581,8 @@ paths:
     patch:
       tags:
         - Boards
-      summary: Changes board collection by ID
-      description: Changes a single boards collection by ID.
+      summary: Changes boards collection
+      description: Changes a single boards collection by ID
       parameters:
         - name: Authorization
           in: header
@@ -433,7 +596,7 @@ paths:
           type: string
         - name: collection
           in: body
-          description: New collection object
+          description: new board collection name
           required: true
           schema:
             type: object
@@ -441,7 +604,7 @@ paths:
               collection:
                 type: string
                 description: The column id associated with that board id
-                example: New Board Title
+                example: new board collection
       responses:
         "200":
           description: 200 response
@@ -449,14 +612,61 @@ paths:
             application/json: |-
               {
                 "updatedBoard": {
-                "_id": "642cd4ff3ee8d31c0d77d13c",
-                "userId": "642ccfe13ee8d31c0d77d125",
-                "title": "board 2",
-                "category": "sharks",
-                "columnOrder": [],
-                "createdAt": "2023-04-05T01:55:11.158Z",
-                "updatedAt": "2023-04-05T01:58:27.002Z",
-                "__v": 0
+                    "_id": "64396f635a3681dae75be086",
+                    "userId": "64370cdb80eec739f8fd598d",
+                    "title": "new board title",
+                    "category": "new board collection",
+                    "columnInfo": [
+                        {
+                            "_id": "64396f7c5a3681dae75be089",
+                            "boardId": "64396f635a3681dae75be086",
+                            "title": "column 1",
+                            "cardInfo": [
+                                {
+                                    "_id": "64396fb75a3681dae75be091",
+                                    "title": "card 1",
+                                    "text": "Coding is dificult",
+                                    "columnId": "64396f7c5a3681dae75be089",
+                                    "label": null,
+                                    "labelColor": null,
+                                    "description": null,
+                                    "createdAt": "2023-04-14T15:22:31.789Z",
+                                    "updatedAt": "2023-04-14T15:22:31.789Z",
+                                    "__v": 0
+                                },
+                                {
+                                    "_id": "64396fbb5a3681dae75be096",
+                                    "title": "card 2",
+                                    "text": "Coding is dificult",
+                                    "columnId": "64396f7c5a3681dae75be089",
+                                    "label": null,
+                                    "labelColor": null,
+                                    "description": null,
+                                    "createdAt": "2023-04-14T15:22:35.262Z",
+                                    "updatedAt": "2023-04-14T15:22:35.262Z",
+                                    "__v": 0
+                                },
+                                {
+                                    "_id": "64396fbe5a3681dae75be09b",
+                                    "title": "card 3",
+                                    "text": "Coding is dificult",
+                                    "columnId": "64396f7c5a3681dae75be089",
+                                    "label": null,
+                                    "labelColor": null,
+                                    "description": null,
+                                    "createdAt": "2023-04-14T15:22:38.091Z",
+                                    "updatedAt": "2023-04-14T15:22:38.091Z",
+                                    "__v": 0
+                                }
+                            ],
+                            "createdAt": "2023-04-14T15:21:32.831Z",
+                            "updatedAt": "2023-04-14T15:22:38.097Z",
+                            "__v": 3
+                        }
+                    ],
+                    "createdAt": "2023-04-14T15:21:07.211Z",
+                    "updatedAt": "2023-04-14T16:45:05.589Z",
+                    "__v": 1
                 }
               }
         "401":
@@ -465,12 +675,12 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
-  /boards/column-order/{boardId}:
+  /boards/column-reorder/{boardId}:
     patch:
       tags:
         - Boards
-      summary: Changes board column order by ID
-      description: Changes a single boards column order by ID.
+      summary: Changes boards column order
+      description: Changes a single boards column order by ID
       parameters:
         - name: Authorization
           in: header
@@ -484,7 +694,7 @@ paths:
           type: string
         - name: newColumnOrder
           in: body
-          description: Board object that needs column order changed
+          description: Boards new column order array
           required: true
           schema:
             type: object
@@ -496,9 +706,9 @@ paths:
                 description: The column id associated with that board id .
                 example:
                   [
-                    "642cd7233ee8d31c0d77d14d",
-                    "642cd71c3ee8d31c0d77d143",
-                    "642cd7203ee8d31c0d77d148",
+                    "64398416b75d0784c6915add",
+                    "64398413b75d0784c6915ad8",
+                    "6439840fb75d0784c6915ad3",
                   ]
       responses:
         "200":
@@ -507,18 +717,42 @@ paths:
             application/json: |-
               {
                 "updatedBoard": {
-                "_id": "642cd4ff3ee8d31c0d77d13c",
-                "userId": "642ccfe13ee8d31c0d77d125",
-                "title": "board 2",
-                "category": "sharks",
-                "columnOrder": [
-                  "642cd7233ee8d31c0d77d14d",
-                  "642cd71c3ee8d31c0d77d143",
-                  "642cd7203ee8d31c0d77d148"
-                  ],
-                "createdAt": "2023-04-05T01:55:11.158Z",
-                "updatedAt": "2023-04-05T02:08:06.965Z",
-                "__v": 3
+                    "_id": "643983f5b75d0784c6915ad0",
+                    "userId": "64370cdb80eec739f8fd598d",
+                    "title": "board 1",
+                    "category": null,
+                    "columnInfo": [
+                        {
+                            "_id": "64398416b75d0784c6915add",
+                            "boardId": "643983f5b75d0784c6915ad0",
+                            "title": "column 3",
+                            "cardInfo": [],
+                            "createdAt": "2023-04-14T16:49:26.754Z",
+                            "updatedAt": "2023-04-14T16:49:26.754Z",
+                            "__v": 0
+                        },
+                        {
+                            "_id": "64398413b75d0784c6915ad8",
+                            "boardId": "643983f5b75d0784c6915ad0",
+                            "title": "column 2",
+                            "cardInfo": [],
+                            "createdAt": "2023-04-14T16:49:23.582Z",
+                            "updatedAt": "2023-04-14T16:49:23.582Z",
+                            "__v": 0
+                        },
+                        {
+                            "_id": "6439840fb75d0784c6915ad3",
+                            "boardId": "643983f5b75d0784c6915ad0",
+                            "title": "column 1",
+                            "cardInfo": [],
+                            "createdAt": "2023-04-14T16:49:19.746Z",
+                            "updatedAt": "2023-04-14T16:49:19.746Z",
+                            "__v": 0
+                        }
+                    ],
+                    "createdAt": "2023-04-14T16:48:53.375Z",
+                    "updatedAt": "2023-04-14T16:51:35.590Z",
+                    "__v": 3
                 }
               }
         "400":
