@@ -6,8 +6,7 @@ import { setModalOpen } from "../features/modalOpenSlice";
 
 const RenderCards = ({ index, id }) => {
   const columns = useSelector((state) => state.boardColumns.columns);
-  const cards = columns[index].cardOrder;
-  console.log(cards)
+  const cards = columns[index].cardInfo;
   // console.log("index: " + index + "| id: " + id);
   // const [ isLoading, setIsLoading ] = useState(true);
 
