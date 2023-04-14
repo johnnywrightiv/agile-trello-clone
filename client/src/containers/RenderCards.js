@@ -18,10 +18,15 @@ const RenderCards = (columnIndex) => {
 
   const handleClick = async (cardIndex) => {
     const index = columnIndex.columnIndex;
+    const columnId = columns[index]._id;
     const cards = columns[index].cardOrder;
     const cardId = cards[cardIndex]
-  
-    await dispatch(deleteCardAction(cardId));
+    const requestBody = {
+      columnId: columnId,
+      cardId: cardId
+    }
+    
+    await dispatch(deleteCardAction(requestBody));
     await dispatch(fetchColumnsAction(boardId));
   }
 
