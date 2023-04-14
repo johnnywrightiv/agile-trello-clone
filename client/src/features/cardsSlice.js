@@ -33,6 +33,21 @@ export const addCardAction = createAsyncThunk("card/add", async(body, rejectWith
   }
 });
 
+export const deleteCardAction = createAsyncThunk("card/delete", async(id, rejectWithValue) => {
+
+  try {
+    const { data } = await axios.delete(API_URL + id,  authHeader());
+
+    return data;
+  } catch (error) {
+    if (!error?.response) {
+      throw error;
+    }
+    return rejectWithValue(error?.response?.data);
+  }
+});
+
+
 const initialState = {
   cards: [],
 };

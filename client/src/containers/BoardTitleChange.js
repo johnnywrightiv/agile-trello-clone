@@ -8,7 +8,7 @@ import { fetchBoardByIdAction, updateBoardTitleAction } from "../features/boardB
 
 const BoardTitleChange = () => {
   const boardData = useSelector((state) => state.boardById.board);
-  console.log(boardData._id);
+
   // local state
   const [ boardTitle, setBoardTitle ] = useState(boardData.title)
   const [ isEditingBoardTitle, setIsEditingBoardTitle ] = useState(false);
@@ -26,12 +26,7 @@ const BoardTitleChange = () => {
     setIsEditingBoardTitle(true);
   }
 
-  // function that sets local state as user changes the title
-  // const handleBoardTitleChange = async (event) => {
-  //   setBoardTitle(event.target.value);
-  // };
-
-  // function that closes the edit box and dipatches the patch function to update the title of the board.  It also fetches the boardById in order to update the redux store with the new information.
+  // function that closes the edit box and dipatches the PATCH function to update the title of the board.  It also fetches the boardById in order to update the redux store with the new information.
   const handleFormSubmit = async (data) => {
     const newBoardTitle = data.title;
     const boardId = boardData._id;
@@ -43,6 +38,7 @@ const BoardTitleChange = () => {
     await dispatch(fetchBoardByIdAction(boardId));
     setBoardTitle(newBoardTitle);
     setIsEditingBoardTitle(false);
+    reset();
   }
 
    return (

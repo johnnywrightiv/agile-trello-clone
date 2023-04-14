@@ -27,7 +27,8 @@ const RenderColumns = (boardId) => {
         id: columnId,
         title: newTitle
       }
-      console.log(requestBody);
+
+      // Board Id from props to sent to fetchColumnsAction
       const board = boardId.boardId
       await dispatch(updateColumnTitleAction(requestBody));
       await dispatch(fetchColumnsAction(board));
@@ -57,7 +58,7 @@ const RenderColumns = (boardId) => {
                 </Card.Title>
               )}
             </Card.Header>
-            <RenderCards index={columnIndex} id={column._id}/>  
+            <RenderCards columnIndex={columnIndex} />  
             <Card.Footer>
               <CreateCardButton columnIndex={columnIndex}/> 
             </Card.Footer>
