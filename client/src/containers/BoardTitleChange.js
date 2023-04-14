@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBoardByIdAction, updateBoardTitleAction } from "../features/boardByIdSlice";
 
@@ -10,6 +10,10 @@ const BoardTitleChange = () => {
   // local state
   const [ boardTitle, setBoardTitle ] = useState(boardData.title)
   const [ isEditingBoardTitle, setIsEditingBoardTitle ] = useState(false);
+
+  useEffect(() => {
+    setBoardTitle(boardData.title);
+  }, [boardData]);
 
   const dispatch = useDispatch();
 
