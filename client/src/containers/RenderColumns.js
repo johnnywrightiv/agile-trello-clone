@@ -11,26 +11,28 @@ import RenderCards from "./RenderCards";
 // Renders in BoardView the id of the board is passed down as a prop
 const RenderColumns = (boardId) => {
   const [ isEditingColumnTitle, setIsEditingColumnTitle ] = useState(false);
-  const [ editingColumnIndex, setEditingColumnIndex ] = useState(null);
+  const [ editingColumnIndex, setEditingColumnIndex ] = useState(0);
   // const [ columnTitle, setColumnTitle ] = useState();
-  const { register, handleSubmit, reset } = useForm();
   const columns = useSelector((state) => state.boardColumns.columns);
+  const { register, handleSubmit, reset } = useForm();
+
 
   const dispatch = useDispatch();
 
 
   const handleFormSubmit = async (data) => {
-    const columnId = columns[editingColumnIndex]._id;
-    const newTitle = data.title;
-    const requestBody = {
-      id: columnId,
-      title: newTitle
-    }
-    const board = boardId.boardId
-    await dispatch(updateColumnTitleAction(requestBody));
-    await dispatch(fetchColumnsAction(board));
-    setIsEditingColumnTitle(false);
-    reset();
+      const columnId = columns[editingColumnIndex]._id;
+      const newTitle = data.title;
+      const requestBody = {
+        id: columnId,
+        title: newTitle
+      }
+      console.log(requestBody);
+      const board = boardId.boardId
+      await dispatch(updateColumnTitleAction(requestBody));
+      await dispatch(fetchColumnsAction(board));
+      setIsEditingColumnTitle(false);
+      reset();
   }
 
   const handleColumnTitleClick = (columnIndex) => {
@@ -46,10 +48,9 @@ const RenderColumns = (boardId) => {
             <Card.Header className="d-flex justify-content-between align-items-center mb-2 column-header">
               {isEditingColumnTitle && editingColumnIndex === columnIndex ? (
                 <Form onBlur={handleSubmit(handleFormSubmit)}>
-                    <Form.Control className="mb-3" type="text" placeholder={column.title} {...register("title")} />
+                    <Form.Control className="mb-3" type="text" placeholder="Enter New Name" 
+                    {...register("title", {required: true})} />
                 </Form>
-
-                // <input type="text" value={column.title} onChange={(event) => handleColumnTitleChange(event, columnIndex)} onBlur={handleColumnTitleBlur} />
               ) : (
                 <Card.Title onClick={() => handleColumnTitleClick(columnIndex)}>
                   {column.title}
