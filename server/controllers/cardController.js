@@ -48,7 +48,7 @@ exports.createCard = async (req, res) => {
   try {
     const { title, text, columnId } = req.body;
 
-    const newCard = new Card({
+    const newCard = await Card.create({
       title,
       text,
       columnId: columnId,
@@ -68,7 +68,6 @@ exports.createCard = async (req, res) => {
       const newCardInfo = Array.from(column.cardInfo);
       newCardInfo.push(newCard._id);
       column.set({ cardInfo: newCardInfo });
-
       const columnResult = await column.save();
 
       return res.status(201).json({

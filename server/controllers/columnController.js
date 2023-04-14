@@ -65,7 +65,7 @@ exports.createColumn = async (req, res) => {
   try {
     const { title, boardId } = req.body;
 
-    const newColumn = new Column({
+    const newColumn = await Column.create({
       boardId: boardId,
       title,
       cardInfo: [],
@@ -76,9 +76,11 @@ exports.createColumn = async (req, res) => {
     if (!board) {
       res.status(404).json({ message: 'Board with provided id does not exist' });
     } else {
+
       const newColumnInfo = Array.from(board.columnInfo);
       newColumnInfo.push(newColumn._id);
       board.set({ columnInfo: newColumnInfo });
+      const boardResult = await board.save();
 
       return res.status(201).json({
         newColumn

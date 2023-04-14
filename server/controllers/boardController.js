@@ -64,7 +64,6 @@ exports.getAllBoards = async (req, res) => {
 exports.getOneBoard = async (req, res) => {
   try {
     const { boardId } = req.params;
-    const { columnId } = req.body;
     const board = await Board.findOne({ _id: boardId }).populate({
       path: "columnInfo", 
       populate: [
@@ -94,6 +93,7 @@ exports.createBoard = async (req, res) => {
       userId: req.userData._id,
       title: title,
       category: null,
+      columnInfo: [],
     })
 
     res.status(201).json({ newBoard: newBoard });
