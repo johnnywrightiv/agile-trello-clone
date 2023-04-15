@@ -19,7 +19,7 @@ paths:
       summary: Get all users
       description: Retrieves a list of all users
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -169,7 +169,7 @@ paths:
       summary: Change users organization
       description: Changes the users organization by userId
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -218,12 +218,12 @@ paths:
       summary: Get all boards
       description: Retrieves a list of all the users boards
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
           type: string
-        - name: Query
+        - name: query
           in: query
           description: Optional query parameter (must specify ?query={query})
           required: false
@@ -326,7 +326,7 @@ paths:
       summary: Create a new board
       description: Creates a new board for the user
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -370,7 +370,7 @@ paths:
       summary: Get a users board
       description: Retrieves a users board by ID.
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -456,7 +456,7 @@ paths:
       summary: Deletes a users board
       description: Deletes a users board by ID
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -466,13 +466,18 @@ paths:
           description: ID of the board to delete
           required: true
           type: string
+        - name: Query
+          in: query
+          description: Optional query parameter (must specify ?columnId={columnId})
+          required: false
+          type: string
       responses:
         "200":
           description: 200 response
           examples:
             application/json: |-
               {
-                "message": "Board deleted"
+                "message": "board deleted"
               }
         "401":
           description: Unauthorized
@@ -487,7 +492,7 @@ paths:
       summary: Changes board title
       description: Changes a single boards title by ID.
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -584,7 +589,7 @@ paths:
       summary: Changes boards collection
       description: Changes a single boards collection by ID
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -682,7 +687,7 @@ paths:
       summary: Changes boards column order
       description: Changes a single boards column order by ID
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -765,10 +770,10 @@ paths:
     post:
       tags:
         - Columns
-      summary: Create a new column
-      description: Cerates a new column in a spcific board
+      summary: Create a column
+      description: Creates a new column in a users board
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -782,40 +787,26 @@ paths:
             properties:
               title:
                 type: string
-                description: The title of the column being created.
-                example: New Column
+                description: The title of the column created
+                example: Column 1
               boardId:
                 type: string
                 description: The board id associated with that column.
-                example: 642f229bb6d6d71f6fb43a8d
+                example: 643a8fc98378d10c769ed0b5
       responses:
         "201":
           description: 201 response
           examples:
             application/json: |-
               {
-              "newColumn": {
-                  "boardId": "642f229bb6d6d71f6fb43a8d",
-                  "title": "column 3",
-                  "cardOrder": [],
-                  "_id": "642f2539b6d6d71f6fb43a9a",
-                  "createdAt": "2023-04-06T20:02:01.386Z",
-                  "updatedAt": "2023-04-06T20:02:01.386Z",
-                  "__v": 0
-              },
-              "board": {
-                  "userId": "642e8e677e546379ab2b23b8",
-                  "title": "board 1",
-                  "category": null,
-                  "columnOrder": [
-                      "642f2531b6d6d71f6fb43a90",
-                      "642f2536b6d6d71f6fb43a95",
-                      "642f2539b6d6d71f6fb43a9a"
-                  ],
-                  "_id": "642f229bb6d6d71f6fb43a8d",
-                  "createdAt": "2023-04-06T19:50:51.601Z",
-                  "updatedAt": "2023-04-06T20:02:01.390Z",
-                  "__v": 3
+                "newColumn": {
+                    "boardId": "643a8fc98378d10c769ed0b5",
+                    "title": "column 1",
+                    "cardInfo": [],
+                    "_id": "643a8fde8378d10c769ed0b8",
+                    "createdAt": "2023-04-15T11:51:58.939Z",
+                    "updatedAt": "2023-04-15T11:51:58.939Z",
+                    "__v": 0
                 }
               }
         "401":
@@ -828,10 +819,10 @@ paths:
     get:
       tags:
         - Columns
-      summary: Get a column by ID
-      description: Retrieves a single column by ID.
+      summary: Get a column
+      description: Retrieves a single column by ID
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -848,44 +839,14 @@ paths:
             application/json: |-
               {
                 "column": {
-                    "_id": "642f2a00b6d6d71f6fb43ab0",
-                    "boardId": "642f29dfb6d6d71f6fb43aad",
+                    "_id": "643a8fde8378d10c769ed0b8",
+                    "boardId": "643a8fc98378d10c769ed0b5",
                     "title": "column 1",
-                    "cardOrder": [],
-                    "createdAt": "2023-04-06T20:22:24.752Z",
-                    "updatedAt": "2023-04-06T20:22:24.752Z",
+                    "cardInfo": [],
+                    "createdAt": "2023-04-15T11:51:58.939Z",
+                    "updatedAt": "2023-04-15T11:51:58.939Z",
                     "__v": 0
                 }
-              }
-        "401":
-          description: Unauthorized
-        "404":
-          description: Not found
-        "500":
-          description: Internal Server Error
-    delete:
-      tags:
-        - Columns
-      summary: Delete a column by ID
-      description: Deletes a single column by ID including any cards within.
-      parameters:
-        - name: Authorization
-          in: header
-          description: JWT token for authentication
-          required: true
-          type: string
-        - name: columnId
-          in: path
-          description: ID of the column to delete
-          required: true
-          type: string
-      responses:
-        "200":
-          description: 200 response
-          examples:
-            application/json: |-
-              {
-                "message": "Column deleted"
               }
         "401":
           description: Unauthorized
@@ -896,29 +857,29 @@ paths:
     patch:
       tags:
         - Columns
-      summary: Update the columns title
-      description: Update the column title.
+      summary: Update column title
+      description: Update a boards column title
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
           type: string
         - name: columnId
           in: path
-          description: ID of the column to update title
+          description: ID of the column to update
           required: true
           type: string
         - name: title
           in: body
-          description: New title object
+          description: New column title
           required: true
           schema:
             type: object
             properties:
               title:
                 type: string
-                example: New Column Title
+                example: new column 1
       responses:
         "200":
           description: 200 response
@@ -926,12 +887,12 @@ paths:
             application/json: |-
               {
                 "updatedColumn": {
-                    "_id": "642f306cf10ebbcbbee5b850",
-                    "boardId": "642f29dfb6d6d71f6fb43aad",
-                    "title": "New Column Title",
-                    "cardOrder": [],
-                    "createdAt": "2023-04-06T20:49:48.300Z",
-                    "updatedAt": "2023-04-06T20:50:05.458Z",
+                    "_id": "643a8fde8378d10c769ed0b8",
+                    "boardId": "643a8fc98378d10c769ed0b5",
+                    "title": "new column 1",
+                    "cardInfo": [],
+                    "createdAt": "2023-04-15T11:51:58.939Z",
+                    "updatedAt": "2023-04-15T14:32:50.875Z",
                     "__v": 0
                 }
               }
@@ -945,20 +906,20 @@ paths:
     get:
       tags:
         - Columns
-      summary: Get all columns for a single board
-      description: Retrieves an array of all columns in a specific board.
+      summary: Get all columns in a board
+      description: Retrieves all columns in a single board
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
           type: string
         - name: boardId
           in: path
-          description: ID of the board you are getting columns from
+          description: ID of the board
           required: true
           type: string
-        - name: Sort
+        - name: sort
           in: query
           description: optional sort parameter (must specify ?sort=newest, ?sort=oldest, ?sort=alphabetically, or ?sort=reverse-alphabetically)
           required: false
@@ -971,47 +932,59 @@ paths:
               {
                 "columns": [
                     {
-                        "_id": "642f2531b6d6d71f6fb43a90",
-                        "boardId": "642f229bb6d6d71f6fb43a8d",
+                        "_id": "643ab7698378d10c769ed0c4",
+                        "boardId": "643ab74e8378d10c769ed0c1",
                         "title": "column 1",
-                        "cardOrder": [],
-                        "createdAt": "2023-04-06T20:01:53.909Z",
-                        "updatedAt": "2023-04-06T20:01:53.909Z",
-                        "__v": 0
+                        "cardInfo": [
+                            {
+                                "_id": "643ab7af8378d10c769ed0d6",
+                                "title": "card 1",
+                                "text": "hello",
+                                "columnId": "643ab7698378d10c769ed0c4",
+                                "label": null,
+                                "labelColor": null,
+                                "description": null,
+                                "createdAt": "2023-04-15T14:41:51.108Z",
+                                "updatedAt": "2023-04-15T14:41:51.108Z",
+                                "__v": 0
+                            }
+                        ],
+                        "createdAt": "2023-04-15T14:40:41.687Z",
+                        "updatedAt": "2023-04-15T14:41:51.112Z",
+                        "__v": 1
                     },
                     {
-                        "_id": "642f2536b6d6d71f6fb43a95",
-                        "boardId": "642f229bb6d6d71f6fb43a8d",
+                        "_id": "643ab76c8378d10c769ed0c9",
+                        "boardId": "643ab74e8378d10c769ed0c1",
                         "title": "column 2",
-                        "cardOrder": [],
-                        "createdAt": "2023-04-06T20:01:58.212Z",
-                        "updatedAt": "2023-04-06T20:01:58.212Z",
-                        "__v": 0
+                        "cardInfo": [
+                            {
+                                "_id": "643ab7b98378d10c769ed0db",
+                                "title": "card 1",
+                                "text": "hi",
+                                "columnId": "643ab76c8378d10c769ed0c9",
+                                "label": null,
+                                "labelColor": null,
+                                "description": null,
+                                "createdAt": "2023-04-15T14:42:01.232Z",
+                                "updatedAt": "2023-04-15T14:42:01.232Z",
+                                "__v": 0
+                            }
+                        ],
+                        "createdAt": "2023-04-15T14:40:44.986Z",
+                        "updatedAt": "2023-04-15T14:42:01.239Z",
+                        "__v": 1
                     },
                     {
-                        "_id": "642f2539b6d6d71f6fb43a9a",
-                        "boardId": "642f229bb6d6d71f6fb43a8d",
+                        "_id": "643ab76f8378d10c769ed0ce",
+                        "boardId": "643ab74e8378d10c769ed0c1",
                         "title": "column 3",
-                        "cardOrder": [],
-                        "createdAt": "2023-04-06T20:02:01.386Z",
-                        "updatedAt": "2023-04-06T20:02:01.386Z",
+                        "cardInfo": [],
+                        "createdAt": "2023-04-15T14:40:47.989Z",
+                        "updatedAt": "2023-04-15T14:40:47.989Z",
                         "__v": 0
                     }
-                ],
-                "board": {
-                    "_id": "642f229bb6d6d71f6fb43a8d",
-                    "userId": "642e8e677e546379ab2b23b8",
-                    "title": "board 1",
-                    "category": null,
-                    "columnOrder": [
-                        "642f2531b6d6d71f6fb43a90",
-                        "642f2536b6d6d71f6fb43a95",
-                        "642f2539b6d6d71f6fb43a9a"
-                    ],
-                    "createdAt": "2023-04-06T19:50:51.601Z",
-                    "updatedAt": "2023-04-06T20:02:01.390Z",
-                    "__v": 3
-                }
+                ]
               }
         "401":
           description: Unauthorized
@@ -1019,14 +992,50 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
+  /columns/{columnId}/{boardId}:
+    delete:
+      tags:
+        - Columns
+      summary: Delete a column in a board
+      description: Deletes a single column in a specific board by ID
+      parameters:
+        - name: authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: columnId
+          in: path
+          description: ID of the column to delete
+          required: true
+          type: string
+        - name: boardId
+          in: path
+          description: ID of the board
+          required: true
+          type: string
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "message": "column deleted"
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
   /cards:
     post:
       tags:
         - Cards
-      summary: Create a new card
+      summary: Create a card
       description: Creates a new card in a specific column
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -1040,16 +1049,16 @@ paths:
             properties:
               title:
                 type: string
-                description: The title of the card being created.
-                example: Card
+                description: The title of the card being created
+                example: card 1
               text:
                 type: string
-                description: The text you wish the cardto contain.
-                example: Add this new functionality
+                description: The text you wish the card to contain
+                example: hello
               columnId:
                 type: string
-                description: The column id associated with that card.
-                example: 642f229bb6d6d71f6fb43a8d
+                description: The column id associated with that card
+                example: 643ac4ea47c58f1da44903e4
       responses:
         "201":
           description: 201 response
@@ -1057,27 +1066,16 @@ paths:
             application/json: |-
               {
                 "newCard": {
-                    "title": "Card Title",
-                    "text": "Hello World",
-                    "columnId": "642f306cf10ebbcbbee5b850",
+                    "title": "card 1",
+                    "text": "hello",
+                    "columnId": "643ac4ea47c58f1da44903e4",
                     "label": null,
                     "labelColor": null,
                     "description": null,
-                    "_id": "642f37a17e8613854d2d9f25",
-                    "createdAt": "2023-04-06T21:20:33.437Z",
-                    "updatedAt": "2023-04-06T21:20:33.437Z",
+                    "_id": "643ac50d47c58f1da44903ee",
+                    "createdAt": "2023-04-15T15:38:53.056Z",
+                    "updatedAt": "2023-04-15T15:38:53.056Z",
                     "__v": 0
-                },
-                "column": {
-                    "boardId": "642f29dfb6d6d71f6fb43aad",
-                    "title": "New Column Title",
-                    "cardOrder": [
-                        "642f37a17e8613854d2d9f25"
-                    ],
-                    "_id": "642f306cf10ebbcbbee5b850",
-                    "createdAt": "2023-04-06T20:49:48.300Z",
-                    "updatedAt": "2023-04-06T21:20:33.463Z",
-                    "__v": 1
                 }
               }
         "401":
@@ -1090,17 +1088,17 @@ paths:
     get:
       tags:
         - Cards
-      summary: Get a card by ID
-      description: Retrieves a single card by ID.
+      summary: Get a card
+      description: Retrieves a single card by ID
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
           type: string
         - name: cardId
           in: path
-          description: ID of the card to get
+          description: ID of the card
           required: true
           type: string
       responses:
@@ -1110,15 +1108,15 @@ paths:
             application/json: |-
               {
                 "card": {
-                    "_id": "642f37a17e8613854d2d9f25",
-                    "title": "Card Title",
-                    "text": "Hello World",
-                    "columnId": "642f306cf10ebbcbbee5b850",
+                    "_id": "643ac50d47c58f1da44903ee",
+                    "title": "card 1",
+                    "text": "hello",
+                    "columnId": "643ac4ea47c58f1da44903e4",
                     "label": null,
                     "labelColor": null,
                     "description": null,
-                    "createdAt": "2023-04-06T21:20:33.437Z",
-                    "updatedAt": "2023-04-06T21:20:33.437Z",
+                    "createdAt": "2023-04-15T15:38:53.056Z",
+                    "updatedAt": "2023-04-15T15:38:53.056Z",
                     "__v": 0
                 }
               }
@@ -1128,13 +1126,14 @@ paths:
           description: Not found
         "500":
           description: Internal Server Error
+  /cards/{cardId}/{columnId}:
     delete:
       tags:
         - Cards
-      summary: Delete a card by Id
-      description: Deletes a single card by Id.
+      summary: Delete a card
+      description: Deletes a single card in a column by Id
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -1144,14 +1143,18 @@ paths:
           description: ID of the card to delete
           required: true
           type: string
-
+        - name: columnId
+          in: path
+          description: ID of the column
+          required: true
+          type: string
       responses:
         "200":
           description: 200 response
           examples:
             application/json: |-
               {
-                "message": "Card deleted"
+                "message": "card deleted"
               }
         "401":
           description: Unauthorized
@@ -1163,17 +1166,17 @@ paths:
     get:
       tags:
         - Cards
-      summary: Get all cards for a single column
-      description: Retrieves an array of all cards in a specific column.
+      summary: Get all cards in a column
+      description: Retrieves all cards in a column by id
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
           type: string
         - name: columnId
           in: path
-          description: ID of the column you are getting cards from
+          description: ID of the column
           required: true
           type: string
       responses:
@@ -1184,55 +1187,30 @@ paths:
               {
                 "cards": [
                     {
-                        "_id": "642f37a17e8613854d2d9f25",
-                        "title": "Card Title",
-                        "text": "Hello World",
-                        "columnId": "642f306cf10ebbcbbee5b850",
+                        "_id": "643ac50447c58f1da44903e9",
+                        "title": "card 1",
+                        "text": "hello",
+                        "columnId": "643ac4ea47c58f1da44903e4",
                         "label": null,
                         "labelColor": null,
                         "description": null,
-                        "createdAt": "2023-04-06T21:20:33.437Z",
-                        "updatedAt": "2023-04-06T21:20:33.437Z",
+                        "createdAt": "2023-04-15T15:38:44.813Z",
+                        "updatedAt": "2023-04-15T15:38:44.813Z",
                         "__v": 0
                     },
                     {
-                        "_id": "642f37cd7e8613854d2d9f2a",
-                        "title": "Card Title 2",
-                        "text": "Hello World 2",
-                        "columnId": "642f306cf10ebbcbbee5b850",
+                        "_id": "643ac50d47c58f1da44903ee",
+                        "title": "card 2",
+                        "text": "hi there",
+                        "columnId": "643ac4ea47c58f1da44903e4",
                         "label": null,
                         "labelColor": null,
                         "description": null,
-                        "createdAt": "2023-04-06T21:21:17.321Z",
-                        "updatedAt": "2023-04-06T21:21:17.321Z",
-                        "__v": 0
-                    },
-                    {
-                        "_id": "642f37d27e8613854d2d9f2f",
-                        "title": "Card Title 3",
-                        "text": "Hello World 3",
-                        "columnId": "642f306cf10ebbcbbee5b850",
-                        "label": null,
-                        "labelColor": null,
-                        "description": null,
-                        "createdAt": "2023-04-06T21:21:22.029Z",
-                        "updatedAt": "2023-04-06T21:21:22.029Z",
+                        "createdAt": "2023-04-15T15:38:53.056Z",
+                        "updatedAt": "2023-04-15T15:38:53.056Z",
                         "__v": 0
                     }
-                ],
-                "column": {
-                    "_id": "642f306cf10ebbcbbee5b850",
-                    "boardId": "642f29dfb6d6d71f6fb43aad",
-                    "title": "New Column Title",
-                    "cardOrder": [
-                        "642f37a17e8613854d2d9f25",
-                        "642f37cd7e8613854d2d9f2a",
-                        "642f37d27e8613854d2d9f2f"
-                    ],
-                    "createdAt": "2023-04-06T20:49:48.300Z",
-                    "updatedAt": "2023-04-06T21:21:22.036Z",
-                    "__v": 3
-                }
+                ]
               }
         "401":
           description: Unauthorized
@@ -1240,51 +1218,231 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
-  /cards/{sameColumnId}/same-column-reorder:
+  /cards/same-reorder:
     patch:
       tags:
         - Cards
       summary: Reorders cards within the same column
       description: Reorders cards within the same column
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
           type: string
-        - name: sameColumnId
-          in: path
-          description: ID of the column you are getting cards from
-          required: true
-          type: string
-        - name: sameColumnCardIds
+        - name: sameColumnId, sameColumnCardIds
           in: body
-          description: New array of card ids within current column
+          description: New array of card ids and current column id
           required: true
           schema:
             type: object
             properties:
+              sameColumnId:
+                example: 643ac4ea47c58f1da44903e4
               sameColumnCardIds:
                 example:
-                  ["64370e1ecf7ac0a757e784e2", "64370e12cf7ac0a757e784dd"]
+                  [
+                    "643acaac47c58f1da4490400",
+                    "643ac50d47c58f1da44903ee",
+                    "643ac50447c58f1da44903e9",
+                  ]
       responses:
         "200":
           description: 200 response
           examples:
             application/json: |-
               {
+                "message": "column reorder successful",
                 "updatedColumn": {
-                    "_id": "64370d5180eec739f8fd5996",
-                    "boardId": "64370d0e80eec739f8fd5993",
+                    "_id": "643ac4ea47c58f1da44903e4",
+                    "boardId": "643ac4ce47c58f1da44903e1",
                     "title": "column 1",
-                    "cardOrder": [
-                        "64370e1ecf7ac0a757e784e2",
-                        "64370e12cf7ac0a757e784dd"
+                    "cardInfo": [
+                        {
+                            "_id": "643acaac47c58f1da4490400",
+                            "title": "card 3",
+                            "text": "bye",
+                            "columnId": "643ac4ea47c58f1da44903e4",
+                            "label": null,
+                            "labelColor": null,
+                            "description": null,
+                            "createdAt": "2023-04-15T16:02:52.703Z",
+                            "updatedAt": "2023-04-15T16:04:40.945Z",
+                            "__v": 0
+                        },
+                        {
+                            "_id": "643ac50d47c58f1da44903ee",
+                            "title": "card 2",
+                            "text": "hi there",
+                            "columnId": "643ac4ea47c58f1da44903e4",
+                            "label": null,
+                            "labelColor": null,
+                            "description": null,
+                            "createdAt": "2023-04-15T15:38:53.056Z",
+                            "updatedAt": "2023-04-15T15:38:53.056Z",
+                            "__v": 0
+                        },
+                        {
+                            "_id": "643ac50447c58f1da44903e9",
+                            "title": "card 1",
+                            "text": "hello",
+                            "columnId": "643ac4ea47c58f1da44903e4",
+                            "label": null,
+                            "labelColor": null,
+                            "description": null,
+                            "createdAt": "2023-04-15T15:38:44.813Z",
+                            "updatedAt": "2023-04-15T15:38:44.813Z",
+                            "__v": 0
+                        }
                     ],
-                    "createdAt": "2023-04-12T19:58:09.078Z",
-                    "updatedAt": "2023-04-12T20:11:33.275Z",
+                    "createdAt": "2023-04-15T15:38:18.061Z",
+                    "updatedAt": "2023-04-15T16:06:30.358Z",
                     "__v": 5
                 }
+              }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
+  /cards/different-reorder:
+    patch:
+      tags:
+        - Cards
+      summary: Reorders cards within a different column
+      description: Reorders cards within a different column
+      parameters:
+        - name: authorization
+          in: header
+          description: JWT token for authentication
+          required: true
+          type: string
+        - name: removedColumnId, addedColumnId, removedColumnCardIds,  addedColumnCardIds
+          in: body
+          description: Card ids from removed column with that columns id and card ids from added column with that columns id
+          required: true
+          schema:
+            type: object
+            properties:
+              removedColumnId:
+                example: 643aced6c8277b3a702dca4e
+              removedColumnCardIds:
+                example:
+                  ["643acf01c8277b3a702dca58", "643acf0ac8277b3a702dca5d"]
+              addedColumnId:
+                example: 643ac4ea47c58f1da44903e4
+              addedColumnCardIds:
+                example:
+                  [
+                    "643acaac47c58f1da4490400",
+                    "643ac50d47c58f1da44903ee",
+                    "643acefbc8277b3a702dca53",
+                    "643ac50447c58f1da44903e9",
+                  ]
+      responses:
+        "200":
+          description: 200 response
+          examples:
+            application/json: |-
+              {
+                "message": "column reorder successful",
+                "updatedRemovedColumn": [
+                    {
+                        "_id": "643aced6c8277b3a702dca4e",
+                        "boardId": "643ac4ce47c58f1da44903e1",
+                        "title": "column 2",
+                        "cardInfo": [
+                            {
+                                "_id": "643acf01c8277b3a702dca58",
+                                "title": "card 2",
+                                "text": "dog",
+                                "columnId": "643aced6c8277b3a702dca4e",
+                                "label": null,
+                                "labelColor": null,
+                                "description": null,
+                                "createdAt": "2023-04-15T16:21:21.302Z",
+                                "updatedAt": "2023-04-15T16:21:21.302Z",
+                                "__v": 0
+                            },
+                            {
+                                "_id": "643acf0ac8277b3a702dca5d",
+                                "title": "card 3",
+                                "text": "weasel",
+                                "columnId": "643aced6c8277b3a702dca4e",
+                                "label": null,
+                                "labelColor": null,
+                                "description": null,
+                                "createdAt": "2023-04-15T16:21:30.823Z",
+                                "updatedAt": "2023-04-15T16:21:30.823Z",
+                                "__v": 0
+                            }
+                        ],
+                        "createdAt": "2023-04-15T16:20:38.946Z",
+                        "updatedAt": "2023-04-15T16:34:55.748Z",
+                        "__v": 4
+                    }
+                ],
+                "updatedAddedColumn": [
+                    {
+                        "_id": "643ac4ea47c58f1da44903e4",
+                        "boardId": "643ac4ce47c58f1da44903e1",
+                        "title": "column 1",
+                        "cardInfo": [
+                            {
+                                "_id": "643acaac47c58f1da4490400",
+                                "title": "card 3",
+                                "text": "bye",
+                                "columnId": "643ac4ea47c58f1da44903e4",
+                                "label": null,
+                                "labelColor": null,
+                                "description": null,
+                                "createdAt": "2023-04-15T16:02:52.703Z",
+                                "updatedAt": "2023-04-15T16:04:40.945Z",
+                                "__v": 0
+                            },
+                            {
+                                "_id": "643ac50d47c58f1da44903ee",
+                                "title": "card 2",
+                                "text": "hi there",
+                                "columnId": "643ac4ea47c58f1da44903e4",
+                                "label": null,
+                                "labelColor": null,
+                                "description": null,
+                                "createdAt": "2023-04-15T15:38:53.056Z",
+                                "updatedAt": "2023-04-15T15:38:53.056Z",
+                                "__v": 0
+                            },
+                            {
+                                "_id": "643acefbc8277b3a702dca53",
+                                "title": "card 1",
+                                "text": "fish",
+                                "columnId": "643aced6c8277b3a702dca4e",
+                                "label": null,
+                                "labelColor": null,
+                                "description": null,
+                                "createdAt": "2023-04-15T16:21:15.518Z",
+                                "updatedAt": "2023-04-15T16:21:15.518Z",
+                                "__v": 0
+                            },
+                            {
+                                "_id": "643ac50447c58f1da44903e9",
+                                "title": "card 1",
+                                "text": "hello",
+                                "columnId": "643ac4ea47c58f1da44903e4",
+                                "label": null,
+                                "labelColor": null,
+                                "description": null,
+                                "createdAt": "2023-04-15T15:38:44.813Z",
+                                "updatedAt": "2023-04-15T15:38:44.813Z",
+                                "__v": 0
+                            }
+                        ],
+                        "createdAt": "2023-04-15T15:38:18.061Z",
+                        "updatedAt": "2023-04-15T16:34:55.748Z",
+                        "__v": 6
+                    }
+                ]
               }
         "401":
           description: Unauthorized
@@ -1296,10 +1454,10 @@ paths:
     patch:
       tags:
         - Cards
-      summary: Updates the cards title
-      description: Updates the cards title.
+      summary: Updates a cards title
+      description: Updates the cards title by id
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -1311,14 +1469,14 @@ paths:
           type: string
         - name: title
           in: body
-          description: New title object
+          description: New card title
           required: true
           schema:
             type: object
             properties:
               title:
                 type: string
-                example: New Card Title
+                example: new card title
       responses:
         "200":
           description: 200 response
@@ -1326,15 +1484,15 @@ paths:
             application/json: |-
               {
                 "updatedCard": {
-                    "_id": "642f37cd7e8613854d2d9f2a",
-                    "title": "New Card Title",
-                    "text": "Hello World 2",
-                    "columnId": "642f306cf10ebbcbbee5b850",
+                    "_id": "643acf01c8277b3a702dca58",
+                    "title": "new card title",
+                    "text": "dog",
+                    "columnId": "643aced6c8277b3a702dca4e",
                     "label": null,
                     "labelColor": null,
                     "description": null,
-                    "createdAt": "2023-04-06T21:21:17.321Z",
-                    "updatedAt": "2023-04-06T22:00:20.997Z",
+                    "createdAt": "2023-04-15T16:21:21.302Z",
+                    "updatedAt": "2023-04-15T16:42:08.633Z",
                     "__v": 0
                 }
               }
@@ -1349,9 +1507,9 @@ paths:
       tags:
         - Cards
       summary: Updates the cards text
-      description: Updates the cards text
+      description: Updates the cards text bi id
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -1363,31 +1521,31 @@ paths:
           type: string
         - name: text
           in: body
-          description: New text object
+          description: New card text
           required: true
           schema:
             type: object
             properties:
               text:
                 type: string
-                example: New Card Text
+                example: new card text
       responses:
         "200":
           description: 200 response
           examples:
             application/json: |-
               {
-              "updatedCard": {
-                  "_id": "642f37cd7e8613854d2d9f2a",
-                  "title": "New Card Title",
-                  "text": "New Card Text",
-                  "columnId": "642f306cf10ebbcbbee5b850",
-                  "label": null,
-                  "labelColor": null,
-                  "description": null,
-                  "createdAt": "2023-04-06T21:21:17.321Z",
-                  "updatedAt": "2023-04-06T22:01:07.343Z",
-                  "__v": 0
+                "updatedCard": {
+                    "_id": "643acf01c8277b3a702dca58",
+                    "title": "new card title",
+                    "text": "new card text",
+                    "columnId": "643aced6c8277b3a702dca4e",
+                    "label": null,
+                    "labelColor": null,
+                    "description": null,
+                    "createdAt": "2023-04-15T16:21:21.302Z",
+                    "updatedAt": "2023-04-15T16:43:28.806Z",
+                    "__v": 0
                 }
               }
         "401":
@@ -1401,9 +1559,9 @@ paths:
       tags:
         - Cards
       summary: Updates the cards label and label color
-      description: Updates the cards label and label color
+      description: Updates the cards label and label color by id
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -1415,17 +1573,17 @@ paths:
           type: string
         - name: label, labelColor
           in: body
-          description: New label and label color object
+          description: New label and label color
           required: true
           schema:
             type: object
             properties:
               label:
                 type: string
-                example: New Card Label
+                example: new card label
               labelColor:
                 type: string
-                example: Blue
+                example: blue
       responses:
         "200":
           description: 200 response
@@ -1433,15 +1591,15 @@ paths:
             application/json: |-
               {
                 "updatedCard": {
-                    "_id": "642f37cd7e8613854d2d9f2a",
-                    "title": "New Card Title",
-                    "text": "New Card Text",
-                    "columnId": "642f306cf10ebbcbbee5b850",
-                    "label": "New Card Label",
-                    "labelColor": "Blue",
+                    "_id": "643acf01c8277b3a702dca58",
+                    "title": "new card title",
+                    "text": "new card text",
+                    "columnId": "643aced6c8277b3a702dca4e",
+                    "label": "new card label",
+                    "labelColor": "blue",
                     "description": null,
-                    "createdAt": "2023-04-06T21:21:17.321Z",
-                    "updatedAt": "2023-04-06T22:03:27.205Z",
+                    "createdAt": "2023-04-15T16:21:21.302Z",
+                    "updatedAt": "2023-04-15T16:46:01.258Z",
                     "__v": 0
                 }
               }
@@ -1456,9 +1614,9 @@ paths:
       tags:
         - Cards
       summary: Updates the cards description
-      description: Updates the cards description
+      description: Updates the cards description by id
       parameters:
-        - name: Authorization
+        - name: authorization
           in: header
           description: JWT token for authentication
           required: true
@@ -1470,14 +1628,14 @@ paths:
           type: string
         - name: description
           in: body
-          description: New label and label color object
+          description: New card description
           required: true
           schema:
             type: object
             properties:
               description:
                 type: string
-                example: This card is one cool card
+                example: this card is one cool card
       responses:
         "200":
           description: 200 response
@@ -1485,15 +1643,15 @@ paths:
             application/json: |-
               {
                 "updatedCard": {
-                    "_id": "642f37cd7e8613854d2d9f2a",
-                    "title": "New Card Title",
-                    "text": "New Card Text",
-                    "columnId": "642f306cf10ebbcbbee5b850",
-                    "label": "New Card Label",
-                    "labelColor": "Blue",
-                    "description": null,
-                    "createdAt": "2023-04-06T21:21:17.321Z",
-                    "updatedAt": "2023-04-06T22:03:27.205Z",
+                    "_id": "643acf01c8277b3a702dca58",
+                    "title": "new card title",
+                    "text": "new card text",
+                    "columnId": "643aced6c8277b3a702dca4e",
+                    "label": "new card label",
+                    "labelColor": "blue",
+                    "description": "this is one cool card",
+                    "createdAt": "2023-04-15T16:21:21.302Z",
+                    "updatedAt": "2023-04-15T16:48:45.166Z",
                     "__v": 0
                 }
               }

@@ -27,7 +27,7 @@ exports.getAllColumns = async (req, res) => {
     if (!board) {
       return res
         .status(404)
-        .json({ message: 'Board with given id was not found' });
+        .json({ message: 'board with given id was not found' });
     }
 
     const columns = await Column.find({ boardId: boardId }).populate('cardInfo').sort(sortColumns)
@@ -46,12 +46,11 @@ exports.getOneColumn = async (req, res) => {
     const { columnId } = req.params;
 
     const column = await Column.findOne({ _id: columnId }).populate('cardInfo');
-    const cards = await Card.find({columnId: columnId})
 
     if (!column) {
       return res
         .status(404)
-        .json({ message: 'Column with given id was not found' });
+        .json({ message: 'column with given id was not found' });
     } else {
       return res.status(200).json({ column: column });
     }
@@ -74,7 +73,7 @@ exports.createColumn = async (req, res) => {
     const board = await Board.findById(boardId)
 
     if (!board) {
-      res.status(404).json({ message: 'Board with provided id does not exist' });
+      res.status(404).json({ message: 'board with given id was not found' });
     } else {
 
       const newColumnInfo = Array.from(board.columnInfo);
@@ -83,7 +82,7 @@ exports.createColumn = async (req, res) => {
       const boardResult = await board.save();
 
       return res.status(201).json({
-        newColumn
+        newColumn,
       });
     }
   } catch (err) {
@@ -101,7 +100,7 @@ exports.changeColumnTitle = async (req, res) => {
     if (!updatedColumn) {
       return res
         .status(404)
-        .json({ message: 'Column with given id was not found' });
+        .json({ message: 'column with given id was not found' });
     } else {
       return res.status(200).json({ updatedColumn: updatedColumn });
     }
@@ -123,16 +122,12 @@ exports.deleteOneColumn = async (req, res) => {
       return column !== columnId;
     })});
     
-    const updatedBoard = await Board.findOne({_id: boardId}).populate('columnInfo');
-    
     if (!column) {
       return res
         .status(404)
-        .json({ message: 'Column with given id was not found' });
+        .json({ message: 'column with given id was not found' });
     } else {
-      
-
-      return res.status(200).json({ message: "Column deleted", updatedBoard: updatedBoard });
+      return res.status(200).json({ message: "column deleted" });
     }
   } catch (err) {
     return res.status(500).json({ message: err.message });
