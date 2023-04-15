@@ -1,6 +1,7 @@
 import { Form, Button, FloatingLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchBoardByIdAction } from "../features/boardByIdSlice";
 import { addColumnAction, fetchColumnsAction } from "../features/columnsSlice";
 import { setModalClosed } from "../features/modalOpenSlice";
 
@@ -17,6 +18,7 @@ const CreateColumnForm = () => {
       boardId: boardData._id
     }
     await dispatch(addColumnAction(requestData));
+    await dispatch(fetchBoardByIdAction(boardData._id));
     await dispatch(fetchColumnsAction(boardData._id));
     dispatch(setModalClosed());
   }

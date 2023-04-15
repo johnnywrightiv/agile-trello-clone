@@ -2,14 +2,16 @@ import { Form, Button, FloatingLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { addCardAction } from "../features/cardsSlice";
-import { addColumnAction, fetchColumnsAction } from "../features/columnsSlice";
+import { fetchColumnsAction } from "../features/columnsSlice";
 import { setSecondModalClosed } from "../features/modalOpenSlice";
 
 // Form to Ceate Card for User Board Column
 const CreateCardForm = () => {
   const boardData = useSelector((state) => state.boardById.board);
-  const columnIds = boardData.columnOrder;
+  const columnIds = boardData.columnInfo.map(column => column._id);
+  console.log(columnIds);
   const columnIndex = useSelector((state) => state.columnIndex.index);
+  console.log(columnIndex)
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
 
