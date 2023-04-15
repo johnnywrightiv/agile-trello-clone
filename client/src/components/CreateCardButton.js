@@ -9,8 +9,9 @@ const CreateCardButton = (columnIndex) => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    console.log(columnIndex);
-    dispatch(setColumnIndex(columnIndex));
+    const index = columnIndex.columnIndex;
+    console.log(index);
+    dispatch(setColumnIndex(index));
     dispatch(setSecondModalOpen());
   }
 

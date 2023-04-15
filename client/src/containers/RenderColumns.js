@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, createContext } from "react";
 import { Card, Col, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import CreateColumnButton from "../components/CreateColumnButton";
 import { fetchColumnsAction, updateColumnTitleAction } from "../features/columnsSlice";
 import RenderCards from "./RenderCards";
 
+export const ColumnIndexContext = createContext();
 
 // Renders in BoardView the id of the board is passed down as a prop
 const RenderColumns = (boardId) => {
@@ -45,7 +46,8 @@ const RenderColumns = (boardId) => {
   return (
       <>
         {columns.map((column, columnIndex) => (
-          <Card className="card-column m-2" key={columnIndex}>
+        <ColumnIndexContext.Provider value={columnIndex} key={columnIndex}>
+          <Card className="card-column m-2">
             <Card.Header className="d-flex justify-content-between align-items-center mb-2 column-header">
               {isEditingColumnTitle && editingColumnIndex === columnIndex ? (
                 <Form onBlur={handleSubmit(handleFormSubmit)}>
@@ -63,6 +65,7 @@ const RenderColumns = (boardId) => {
               <CreateCardButton columnIndex={columnIndex}/> 
             </Card.Footer>
           </Card>
+        </ColumnIndexContext.Provider>
         ))}
         <Col className="add-column" xs={4} md={3}>
           <CreateColumnButton />

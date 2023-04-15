@@ -21,6 +21,7 @@ export const fetchCardsAction = createAsyncThunk("cards/fetch", async(id, reject
 });
 
 export const addCardAction = createAsyncThunk("card/add", async(body, rejectWithValue) => {
+  console.log(body);
   try {
     const { data } = await axios.post(API_URL, body, authHeader());
 
@@ -36,7 +37,7 @@ export const addCardAction = createAsyncThunk("card/add", async(body, rejectWith
 export const deleteCardAction = createAsyncThunk("card/delete", async(body, rejectWithValue) => {
   const cardId = body.cardId;
   const columnId = body.columnId;
-  
+
   try {
     const { data } = await axios.delete(API_URL + cardId + '/' + columnId,  authHeader());
 

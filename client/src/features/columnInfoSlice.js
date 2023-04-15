@@ -11,7 +11,7 @@ const columnInfoSlice = createSlice({
   initialState,
   reducers: {
     setColumnIndex: (state, action) => {
-      state.index = action.payload.columnIndex;
+      state.index = action.payload;
     },
     setColumnId: (state, action) => {
       state.id = action.payload.columnId;
