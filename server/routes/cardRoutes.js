@@ -37,11 +37,11 @@ router
   .patch(checkAuth, cardController.changeCardDescription);
   
 router
-  .route('/same-column-reorder')
+  .route('/same-reorder')
   .patch(checkAuth, cardController.reorderSameColumn)
 
 router
-  .route('/different-column-reorder')
+  .route('/different-reorder')
   .patch(checkAuth, cardController.reorderDifferentColumn);
 
 

@@ -1,6 +1,7 @@
 const Board = require('./../models/boardModel');
 const Column = require('./../models/columnModel');
 const Card = require('./../models/cardModel');
+const { findByIdAndDelete } = require('../models/userModel');
 
 // GET - get all users boards
 exports.getAllBoards = async (req, res) => {
@@ -51,7 +52,7 @@ exports.getAllBoards = async (req, res) => {
          title:"",
          columnInfo: [],
       });
-      return res.status(200).json({ message: 'This user has not created any boards' })
+      return res.status(200).json({ message: 'user has not created any boards' })
     } else {
       return res.status(200).json({ boards });
     }
@@ -76,7 +77,7 @@ exports.getOneBoard = async (req, res) => {
     // const columns = await Column.find({column: columnId}).populate('cardInfo');
 
     if (!board) {
-      return res.status(404).json({ message: 'The board with given id was not found' });
+      return res.status(404).json({ message: 'board with given id was not found' });
     } else {
       return res.status(200).json({ board: board })
     }
@@ -106,20 +107,12 @@ exports.createBoard = async (req, res) => {
 exports.updateTitle = async (req, res) => {
   try {
     const { boardId } = req.params;
-      const updatedBoard = await Board.findOneAndUpdate({_id: boardId}, { title: req.body.title }, { new: true }).populate({
-        path: "columnInfo", 
-        populate: [
-          {
-          path: 'cardInfo',
-          model: "Cards"
-          }
-        ]
-      });
+      const updatedBoard = await Board.findOneAndUpdate(boardId, { title: req.body.title }, { new: true }).populate('columnInfo');
   
       if (!updatedBoard) {
         return res
           .status(404)
-          .json({ message: 'Unable to find the that board' });
+          .json({ message: 'board with given id was not found' });
       } else {
         return res.status(200).json({ updatedBoard: updatedBoard });
       }
@@ -132,20 +125,12 @@ exports.updateTitle = async (req, res) => {
 exports.updateCollection = async (req, res) => {
   try {
     const { boardId } = req.params;
-      const updatedBoard = await Board.findOneAndUpdate({_id: boardId}, { category: req.body.category }, { new: true }).populate({
-        path: "columnInfo", 
-        populate: [
-          {
-          path: 'cardInfo',
-          model: "Cards"
-          }
-        ]
-      });
+      const updatedBoard = await Board.findOneAndUpdate(boardId, { category: req.body.category }, { new: true }).populate('columnInfo');
   
       if (!updatedBoard) {
         return res
           .status(404)
-          .json({ message: 'Unable to find the that board' });
+          .json({ message: 'board with given id was not found' });
       } else {
         return res.status(200).json({ updatedBoard: updatedBoard });
       }
@@ -173,7 +158,7 @@ exports.updateColumnOrder = async (req, res) => {
       return res.status(500).json({message: err.message});
     }
   } catch (error) {
-    return res.status(400).json({message:'Required parameters are missing'});
+    return res.status(400).json({message:'required parameters missing'});
   }
 }
 
@@ -181,14 +166,24 @@ exports.updateColumnOrder = async (req, res) => {
 exports.deleteOneBoard = async (req, res) => {
   try {
     const { boardId } = req.params;
-    const board = await Board.findOneAndRemove({ _id: boardId });
-    // const columns = await Column.remove({ boardId: boardId });
-    // const cards = await Card.deleteMany({ columnId: columnId });
+    const { columnId } = req.query;
+
+    const board = await Board.findOne({ _id: boardId });
 
     if (!board) {
-      return res.status(404).json({ message: 'The board with given id was not found' });
+      return res.status(404).json({ message: 'board with given id was not found' });
     } else {
-      return res.status(200).json({ message: "Board deleted" })
+      if (columnId) {
+        const removedBoard = await Board.findByIdAndDelete({_id: boardId})
+        const deletedColumns = await Column.deleteMany({ boardId: boardId });
+        const deletedCards = await Card.deleteMany({ columnId: columnId });
+        
+      } else {
+        const removedBoard = await Board.findByIdAndDelete({_id: boardId})
+        const deletedColumns = await Column.deleteMany({ boardId: boardId });
+        
+      }
+      return res.status(200).json({ message: "board deleted" })
     }
   } catch (err) {
     return res.status(500).json({ message: err });
