@@ -13,18 +13,21 @@ const DeleteCard = (cardIndex) => {
   const columns = useSelector((state) => state.boardColumns.columns);
 
   const columnIndex = useContext(ColumnIndexContext);
-  console.log(columnIndex);
+  const allBoardCardInfo = columns.map(card => card.cardInfo);
+  const columnCards = allBoardCardInfo[columnIndex];
+  
+  
   const dispatch = useDispatch();
 
   const handleClick = async (index) => {
     const columnId = columns[columnIndex]._id;
-    const cards = columns[columnIndex].cardOrder;
-    const cardId = cards[index.cardIndex]
+    const cardId = columnCards[index.cardIndex]._id;
+
     const requestBody = {
       columnId: columnId,
       cardId: cardId
     }
-    
+
     await dispatch(deleteCardAction(requestBody));
     await dispatch(fetchColumnsAction(boardId));
   }
