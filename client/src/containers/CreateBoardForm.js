@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { addBoardAction, fetchBoardsAction } from "../features/boardsSlice";
 import { setModalClosed } from "../features/modalOpenSlice";
 
-// Form to Ceate Board for User
+// Form to Create Board for User
 const CreateBoardForm = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { setModalOpen } from "../features/modalOpenSlice";
 import CreateBoardModal from "../containers/CreateBoardModal";
 
+
 const CreateBoardButton = () => {
   const dispatch = useDispatch();
 
