@@ -2,7 +2,7 @@
   "name": "agile-trello-clone",
   "version": "1.0.0",
   "description": "Welcome to our Trello clone project! This is a group project created by the cohorts of Parsity's coding bootcamp. We're building a Trello clone using agile development methodology over the course of a four week part-time sprint.",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
     "start": "node server.js",
     "devStart": "nodemon server.js",
