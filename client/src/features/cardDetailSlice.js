@@ -54,7 +54,7 @@ const cardByIdSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchCardByIdAction.fulfilled, (state, action) => {
-      state.card = action?.payload;
+      state.card = action?.payload.card;
       state.loading = false;
       state.error = undefined;
     });
