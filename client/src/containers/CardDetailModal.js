@@ -7,9 +7,7 @@ import CardTitleChange from "./CardTitleChange";
 
 const CardDetailModal = () => {
   const isOpen = useSelector((state) => state.isModalOpen.cardDetailOpen);
-  const cardDetails = useSelector((state) => state.cardById.card);
 
-  console.log(cardDetails);
 
   const dispatch = useDispatch();
 
