@@ -1,9 +1,9 @@
 import { Card } from "react-bootstrap";
 import { useSelector } from "react-redux"
-
 import { useDrag } from 'react-dnd'
 import DeleteCard from "../components/DeleteCard";
 import { ItemTypes } from "../components/ItemTypes";
+import CardDetailButton from "../components/CardDetailButton";
 
 
 const RenderCards = (columnIndex) => {
@@ -28,7 +28,10 @@ const RenderCards = (columnIndex) => {
           opacity: isDragging ? 0.5 : 1,
           cursor: 'move',
         }}>
-          <Card.Header className="card-title">{card.title}</Card.Header>
+          <Card.Header className="hstack card-title">
+            <p>{card.title}</p>
+            <CardDetailButton />
+          </Card.Header>
           <Card.Body>
             {card.text}
           </Card.Body>

@@ -1,15 +1,15 @@
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { setModalClosed } from "../features/modalOpenSlice";
+import { setCardDetailModalClosed } from "../features/modalOpenSlice";
 
 
-const CardModal = () => {
-  const isOpen = useSelector((state) => state.isModalOpen.open);
+const CardDetailModal = () => {
+  const isOpen = useSelector((state) => state.isModalOpen.cardDetailOpen);
 
   const dispatch = useDispatch();
 
   const handleModalClose = () => {
-    dispatch(setModalClosed());
+    dispatch(setCardDetailModalClosed());
   }
   return (
     <Modal show={isOpen} onHide={handleModalClose}>
@@ -23,4 +23,4 @@ const CardModal = () => {
   )
 }
 
-export default CardModal;
+export default CardDetailModal;

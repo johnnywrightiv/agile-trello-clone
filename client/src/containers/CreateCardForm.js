@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { addCardAction } from "../features/cardsSlice";
 import { fetchColumnsAction } from "../features/columnsSlice";
-import { setSecondModalClosed } from "../features/modalOpenSlice";
+import { setCreateCardModalClosed } from "../features/modalOpenSlice";
 
 // Form to Ceate Card for User Board Column
 const CreateCardForm = () => {
@@ -28,7 +28,7 @@ const CreateCardForm = () => {
     }
     await dispatch(addCardAction(requestData));
     await dispatch(fetchColumnsAction(boardData._id));
-    dispatch(setSecondModalClosed());
+    dispatch(setCreateCardModalClosed());
   }
 
   return (
