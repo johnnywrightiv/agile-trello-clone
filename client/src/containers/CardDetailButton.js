@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
-import CardDetailModal from '../containers/CardDetailModal';
+import CardDetailModal from './CardDetailModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCardDetailModalOpen } from '../features/modalOpenSlice';
 import { fetchCardByIdAction } from '../features/cardDetailSlice';
-import { ColumnIndexContext } from "../containers/RenderColumns";
+import { ColumnIndexContext } from "./RenderColumns";
 import { useContext } from 'react';
 
 const CardDetailButton = (cardIndex) => {
@@ -19,7 +19,7 @@ const CardDetailButton = (cardIndex) => {
     const clickedCardId = columnCards[clickedCardIndex]._id
     console.log(clickedCardId);
     dispatch(fetchCardByIdAction(clickedCardId));
-    // dispatch(setCardDetailModalOpen(true));
+    dispatch(setCardDetailModalOpen(true));
   }
   return (
     <>

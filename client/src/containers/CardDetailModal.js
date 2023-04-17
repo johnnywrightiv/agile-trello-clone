@@ -5,6 +5,9 @@ import { setCardDetailModalClosed } from "../features/modalOpenSlice";
 
 const CardDetailModal = () => {
   const isOpen = useSelector((state) => state.isModalOpen.cardDetailOpen);
+  const cardDetails = useSelector((state) => state.cardById.card);
+
+  console.log(cardDetails);
 
   const dispatch = useDispatch();
 
@@ -14,10 +17,10 @@ const CardDetailModal = () => {
   return (
     <Modal show={isOpen} onHide={handleModalClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Test</Modal.Title>
+        <Modal.Title>{cardDetails.title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Card detail view goes here</p>
+        {cardDetails.text}
       </Modal.Body>
     </Modal>
   )
