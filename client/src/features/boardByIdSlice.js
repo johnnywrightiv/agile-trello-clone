@@ -50,7 +50,7 @@ const boardByIdSlice = createSlice({
     builder.addCase(fetchBoardByIdAction.rejected, (state, action) => {
       state.loading = false;
       state.error = action?.payload;
-      state.boards = null; 
+      state.board = null; 
     });
     builder.addCase(updateBoardTitleAction.pending, (state, action) => {
       state.loading = true;

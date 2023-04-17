@@ -30,7 +30,7 @@ const RenderCards = (columnIndex) => {
         }}>
           <Card.Header className="hstack card-title">
             <p>{card.title}</p>
-            <CardDetailButton />
+            <CardDetailButton cardIndex={cardIndex} />
           </Card.Header>
           <Card.Body>
             {card.text}
