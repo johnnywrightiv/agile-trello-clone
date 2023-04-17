@@ -5,10 +5,10 @@ dotenv.config({ path: './config.env' });
 
 const app = require('./app');
 
-const port = 3001
+const port = process.env.PORT || 8000;
 
 mongoose
-  .connect("mongodb://localhost/trello")
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Connected to database");
   })
