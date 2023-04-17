@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Form, Card } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCardByIdAction, updateCardTextAction } from "../features/cardDetailSlice";
-
+import { updateCardTextAction } from "../features/cardDetailSlice";
 
 
 const CardTextChange = () => {
@@ -32,10 +31,9 @@ const CardTextChange = () => {
     const cardId = cardData._id;
     const bodyRequest = {
       id: cardId,
-      Text: newCardText
+      text: newCardText
     }
     await dispatch(updateCardTextAction(bodyRequest));
-    await dispatch(fetchCardByIdAction(cardId));
     setCardText(newCardText);
     setIsEditingCardText(false);
     reset();
