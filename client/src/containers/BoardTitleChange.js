@@ -43,7 +43,7 @@ const BoardTitleChange = () => {
 
    return (
     <>
-      {isEditingBoardTitle ? <Form onBlur={handleSubmit(handleFormSubmit)}>
+      {isEditingBoardTitle ? <Form onSubmit={handleSubmit(handleFormSubmit)}>
                     <Form.Control className="mb-3 col-4" type="text" placeholder="Enter New Board Name" required {...register("title", {required: true})} />
                 </Form> : 
       <h2 className="board-title" onClick={handleBoardTitleClick}>
