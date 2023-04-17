@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
 import authHeader from "../services/auth-header";
 
-const API_URL = 'http://localhost:3001/api/cards/'
+const API_URL = 'https://trello-clone-api-crxa.onrender.com/api/cards/'
 
 export const fetchCardByIdAction = createAsyncThunk("card/fetch", async(id, rejectWithValue) => {
   try {
