@@ -42,7 +42,7 @@ const CardTitleChange = () => {
 
    return (
     <>
-      {isEditingCardTitle ? <Form onBlur={handleSubmit(handleFormSubmit)}>
+      {isEditingCardTitle ? <Form onSubmit={handleSubmit(handleFormSubmit)}>
                     <Form.Control className="mb-3 col-4" type="text" placeholder="Enter New Card Title" required {...register("title", {required: true})} />
                 </Form> : 
       <Card.Title className="card-title" onClick={handleCardTitleClick}>

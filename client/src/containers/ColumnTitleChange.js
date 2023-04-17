@@ -43,7 +43,7 @@ const handleColumnTitleClick = (columnIndex) => {
   return (
     <>
       {isEditingColumnTitle && editingColumnIndex === columnIndex ? (
-        <Form onBlur={handleSubmit(handleFormSubmit)}>
+        <Form onSubmit={handleSubmit(handleFormSubmit)}>
             <Form.Control className="mb-3" type="text" placeholder="Enter New Name" 
             {...register("title", {required: true})} />
         </Form>
