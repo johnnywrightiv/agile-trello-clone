@@ -35,7 +35,7 @@ const DeleteCard = (cardIndex) => {
   return (
     <Card.Footer>
       <FontAwesomeIcon className="float-right" onClick={() => handleClick(cardIndex)} icon={faTrashCan} />
-  </Card.Footer>
+    </Card.Footer>
   )
 }
 

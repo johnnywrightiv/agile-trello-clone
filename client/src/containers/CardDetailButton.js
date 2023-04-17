@@ -17,7 +17,7 @@ const CardDetailButton = (cardIndex) => {
     const clickedCardIndex = index.cardIndex;
     const columnCards = columns[columnIndex].cardInfo;
     const clickedCardId = columnCards[clickedCardIndex]._id
-    console.log(clickedCardId);
+
     dispatch(fetchCardByIdAction(clickedCardId));
     dispatch(setCardDetailModalOpen(true));
   }

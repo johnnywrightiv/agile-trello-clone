@@ -9,9 +9,8 @@ import { setCreateCardModalClosed } from "../features/modalOpenSlice";
 const CreateCardForm = () => {
   const boardData = useSelector((state) => state.boardById.board);
   const columnIds = boardData.columnInfo.map(column => column._id);
-  console.log(columnIds);
   const columnIndex = useSelector((state) => state.columnIndex.index);
-  console.log(columnIndex)
+
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
 

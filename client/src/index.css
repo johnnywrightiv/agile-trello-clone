@@ -23,7 +23,8 @@ code {
 }
 
 .board-title,
-.card-title,
+.fa-pencil,
+.fa-trash-can,
 .column-header {
   cursor: pointer;
 }

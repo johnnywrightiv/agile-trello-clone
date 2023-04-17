@@ -20,7 +20,7 @@ const BoardsView = () => {
 
   useEffect(() => {
     dispatch(fetchBoardsAction());
-  }, []); 
+  }, [dispatch]); 
 
   const handleClick = async (e) => {
     const id = e.currentTarget.id;
@@ -33,7 +33,7 @@ const BoardsView = () => {
     if (boardsArray && boardsArray.length > 0) {
     return boardsArray.map((board) => (
       <Col sm={4} key={board._id} id={board._id} onClick={handleClick}>
-        <Card>
+        <Card className="board-title">
           <Card.Body>
             <Card.Title>{board.title}</Card.Title>
           </Card.Body>
