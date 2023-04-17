@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCardByIdAction, updateCardTitleAction } from "../features/cardDetailSlice";
+import { updateCardTitleAction } from "../features/cardDetailSlice";
 
 
 
@@ -35,7 +35,6 @@ const CardTitleChange = () => {
       title: newCardTitle
     }
     await dispatch(updateCardTitleAction(bodyRequest));
-    await dispatch(fetchCardByIdAction(cardId));
     setCardTitle(newCardTitle);
     setIsEditingCardTitle(false);
     reset();
