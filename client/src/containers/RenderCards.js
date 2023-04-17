@@ -1,7 +1,7 @@
 import { Card } from "react-bootstrap";
 import { useSelector } from "react-redux"
 import { useDrag } from 'react-dnd'
-import DeleteCard from "../components/DeleteCard";
+import DeleteCard from "./DeleteCard";
 import { ItemTypes } from "../components/ItemTypes";
 import CardDetailButton from "./CardDetailButton";
 

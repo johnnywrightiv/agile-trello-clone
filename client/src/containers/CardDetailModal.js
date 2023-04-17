@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCardDetailModalClosed } from "../features/modalOpenSlice";
 import CardTextChange from "./CardTextChange";
 import CardTitleChange from "./CardTitleChange";
+import RenderCardComments from "./RenderCardComments";
 
 
 const CardDetailModal = () => {
@@ -24,6 +25,8 @@ const CardDetailModal = () => {
       </Modal.Header>
       <Modal.Body>
         <CardTextChange />
+        <hr className="board-divider" />
+        <RenderCardComments />
       </Modal.Body>
     </Modal>
   )

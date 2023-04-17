@@ -33,13 +33,13 @@ const ColumnTitleChange = ({ columnIndex, columnTitle }) => {
     await dispatch(fetchColumnsAction(boardId));
     setIsEditingColumnTitle(false);
     reset();
-}
+};
 
 const handleColumnTitleClick = (columnIndex) => {
   setIsEditingColumnTitle(true);
   setEditingColumnIndex(columnIndex);
-  // setColumnTitle(columns[columnIndex].title);
 };
+
   return (
     <>
       {isEditingColumnTitle && editingColumnIndex === columnIndex ? (
