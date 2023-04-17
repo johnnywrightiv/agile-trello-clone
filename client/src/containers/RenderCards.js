@@ -15,11 +15,12 @@ const RenderCards = (columnIndex) => {
   }))
 
   const columns = useSelector((state) => state.boardColumns.columns);
-
+  // columnIndex from props
   const index = columnIndex.columnIndex;
+  // array of cards from the store
   const cards = columns[index].cardInfo;
 
-
+  // logic to render cards
   return (
     <>
       { cards ? <>{cards.map((card, cardIndex) => (
@@ -29,7 +30,7 @@ const RenderCards = (columnIndex) => {
           cursor: 'move',
         }}>
           <Card.Header className="hstack card-title">
-            <p>{card.title}</p>
+            <Card.Title>{card.title}</Card.Title>
             <CardDetailButton cardIndex={cardIndex} />
           </Card.Header>
           <Card.Body>

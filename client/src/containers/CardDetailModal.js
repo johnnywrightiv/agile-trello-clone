@@ -1,6 +1,8 @@
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { setCardDetailModalClosed } from "../features/modalOpenSlice";
+import CardTextChange from "./CardTextChange";
+import CardTitleChange from "./CardTitleChange";
 
 
 const CardDetailModal = () => {
@@ -14,13 +16,16 @@ const CardDetailModal = () => {
   const handleModalClose = () => {
     dispatch(setCardDetailModalClosed());
   }
+
   return (
     <Modal show={isOpen} onHide={handleModalClose}>
       <Modal.Header closeButton>
-        <Modal.Title>{cardDetails.title}</Modal.Title>
+        <Modal.Title>
+          <CardTitleChange />
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {cardDetails.text}
+        <CardTextChange />
       </Modal.Body>
     </Modal>
   )
