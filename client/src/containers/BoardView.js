@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { createContext, useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -7,6 +7,8 @@ import { fetchBoardByIdAction } from '../features/boardByIdSlice';
 import NonAuthView from '../components/NonAuthView';
 import { fetchColumnsAction } from '../features/columnsSlice';
 import BoardTitleChange from './BoardTitleChange';
+
+export const BoardIdContext = createContext();
 
 const BoardView = () => {
   // connections to the redux store
@@ -29,13 +31,15 @@ const BoardView = () => {
   return (
     <>
     { userIsLoggedIn ? 
-      <Container className="board-view pt-5">
-        <BoardTitleChange />
-        <hr className="board-divider" />
-        <Row className="column-row flex-nowrap overflow-auto" >
-          <RenderColumns boardId={boardId}/>
-        </Row> 
-      </Container>  : <NonAuthView />  }
+      <BoardIdContext.Provider value={boardId}>
+        <Container className="board-view pt-5">
+          <BoardTitleChange />
+          <hr className="board-divider" />
+          <Row className="column-row flex-nowrap overflow-auto" >
+            <RenderColumns boardId={boardId}/>
+          </Row> 
+        </Container>
+      </BoardIdContext.Provider>  : <NonAuthView />  }
     </>
    
   )

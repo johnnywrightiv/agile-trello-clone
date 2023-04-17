@@ -1,6 +1,6 @@
 import CreateCardForm from "./CreateCardForm";
 import { useDispatch, useSelector } from "react-redux";
-import { setSecondModalClosed } from "../features/modalOpenSlice";
+import { setCreateCardModalClosed } from "../features/modalOpenSlice";
 import { Modal } from "react-bootstrap";
 
   
@@ -10,7 +10,7 @@ const CreateCardModal = () => {
   const dispatch = useDispatch();
 
   const handleModalClose = () => {
-    dispatch(setSecondModalClosed());
+    dispatch(setCreateCardModalClosed());
   }
   return (
     <Modal show={isOpen} onHide={handleModalClose}>

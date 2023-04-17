@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   open: false,
-  secondOpen: false
+  createCardOpen: false,
+  cardDetailOpen: false,
 }
 
 const modalOpenSlice = createSlice({
@@ -16,16 +17,22 @@ const modalOpenSlice = createSlice({
     setModalClosed: (state, action) => {
       state.open = false;
     },
-    setSecondModalOpen: (state, action) => {
-      state.secondOpen = true;
+    setCreateCardModalOpen: (state, action) => {
+      state.createCardOpen = true;
     },
-    setSecondModalClosed: (state, action) => {
-      state.secondOpen = false;
+    setCreateCardModalClosed: (state, action) => {
+      state.createCardOpen = false;
     },
+    setCardDetailModalOpen: (state, action) => {
+      state.cardDetailOpen = true;
+    },
+    setCardDetailModalClosed: (state, action) => {
+      state.cardDetailOpen = false;
+    }
   },
 });
 
 const { reducer, actions } = modalOpenSlice;
 
-export const { setModalOpen, setModalClosed, setSecondModalOpen, setSecondModalClosed } = actions;
+export const { setModalOpen, setModalClosed, setCreateCardModalOpen, setCreateCardModalClosed, setCardDetailModalOpen, setCardDetailModalClosed } = actions;
 export default reducer;

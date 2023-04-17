@@ -2,7 +2,7 @@ import { Button } from "react-bootstrap"
 import { useDispatch } from "react-redux";
 import CreateCardModal from "../containers/CreateCardModal";
 import { setColumnIndex } from "../features/columnInfoSlice";
-import { setSecondModalOpen } from "../features/modalOpenSlice";
+import { setCreateCardModalOpen } from "../features/modalOpenSlice";
 
 
 const CreateCardButton = (columnIndex) => {
@@ -12,7 +12,7 @@ const CreateCardButton = (columnIndex) => {
     const index = columnIndex.columnIndex;
     console.log(index);
     dispatch(setColumnIndex(index));
-    dispatch(setSecondModalOpen());
+    dispatch(setCreateCardModalOpen());
   }
 
   return (

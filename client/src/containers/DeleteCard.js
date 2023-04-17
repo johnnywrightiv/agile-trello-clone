@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { deleteCardAction } from "../features/cardsSlice";
 import { fetchColumnsAction } from "../features/columnsSlice";
-import { ColumnIndexContext } from "../containers/RenderColumns";
+import { ColumnIndexContext } from "./RenderColumns";
 
 
 const DeleteCard = (cardIndex) => {

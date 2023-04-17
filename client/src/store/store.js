@@ -4,6 +4,7 @@ import boardByIdReducer from '../features/boardByIdSlice';
 import columnsInfoReducer from '../features/columnInfoSlice';
 import columnsReducer from '../features/columnsSlice';
 import cardsReducer from '../features/cardsSlice';
+import cardByIdReducer from '../features/cardDetailSlice';
 import userAuthReducer from '../features/userAuthSlice';
 import authMessageReducer from '../features/authMessageSlice';
 import modalOpenClosedReducer from '../features/modalOpenSlice'
@@ -18,6 +19,7 @@ export const store = configureStore({
     boardColumns: columnsReducer,
     columnIndex: columnsInfoReducer,
     columnCards: cardsReducer,
+    cardById: cardByIdReducer,
     userAuth: userAuthReducer,
     authMessage: authMessageReducer,
     isModalOpen: modalOpenClosedReducer,

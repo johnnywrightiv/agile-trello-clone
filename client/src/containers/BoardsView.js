@@ -3,11 +3,9 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoardsAction } from '../features/boardsSlice';
-import CreateBoard from '../components/CreateBoardButton';
 import { fetchBoardByIdAction } from '../features/boardByIdSlice';
 import { fetchColumnsAction } from '../features/columnsSlice';
 import NonAuthView from '../components/NonAuthView';
-import { fetchCardsAction } from '../features/cardsSlice';
 import CreateBoardButton from '../components/CreateBoardButton';
 
 
