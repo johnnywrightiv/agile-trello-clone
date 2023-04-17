@@ -35,5 +35,5 @@ code {
 
 .card-column {
   width: 20rem;
+  height: fit-content;
 }
-
