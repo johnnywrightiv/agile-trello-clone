@@ -1,18 +1,12 @@
 import { Card } from "react-bootstrap";
 import { useSelector } from "react-redux"
-import { useDrag } from 'react-dnd'
+import { Draggable } from 'react-beautiful-dnd';
 import DeleteCard from "./DeleteCard";
-import { ItemTypes } from "../components/ItemTypes";
 import CardDetailButton from "./CardDetailButton";
 
 
 const RenderCards = (columnIndex) => {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.CARD,
-    collect: monitor => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  }))
+
 
   const columns = useSelector((state) => state.boardColumns.columns);
   // columnIndex from props
@@ -24,20 +18,25 @@ const RenderCards = (columnIndex) => {
   return (
     <>
       { cards ? <>{cards.map((card, cardIndex) => (
-        <Card className="card mb-3" key={card._id} ref={drag}
-        style={{
-          opacity: isDragging ? 0.5 : 1,
-          cursor: 'move',
-        }}>
-          <Card.Header className="hstack card-title">
-            <Card.Title>{card.title}</Card.Title>
-            <CardDetailButton cardIndex={cardIndex} />
-          </Card.Header>
-          <Card.Body>
-            {card.text}
-          </Card.Body>
-          <DeleteCard cardIndex={cardIndex}/>
-        </Card>
+        <Draggable draggableId={card._id} index={cardIndex} key={card._id}>
+          {(provided) => (
+            <Card 
+              className="card mb-3"
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              ref={provided.innerRef}
+            >
+            <Card.Header className="hstack card-title">
+              <Card.Title>{card.title}</Card.Title>
+              <CardDetailButton cardIndex={cardIndex} />
+            </Card.Header>
+            <Card.Body>
+              {card.text}
+            </Card.Body>
+            <DeleteCard cardIndex={cardIndex}/>
+          </Card>
+          )}
+        </Draggable>
       ))} </>: <div></div>}
     </>
   )

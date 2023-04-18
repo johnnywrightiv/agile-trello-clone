@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DragDropContext } from 'react-beautiful-dnd';
+
 import NavBar from './components/Navbar';
 import HomePage from './components/HomePage';
 import NotFound from './components/NotFound';
@@ -13,6 +13,10 @@ import BoardView from './containers/BoardView';
 
 
 function App() {
+
+  const onDragEnd = result => {
+
+  };
   return (
     <>
       {/* Nav Container */}
@@ -23,7 +27,7 @@ function App() {
     <br />
     
       {/* Body Container (render components within this container. can just use rows in the components i think)*/}
-      <DndProvider backend={HTML5Backend}>
+      <DragDropContext onDragEnd={onDragEnd}>
         <Container className="md-4 mt-5">
             <Routes>
               <Route exact path="/" element={<HomePage />} />
@@ -33,7 +37,7 @@ function App() {
               <Route exact path="/login" element={<LoginForm />} />
             </Routes>
         </Container>
-      </DndProvider>
+        </DragDropContext>
     </>
   );
 }

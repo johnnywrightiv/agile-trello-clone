@@ -1,10 +1,9 @@
 import { createContext } from "react";
-import { Card, Col, Row } from "react-bootstrap";
-import { useDrag } from "react-dnd";
+import { Card, Row } from "react-bootstrap";
+import { Droppable } from 'react-beautiful-dnd';
 import { useSelector } from "react-redux";
 import CreateCardButton from "../components/CreateCardButton";
 import CreateColumnButton from "../components/CreateColumnButton";
-import { ItemTypes } from "../components/ItemTypes";
 import ColumnTitleChange from "./ColumnTitleChange";
 import RenderCards from "./RenderCards";
 
@@ -15,29 +14,27 @@ const RenderColumns = () => {
   
   // const [ columnTitle, setColumnTitle ] = useState();
   const columns = useSelector((state) => state.boardColumns.columns);
-  
-  // Drag Funcitonality
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.COLUMN,
-    collect: monitor => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  }))
 
   const columnRender = () => {
     return (
       <>
         {columns.map((column, columnIndex) => (
           <ColumnIndexContext.Provider value={columnIndex} key={column._id}>
-            <Card className="card-column m-2" ref={drag}
-        style={{
-          opacity: isDragging ? 0.5 : 1,
-          cursor: 'move',
-        }}>
+            <Card className="card-column m-2">
               <Card.Header className="d-flex justify-content-between align-items-center mb-2 column-header">
                 <ColumnTitleChange columnIndex={columnIndex} columnTitle={column.title} />
               </Card.Header>
-              <RenderCards columnIndex={columnIndex} />  
+              <Droppable droppableId={column._id}>
+                {(provided) => (
+                  <Card.Body
+                    ref={provided.innerRef} 
+                    {...provided.droppableProps} 
+                  >
+                    <RenderCards columnIndex={columnIndex}/>
+                    {provided.placeholder}
+                  </Card.Body>
+                )}
+              </Droppable> 
               <Card.Footer>
                 <CreateCardButton columnIndex={columnIndex}/> 
               </Card.Footer>
