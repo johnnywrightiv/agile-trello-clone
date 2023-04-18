@@ -52,10 +52,8 @@ const RenderColumns = () => {
       <>
         <Row className="column-row flex-nowrap overflow-auto" >
           {columnRender()}
-        </Row>
-        <Col className="add-column" xs={4} md={3}>
           <CreateColumnButton />
-        </Col>
+        </Row>
       </>
   )
 }
