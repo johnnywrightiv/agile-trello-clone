@@ -8,7 +8,8 @@ const app = require('./app');
 const port = process.env.PORT || 8000;
 
 mongoose
-  .connect(process.env.MONGODB_URI)
+  // .connect(process.env.MONGODB_URI)
+  .connect("mongodb://localhost/trello")
   .then(() => {
     console.log("Connected to database");
   })
