@@ -8,14 +8,46 @@ import HomePage from './components/HomePage';
 import NotFound from './components/NotFound';
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './containers/LoginForm';
-import BoardView from './containers/BoardView';
+import BoardView from './containers/boards/BoardView';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 
 
 function App() {
+  const columnsData = useSelector((state) => state.boardColumns.columns);
+  const [ columns, setColumns ] = useState(columnsData);
 
   const onDragEnd = result => {
+    const { destination, source, draggableId } = result;
 
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    console.log(result);
+    
+   
+    // console.log(index)
+    // const column = columns[source.droppableId];
+    // console.log(source.droppableId);
+    // console.log(column);
+    // const newCardInfo = Array.from(column.cardInfo);
+    // newCardInfo.splice(source.index, 1);
+    // newCardInfo.splice(destination.index, 0, draggableId);
+
+    // const newColumn = {
+    //   ...column,
+    //   cardInfo: newCardInfo
+    // }
+    // console.log(newColumn);
   };
   return (
     <>

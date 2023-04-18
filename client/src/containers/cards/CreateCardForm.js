@@ -1,9 +1,9 @@
 import { Form, Button, FloatingLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { addCardAction } from "../features/cardsSlice";
-import { fetchColumnsAction } from "../features/columnsSlice";
-import { setCreateCardModalClosed } from "../features/modalOpenSlice";
+import { addCardAction } from "../../features/cardsSlice";
+import { fetchColumnsAction } from "../../features/columnsSlice";
+import { setCreateCardModalClosed } from "../../features/modalOpenSlice";
 
 // Form to Ceate Card for User Board Column
 const CreateCardForm = () => {

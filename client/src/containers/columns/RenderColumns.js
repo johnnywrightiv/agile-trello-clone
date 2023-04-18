@@ -2,10 +2,10 @@ import { createContext } from "react";
 import { Card, Row } from "react-bootstrap";
 import { Droppable } from 'react-beautiful-dnd';
 import { useSelector } from "react-redux";
-import CreateCardButton from "../components/CreateCardButton";
-import CreateColumnButton from "../components/CreateColumnButton";
+import CreateCardButton from "../../components/CreateCardButton";
+import CreateColumnButton from "../../components/CreateColumnButton";
 import ColumnTitleChange from "./ColumnTitleChange";
-import RenderCards from "./RenderCards";
+import RenderCards from "../cards/RenderCards";
 
 export const ColumnIndexContext = createContext();
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateCardLabelAction } from '../features/cardDetailSlice';
+import { updateCardLabelAction } from '../../features/cardDetailSlice';
 
 function CardLabels() {
   const card = useSelector((state) => state.cardById.card)

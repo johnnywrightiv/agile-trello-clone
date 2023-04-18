@@ -2,8 +2,8 @@ import { useContext, useState } from "react";
 import { Card, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchColumnsAction, updateColumnTitleAction } from "../features/columnsSlice";
-import { BoardIdContext } from "./BoardView";
+import { fetchColumnsAction, updateColumnTitleAction } from "../../features/columnsSlice";
+import { BoardIdContext } from "../boards/BoardView";
 
 
 

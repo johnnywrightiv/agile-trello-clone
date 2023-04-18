@@ -3,9 +3,9 @@ import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { deleteCardAction } from "../features/cardsSlice";
-import { fetchColumnsAction } from "../features/columnsSlice";
-import { ColumnIndexContext } from "./RenderColumns";
+import { deleteCardAction } from "../../features/cardsSlice";
+import { fetchColumnsAction } from "../../features/columnsSlice";
+import { ColumnIndexContext } from "../columns/RenderColumns";
 
 
 const DeleteCard = (cardIndex) => {

@@ -2,9 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import CardDetailModal from './CardDetailModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCardDetailModalOpen } from '../features/modalOpenSlice';
-import { fetchCardByIdAction } from '../features/cardDetailSlice';
-import { ColumnIndexContext } from "./RenderColumns";
+import { setCardDetailModalOpen } from '../../features/modalOpenSlice';
+import { fetchCardByIdAction } from '../../features/cardDetailSlice';
+import { ColumnIndexContext } from "../columns/RenderColumns";
 import { useContext } from 'react';
 
 const CardDetailButton = (cardIndex) => {

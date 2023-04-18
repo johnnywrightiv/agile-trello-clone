@@ -18,7 +18,7 @@ const RenderCards = (columnIndex) => {
   return (
     <>
       { cards ? <>{cards.map((card, cardIndex) => (
-        <Draggable draggableId={card._id} index={cardIndex} key={card._id}>
+        <Draggable draggableId={card._id} columnIndex={columnIndex} index={cardIndex} key={card._id}>
           {(provided) => (
             <Card 
               className="card mb-3"

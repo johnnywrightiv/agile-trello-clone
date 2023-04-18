@@ -2,7 +2,7 @@
 import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import OrgUsers from "../containers/OrgUsers";
-import Login from "../containers/LoginSignOut";
+import Login from "./Login";
 import SignUp from "./SignUp";
 import UserLogout from "./UserLogout";
 import { useSelector } from "react-redux";

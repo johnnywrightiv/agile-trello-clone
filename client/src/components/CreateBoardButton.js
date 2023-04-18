@@ -2,7 +2,7 @@ import { Col, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import { useDispatch } from "react-redux";
 import { setModalOpen } from "../features/modalOpenSlice";
-import CreateBoardModal from "../containers/CreateBoardModal";
+import CreateBoardModal from "../containers/boards/CreateBoardModal";
 
 
 const CreateBoardButton = () => {

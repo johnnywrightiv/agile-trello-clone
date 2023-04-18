@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Form, Card } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCardTextAction } from "../features/cardDetailSlice";
+import { updateCardTextAction } from "../../features/cardDetailSlice";
 
 
 const CardTextChange = () => {

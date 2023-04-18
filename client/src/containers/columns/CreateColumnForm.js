@@ -1,9 +1,9 @@
 import { Form, Button, FloatingLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBoardByIdAction } from "../features/boardByIdSlice";
-import { addColumnAction, fetchColumnsAction } from "../features/columnsSlice";
-import { setModalClosed } from "../features/modalOpenSlice";
+import { fetchBoardByIdAction } from "../../features/boardByIdSlice";
+import { addColumnAction, fetchColumnsAction } from "../../features/columnsSlice";
+import { setModalClosed } from "../../features/modalOpenSlice";
 
 // Form to Ceate Column for User Board
 const CreateColumnForm = () => {
