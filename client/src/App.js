@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { reorderCardsInSameColumn } from './features/cardsSlice';
+import { fetchBoardByIdAction } from './features/boardByIdSlice';
 
 
 
@@ -24,7 +25,7 @@ function App() {
 
   const dispatch = useDispatch();
 
-  const onDragEnd = result => {
+  const onDragEnd = async (result) => {
     const { destination, source, draggableId } = result;
 
     
@@ -42,9 +43,8 @@ function App() {
     // if card is dropped in the same column
     if (source.droppableId === destination.droppableId) {
       // locate the column in the store 
-      console.log(source.index);
-      console.log(destination.index);
       const column = columns.find(column => source.droppableId === column._id);
+      console.log(column);
       const cards = column.cardInfo;
       // logic to create an array of ids listing the card order in the column
       const cardOrderById = cards.map(card => card._id);
@@ -55,8 +55,9 @@ function App() {
         sameColumnId: column._id,
         sameColumnCardIds: cardOrderById
       }
-      console.log(requestBody)
-      dispatch(reorderCardsInSameColumn(requestBody))
+
+      await dispatch(reorderCardsInSameColumn(requestBody));
+      dispatch(fetchBoardByIdAction(column.boardId));
       
     }
 

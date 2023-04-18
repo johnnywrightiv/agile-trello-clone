@@ -14,8 +14,8 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleFormSubmit = (data) => {
-    dispatch(login(data));
+  const handleFormSubmit = async (data) => {
+    await dispatch(login(data));
   }
   
   useEffect(() => {

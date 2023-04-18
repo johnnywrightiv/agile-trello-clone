@@ -14,7 +14,6 @@ const BoardView = () => {
   // connections to the redux store
   const userIsLoggedIn = useSelector((state) => state.userAuth.isLoggedIn);
 
-
   // retrieve boardId from url parameters
   const { boardId } = useParams();
   const dispatch = useDispatch();
