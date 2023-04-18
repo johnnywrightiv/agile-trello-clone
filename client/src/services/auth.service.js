@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = "http://localhost:3001/api/users/";
+const API_URL = "https://trello-clone-api-crxa.onrender.com/api/users/";
 
 const signup = (email, password, org) => {
   const signUpRequest = { 

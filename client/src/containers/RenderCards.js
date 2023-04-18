@@ -24,7 +24,7 @@ const RenderCards = (columnIndex) => {
   return (
     <>
       { cards ? <>{cards.map((card, cardIndex) => (
-        <Card className="card mb-3" key={cardIndex} ref={drag}
+        <Card className="card mb-3" key={card._id} ref={drag}
         style={{
           opacity: isDragging ? 0.5 : 1,
           cursor: 'move',
