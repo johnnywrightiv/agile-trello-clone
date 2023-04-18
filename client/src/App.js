@@ -11,16 +11,23 @@ import LoginForm from './containers/LoginForm';
 import BoardView from './containers/boards/BoardView';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { reorderCardsInSameColumn } from './features/cardsSlice';
+
 
 
 
 function App() {
-  const columnsData = useSelector((state) => state.boardColumns.columns);
-  const [ columns, setColumns ] = useState(columnsData);
+  const columns = useSelector((state) => state.boardColumns.columns);
+  const [ cardOrder, setCardOrder ] = useState();
+
+
+  const dispatch = useDispatch();
 
   const onDragEnd = result => {
     const { destination, source, draggableId } = result;
 
+    
     if (!destination) {
       return;
     }
@@ -31,23 +38,39 @@ function App() {
     ) {
       return;
     }
-
-    console.log(result);
     
-   
-    // console.log(index)
-    // const column = columns[source.droppableId];
-    // console.log(source.droppableId);
-    // console.log(column);
-    // const newCardInfo = Array.from(column.cardInfo);
-    // newCardInfo.splice(source.index, 1);
-    // newCardInfo.splice(destination.index, 0, draggableId);
+    // if card is dropped in the same column
+    if (source.droppableId === destination.droppableId) {
+      // locate the column in the store 
+      console.log(source.index);
+      console.log(destination.index);
+      const column = columns.find(column => source.droppableId === column._id);
+      const cards = column.cardInfo;
+      // logic to create an array of ids listing the card order in the column
+      const cardOrderById = cards.map(card => card._id);
+      const draggedCard = cardOrderById.splice(source.index, 1);
+      // updated card order
+      cardOrderById.splice(destination.index, 0, ...draggedCard);
+      const requestBody = {
+        sameColumnId: column._id,
+        sameColumnCardIds: cardOrderById
+      }
+      console.log(requestBody)
+      dispatch(reorderCardsInSameColumn(requestBody))
+      
+    }
 
-    // const newColumn = {
-    //   ...column,
-    //   cardInfo: newCardInfo
-    // }
-    // console.log(newColumn);
+    
+    // this.props.dispatch(sort(
+    //   source.droppableId,
+    //   destination.droppableId,
+    //   source.index,
+    //   destination.index,
+    //   draggableId
+    // ))
+    
+
+    // console.log(result);
   };
   return (
     <>

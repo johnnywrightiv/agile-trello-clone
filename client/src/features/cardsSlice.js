@@ -50,6 +50,20 @@ export const deleteCardAction = createAsyncThunk("card/delete", async(body, reje
   }
 });
 
+export const reorderCardsInSameColumn = createAsyncThunk("cards/reorder", async (body, rejectWithValue) => {
+  console.log(body);
+  try {
+    const { data } = await axios.patch(API_URL + 'same-reorder', body, authHeader());
+
+    return data;
+  } catch (error) {
+    if (!error?.response) {
+      throw error;
+    }
+    return rejectWithValue(error?.response?.data);
+  }
+})
+
 
 const initialState = {
   cards: [],

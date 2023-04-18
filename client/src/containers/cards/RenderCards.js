@@ -20,12 +20,12 @@ const RenderCards = (columnIndex) => {
       { cards ? <>{cards.map((card, cardIndex) => (
         <Draggable draggableId={card._id} columnIndex={columnIndex} index={cardIndex} key={card._id}>
           {(provided) => (
-            <Card 
-              className="card mb-3"
+            <div 
               {...provided.draggableProps}
               {...provided.dragHandleProps}
               ref={provided.innerRef}
             >
+            <Card className="card mb-3">
             <Card.Header className="hstack card-title">
               <Card.Title>{card.title}</Card.Title>
               <CardDetailButton cardIndex={cardIndex} />
@@ -35,6 +35,7 @@ const RenderCards = (columnIndex) => {
             </Card.Body>
             <DeleteCard cardIndex={cardIndex}/>
           </Card>
+          </div>
           )}
         </Draggable>
       ))} </>: <div></div>}

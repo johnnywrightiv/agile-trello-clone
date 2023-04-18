@@ -47,7 +47,7 @@ export const updateColumnTitleAction = createAsyncThunk("columnTitle/update", as
     }
     return rejectWithValue(error?.response?.data);
   }
-})
+});
 
 const initialState = {
   columns: [],
