@@ -30,7 +30,7 @@ const CardDetailModal = () => {
       </Modal.Header>
       <Modal.Body>
         <CardLabels />
-        <h4> Description </h4>
+        <Modal.Title> Description </Modal.Title>
         <CardTextChange />
         <hr className="board-divider" />
         <RenderCardComments />

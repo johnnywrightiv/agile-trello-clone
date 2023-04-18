@@ -1,15 +1,19 @@
+import { Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import CardCommentForm from "./CardCommentForm";
 
 const RenderCardComments = () => {
   const userAuth = useSelector(state => state.userAuth);
+  
 
   return (
     <>
-    <h4> Comments & Activity </h4>
+    <Modal.Title> Comments & Activity </Modal.Title>
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <span className='user-circle'>{userAuth.user[0].toUpperCase()}</span> 
-      <span>a comment or activity log item</span>
+      <Modal.Body>a comment or activity log item</Modal.Body>
     </div>
+    <CardCommentForm />
     </>
   )
 }
