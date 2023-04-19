@@ -7,7 +7,7 @@ import HomePage from './components/HomePage';
 import NotFound from './components/NotFound';
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './containers/LoginForm';
-import BoardView from './containers/Boards/BoardView';
+import BoardView from './containers/boards/BoardView';
 import { useSelector } from 'react-redux';
 import { reorderCardsInSameColumn } from './features/cardsSlice';
 import { fetchBoardByIdAction } from './features/boardByIdSlice';

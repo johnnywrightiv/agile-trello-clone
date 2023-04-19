@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap"
 import { useDispatch } from "react-redux";
-import CreateCardModal from "../containers/Cards/CreateCardModal";
+import CreateCardModal from "../containers/cards/CreateCardModal";
 import { setColumnIndex } from "../features/columnInfoSlice";
 import { setCreateCardModalOpen } from "../features/modalOpenSlice";
 

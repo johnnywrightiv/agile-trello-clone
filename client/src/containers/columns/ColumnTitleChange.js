@@ -3,8 +3,8 @@ import { Card, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBoardByIdAction } from "../../features/boardByIdSlice";
-import { fetchColumnsAction, updateColumnTitleAction } from "../../features/columnsSlice";
-import { BoardIdContext } from "../Boards/BoardView";
+import {  updateColumnTitleAction } from "../../features/columnsSlice";
+import { BoardIdContext } from "../boards/BoardView";
 
 
 

@@ -6,7 +6,7 @@ import { login } from "../features/userAuthSlice"
 import { useNavigate } from "react-router";
 import { fetchBoardsAction } from "../features/boardsSlice";
 import { useEffect, useState } from "react";
-import LoginAlert from ".LoginAlert";
+import LoginAlert from "./LoginAlert";
 
 const LoginForm = () => {
   const user = useSelector((state) => state.userAuth);

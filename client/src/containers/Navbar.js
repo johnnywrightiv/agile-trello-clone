@@ -6,7 +6,7 @@ import Login from "../components/Login";
 import SignUp from "../components/SignUp";
 import UserLogout from "../components/UserLogout";
 import { useSelector } from "react-redux";
-import logoImage from "./check.png";
+import logoImage from "../components/check.png";
 
 const NavBar = () => {
   const userIsLoggedIn = useSelector((state) => state.userAuth.isLoggedIn)
