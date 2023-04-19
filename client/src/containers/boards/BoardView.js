@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 import RenderColumns from '../columns/RenderColumns';
 import { fetchBoardByIdAction } from '../../features/boardByIdSlice';
 import NonAuthView from '../../components/NonAuthView';
-import { fetchColumnsAction } from '../../features/columnsSlice';
 import BoardTitleChange from './BoardTitleChange';
 
 export const BoardIdContext = createContext();
@@ -13,6 +12,7 @@ export const BoardIdContext = createContext();
 const BoardView = () => {
   // connections to the redux store
   const userIsLoggedIn = useSelector((state) => state.userAuth.isLoggedIn);
+  const board = useSelector((state) => state.boardById.board);
 
   // retrieve boardId from url parameters
   const { boardId } = useParams();
@@ -21,8 +21,6 @@ const BoardView = () => {
   useEffect(() => {
     const refresh = async () => {
     await dispatch(fetchBoardByIdAction(boardId));
-    await dispatch(fetchColumnsAction(boardId));
-
     }
     refresh();
   }, [ ]);

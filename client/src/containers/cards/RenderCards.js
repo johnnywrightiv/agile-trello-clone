@@ -3,21 +3,26 @@ import { useSelector } from "react-redux"
 import { Draggable } from 'react-beautiful-dnd';
 import DeleteCard from "./DeleteCard";
 import CardDetailButton from "./CardDetailButton";
+import { useEffect } from "react";
 
 
 const RenderCards = (columnIndex) => {
 
-
-  const columns = useSelector((state) => state.boardColumns.columns);
+  const board = useSelector((state) => state.boardById.board);
+  const columns = board.columnInfo;
   // columnIndex from props
   const index = columnIndex.columnIndex;
   // array of cards from the store
   const cards = columns[index].cardInfo;
 
+  useEffect(() => {
+
+  }, [columns])
+
   // logic to render cards
   return (
     <>
-      { cards ? <>{cards.map((card, cardIndex) => (
+      { cards ? <> {cards.map((card, cardIndex) => (
         <Draggable draggableId={card._id} columnIndex={columnIndex} index={cardIndex} key={card._id}>
           {(provided) => (
             <div 

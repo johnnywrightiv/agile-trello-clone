@@ -13,7 +13,8 @@ export const ColumnIndexContext = createContext();
 const RenderColumns = () => {
   
   // const [ columnTitle, setColumnTitle ] = useState();
-  const columns = useSelector((state) => state.boardColumns.columns);
+  const board = useSelector((state) => state.boardById.board);
+  const columns = board.columnInfo;
 
   const columnRender = () => {
     return (

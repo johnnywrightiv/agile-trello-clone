@@ -3,14 +3,13 @@ import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import { DragDropContext } from 'react-beautiful-dnd';
 
-import NavBar from './components/Navbar';
+import NavBar from './containers/Navbar';
 import HomePage from './components/HomePage';
 import NotFound from './components/NotFound';
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './containers/LoginForm';
 import BoardView from './containers/boards/BoardView';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { reorderCardsInSameColumn } from './features/cardsSlice';
 import { fetchBoardByIdAction } from './features/boardByIdSlice';
@@ -19,8 +18,8 @@ import { fetchBoardByIdAction } from './features/boardByIdSlice';
 
 
 function App() {
-  const columns = useSelector((state) => state.boardColumns.columns);
-  const [ cardOrder, setCardOrder ] = useState();
+  const board = useSelector((state) => state.boardById.board);
+  const columns = board.columnInfo;
 
 
   const dispatch = useDispatch();
@@ -44,20 +43,20 @@ function App() {
     if (source.droppableId === destination.droppableId) {
       // locate the column in the store 
       const column = columns.find(column => source.droppableId === column._id);
-      console.log(column);
       const cards = column.cardInfo;
       // logic to create an array of ids listing the card order in the column
       const cardOrderById = cards.map(card => card._id);
       const draggedCard = cardOrderById.splice(source.index, 1);
       // updated card order
       cardOrderById.splice(destination.index, 0, ...draggedCard);
+
       const requestBody = {
         sameColumnId: column._id,
         sameColumnCardIds: cardOrderById
       }
 
       await dispatch(reorderCardsInSameColumn(requestBody));
-      dispatch(fetchBoardByIdAction(column.boardId));
+      await dispatch(fetchBoardByIdAction(column.boardId));
       
     }
 

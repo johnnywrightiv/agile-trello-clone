@@ -1,10 +1,10 @@
 
 import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
-import OrgUsers from "../containers/OrgUsers";
-import Login from "./Login";
-import SignUp from "./SignUp";
-import UserLogout from "./UserLogout";
+import OrgUsers from "./OrgUsers";
+import Login from "../components/Login";
+import SignUp from "../components/SignUp";
+import UserLogout from "../components/UserLogout";
 import { useSelector } from "react-redux";
 
 const NavBar = () => {

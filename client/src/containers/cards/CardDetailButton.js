@@ -8,7 +8,8 @@ import { ColumnIndexContext } from "../columns/RenderColumns";
 import { useContext } from 'react';
 
 const CardDetailButton = (cardIndex) => {
-  const columns = useSelector((state) => state.boardColumns.columns);
+  const board = useSelector((state) => state.boardById.board);
+  const columns = board.columnInfo;
   const columnIndex = useContext(ColumnIndexContext);
   
   // need to get columnIndex

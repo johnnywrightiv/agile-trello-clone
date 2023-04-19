@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Card, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchBoardByIdAction } from "../../features/boardByIdSlice";
 import { fetchColumnsAction, updateColumnTitleAction } from "../../features/columnsSlice";
 import { BoardIdContext } from "../boards/BoardView";
 
@@ -9,7 +10,8 @@ import { BoardIdContext } from "../boards/BoardView";
 
 const ColumnTitleChange = ({ columnIndex, columnTitle }) => {
   // access columns for the viewed board from the redux store
-  const columns = useSelector((state) => state.boardColumns.columns);
+  const board = useSelector((state) => state.boardById.board);
+  const columns = board.columnInfo;
   // local state to control editing status
   const [ isEditingColumnTitle, setIsEditingColumnTitle ] = useState (false);
   // local state to set the index of the column being edited
@@ -30,7 +32,7 @@ const ColumnTitleChange = ({ columnIndex, columnTitle }) => {
     }
 
     await dispatch(updateColumnTitleAction(requestBody));
-    await dispatch(fetchColumnsAction(boardId));
+    await dispatch(fetchBoardByIdAction(boardId));
     setIsEditingColumnTitle(false);
     reset();
 };

@@ -8,6 +8,7 @@ import CardTextChange from "./CardTextChange";
 import CardTitleChange from "./CardTitleChange";
 import RenderCardComments from "./RenderCardComments";
 import CardLabels from "./CardLabels"
+import { fetchBoardByIdAction } from "../../features/boardByIdSlice";
 
 
 const CardDetailModal = () => {
@@ -17,7 +18,7 @@ const CardDetailModal = () => {
   const dispatch = useDispatch();
 
   const handleModalClose = async () => {
-    await dispatch(fetchColumnsAction(boardId))
+    await dispatch(fetchBoardByIdAction(boardId))
     dispatch(setCardDetailModalClosed());
   }
 

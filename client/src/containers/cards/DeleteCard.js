@@ -6,11 +6,13 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { deleteCardAction } from "../../features/cardsSlice";
 import { fetchColumnsAction } from "../../features/columnsSlice";
 import { ColumnIndexContext } from "../columns/RenderColumns";
+import { fetchBoardByIdAction } from "../../features/boardByIdSlice";
 
 
 const DeleteCard = (cardIndex) => {
-  const boardId = useSelector((state) => state.boardById.board._id);
-  const columns = useSelector((state) => state.boardColumns.columns);
+  const board = useSelector((state) => state.boardById.board);
+  const columns = board.columnInfo;
+  const boardId = board._id;
 
   const columnIndex = useContext(ColumnIndexContext);
   const allBoardCardInfo = columns.map(card => card.cardInfo);
@@ -20,16 +22,13 @@ const DeleteCard = (cardIndex) => {
   const dispatch = useDispatch();
 
   const handleClick = async (index) => {
-    const columnId = columns[columnIndex]._id;
     const cardId = columnCards[index.cardIndex]._id;
-
     const requestBody = {
-      columnId: columnId,
       cardId: cardId
     }
-
+    
     await dispatch(deleteCardAction(requestBody));
-    await dispatch(fetchColumnsAction(boardId));
+    await dispatch(fetchBoardByIdAction(boardId));
   }
 
   return (
