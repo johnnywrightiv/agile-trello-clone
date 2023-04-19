@@ -6,7 +6,7 @@ const OrgUsers = () => {
 
   return (
     <Dropdown>
-      <Dropdown.Toggle variant="light" id="dropdown-members">
+      <Dropdown.Toggle className="nav-dropdowns" variant="light" id="dropdown-members">
         Members ({members.length})
       </Dropdown.Toggle>
       <Dropdown.Menu>

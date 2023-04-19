@@ -18,7 +18,7 @@ const NavBar = () => {
         <>
           <OrgUsers />
           <Dropdown>
-            <Dropdown.Toggle variant="light" id="dropdown-logout">
+            <Dropdown.Toggle className="nav-dropdowns" variant="light" id="dropdown-logout">
               {userEmail}
             </Dropdown.Toggle>
             <Dropdown.Menu>
