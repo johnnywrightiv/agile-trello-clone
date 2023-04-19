@@ -7,6 +7,7 @@ import { BoardIdContext } from "./BoardView";
 import CardTextChange from "./CardTextChange";
 import CardTitleChange from "./CardTitleChange";
 import RenderCardComments from "./RenderCardComments";
+import CardLabels from "./CardLabels"
 
 
 const CardDetailModal = () => {
@@ -28,6 +29,8 @@ const CardDetailModal = () => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <CardLabels />
+        <h4> Description </h4>
         <CardTextChange />
         <hr className="board-divider" />
         <RenderCardComments />

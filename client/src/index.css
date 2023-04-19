@@ -1,3 +1,37 @@
+:root {
+  /* Main colors */
+  --main-color: #00adff;
+  --secondary-color: #292946c7;
+  --accent-color: #5d90d2;
+  --bg-color: #fff;
+
+  /* Gradient */
+  --gradient: linear-gradient(
+    to right,
+    var(--main-color),
+    var(--secondary-color)
+  );
+
+  /* Semi-Transparent Gradient */
+  --trans-gradient: linear-gradient(
+    to right,
+    rgba(0, 174, 255, 0.435),
+    rgba(93, 144, 210, 0.527)
+  );
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("https://i.pinimg.com/originals/cc/28/4c/cc284c4a55fe34f9b2d44085f37b7ff2.jpg");
+  opacity: 0.2;
+  z-index: -1;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -10,12 +44,6 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-
-.card-column {
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
 }
 
 .red-required {
@@ -36,4 +64,141 @@ code {
 .card-column {
   width: 20rem;
   height: fit-content;
+}
+
+.navbar {
+  background-image: var(--gradient);
+}
+
+.btn-primary {
+  background-color: var(--main-color);
+  border-color: var(--accent-color);
+  border-width: 2px;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.btn-outline-primary {
+  color: var(--main-color);
+  border-color: var(--accent-color);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--secondary-color);
+  color: var(--bg-color);
+}
+
+.btn-outline-secondary {
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--secondary-color);
+  color: var(--bg-color);
+}
+
+.btn-outline-accent {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.btn-outline-accent:hover {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+}
+
+.red-required {
+  color: red;
+}
+
+.user-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.navbar-text {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.nav-dropdowns {
+  color: #ffffff;
+  background-color: var(--gradient);
+}
+
+.card {
+  background: var(--trans-gradient);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--accent-color);
+}
+
+.card-column {
+  /* Change this rgba value to change the column hue. Play with the a value for transparency */
+  background-color: rgba(196, 29, 46, 0.5);
+  padding: 10px;
+}
+
+.card-body {
+  background: var(--bg-color);
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+  font-size: 20px;
+  font-weight: 500;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--secondary-color);
+}
+
+.card-footer {
+  background-color: rgba(255, 255, 255, 0.85);
+  color: var(--accent-color);
+}
+
+.card-highlight {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+}
+
+.fa-pencil {
+  color: var(--accent-color);
+}
+
+.modal-content {
+  background: var(--trans-gradient);
+  border: none;
+  color: var(--secondary-color);
+}
+
+.modal-header {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-bottom: none;
+}
+
+.modal-body {
+  background: var(--bg-color);
+}
+
+.modal-backdrop.show {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+input[type="text"] {
+  border: 2px solid var(--accent-color);
 }

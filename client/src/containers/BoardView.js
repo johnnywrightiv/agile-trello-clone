@@ -35,9 +35,7 @@ const BoardView = () => {
         <Container className="board-view pt-5">
           <BoardTitleChange />
           <hr className="board-divider" />
-          <Row className="column-row flex-nowrap overflow-auto" >
-            <RenderColumns boardId={boardId}/>
-          </Row> 
+          <RenderColumns boardId={boardId}/>
         </Container>
       </BoardIdContext.Provider>  : <NonAuthView />  }
     </>

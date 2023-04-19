@@ -21,7 +21,7 @@ export const fetchCardsAction = createAsyncThunk("cards/fetch", async(id, reject
 });
 
 export const addCardAction = createAsyncThunk("card/add", async(body, rejectWithValue) => {
-  console.log(body);
+
   try {
     const { data } = await axios.post(API_URL, body, authHeader());
 

@@ -33,8 +33,8 @@ const DeleteCard = (cardIndex) => {
   }
 
   return (
-    <Card.Footer className="align-items-right">
-      <FontAwesomeIcon className="justify-content-end" onClick={() => handleClick(cardIndex)} icon={faTrashCan} />
+    <Card.Footer className="d-flex justify-content-end">
+      <FontAwesomeIcon onClick={() => handleClick(cardIndex)} icon={faTrashCan} />
     </Card.Footer>
   )
 }

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
 import authHeader from "../services/auth-header";
 
-const API_URL = 'https://trello-clone-api-crxa.onrender.com/api/boards/'
+const API_URL = 'https://trello-clone-api-crxa.onrender.com/api/boards'
 
 
 //action
