@@ -36,10 +36,9 @@ export const addCardAction = createAsyncThunk("card/add", async(body, rejectWith
 
 export const deleteCardAction = createAsyncThunk("card/delete", async(body, rejectWithValue) => {
   const cardId = body.cardId;
-  const columnId = body.columnId;
 
   try {
-    const { data } = await axios.delete(API_URL + cardId + '/' + columnId,  authHeader());
+    const { data } = await axios.delete(API_URL + cardId,  authHeader());
 
     return data;
   } catch (error) {
@@ -49,6 +48,20 @@ export const deleteCardAction = createAsyncThunk("card/delete", async(body, reje
     return rejectWithValue(error?.response?.data);
   }
 });
+
+export const reorderCardsInSameColumn = createAsyncThunk("cards/reorder", async (body, rejectWithValue) => {
+  console.log(body);
+  try {
+    const { data } = await axios.patch(API_URL + 'same-column-reorder', body, authHeader());
+
+    return data;
+  } catch (error) {
+    if (!error?.response) {
+      throw error;
+    }
+    return rejectWithValue(error?.response?.data);
+  }
+})
 
 
 const initialState = {

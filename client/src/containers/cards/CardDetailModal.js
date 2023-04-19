@@ -1,13 +1,14 @@
 import { useContext } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchColumnsAction } from "../features/columnsSlice";
-import { setCardDetailModalClosed } from "../features/modalOpenSlice";
-import { BoardIdContext } from "./BoardView";
+import { fetchColumnsAction } from "../../features/columnsSlice";
+import { setCardDetailModalClosed } from "../../features/modalOpenSlice";
+import { BoardIdContext } from "../boards/BoardView";
 import CardTextChange from "./CardTextChange";
 import CardTitleChange from "./CardTitleChange";
 import RenderCardComments from "./RenderCardComments";
 import CardLabels from "./CardLabels"
+import { fetchBoardByIdAction } from "../../features/boardByIdSlice";
 
 
 const CardDetailModal = () => {
@@ -17,7 +18,7 @@ const CardDetailModal = () => {
   const dispatch = useDispatch();
 
   const handleModalClose = async () => {
-    await dispatch(fetchColumnsAction(boardId))
+    await dispatch(fetchBoardByIdAction(boardId))
     dispatch(setCardDetailModalClosed());
   }
 
@@ -30,7 +31,7 @@ const CardDetailModal = () => {
       </Modal.Header>
       <Modal.Body>
         <CardLabels />
-        <h4> Description </h4>
+        <Modal.Title> Description </Modal.Title>
         <CardTextChange />
         <hr className="board-divider" />
         <RenderCardComments />

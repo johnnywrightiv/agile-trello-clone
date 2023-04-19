@@ -1,16 +1,16 @@
 import { Button } from "react-bootstrap"
 import { useDispatch } from "react-redux";
-import CreateCardModal from "../containers/CreateCardModal";
+import CreateCardModal from "../containers/cards/CreateCardModal";
 import { setColumnIndex } from "../features/columnInfoSlice";
 import { setCreateCardModalOpen } from "../features/modalOpenSlice";
 
-
+// Button to open the Create Card Modal - accepts columnIndex props from RenderCards
 const CreateCardButton = (columnIndex) => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
     const index = columnIndex.columnIndex;
-    console.log(index);
+    
     dispatch(setColumnIndex(index));
     dispatch(setCreateCardModalOpen());
   }

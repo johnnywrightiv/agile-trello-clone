@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Form, Card } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCardTextAction } from "../features/cardDetailSlice";
+import { updateCardTextAction } from "../../features/cardDetailSlice";
 
 
 const CardTextChange = () => {
@@ -42,7 +42,7 @@ const CardTextChange = () => {
    return (
     <>
       {isEditingCardText ? <Form onSubmit={handleSubmit(handleFormSubmit)}>
-                    <Form.Control className="mb-3 col-4" type="text" placeholder="Enter New Card Text" required {...register("text", {required: true})} />
+                    <Form.Control className="mb-3 col-4" type="text" placeholder="Enter New Card Description" required {...register("text", {required: true})} />
                 </Form> : 
       <Card.Body className="card-text" onClick={handleCardTextClick}>
         {cardText}

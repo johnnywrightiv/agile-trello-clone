@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { login } from "../features/userAuthSlice"
 import { useNavigate } from "react-router";
+import { fetchBoardsAction } from "../features/boardsSlice";
 import { useEffect, useState } from "react";
 import LoginAlert from "./LoginAlert";
-
 
 const LoginForm = () => {
   const user = useSelector((state) => state.userAuth);
@@ -16,7 +16,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const handleFormSubmit = async (data) => {
+ const handleFormSubmit = async (data) => {
     setLoading(true);
     await dispatch(login(data));
     setLoading(false);
@@ -24,6 +24,7 @@ const LoginForm = () => {
   
   useEffect(() => {
     if (user.isLoggedIn) {
+      dispatch(fetchBoardsAction())
       navigate('/');
     } else {
       if (errorMessage.message) {

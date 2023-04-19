@@ -1,8 +1,8 @@
 import { Form, Button, FloatingLabel } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addBoardAction, fetchBoardsAction } from "../features/boardsSlice";
-import { setModalClosed } from "../features/modalOpenSlice";
+import { addBoardAction, fetchBoardsAction } from "../../features/boardsSlice";
+import { setModalClosed } from "../../features/modalOpenSlice";
 
 // Form to Create Board for User
 const CreateBoardForm = () => {

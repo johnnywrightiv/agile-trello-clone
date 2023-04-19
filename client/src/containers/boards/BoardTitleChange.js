@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBoardByIdAction, updateBoardTitleAction } from "../features/boardByIdSlice";
+import { fetchBoardByIdAction, updateBoardTitleAction } from "../../features/boardByIdSlice";
 
 
 

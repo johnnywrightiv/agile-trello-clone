@@ -1,11 +1,10 @@
 import React, { createContext, useEffect } from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import RenderColumns from './RenderColumns';
-import { fetchBoardByIdAction } from '../features/boardByIdSlice';
-import NonAuthView from '../components/NonAuthView';
-import { fetchColumnsAction } from '../features/columnsSlice';
+import RenderColumns from '../columns/RenderColumns';
+import { fetchBoardByIdAction } from '../../features/boardByIdSlice';
+import NonAuthView from '../../components/NonAuthView';
 import BoardTitleChange from './BoardTitleChange';
 
 export const BoardIdContext = createContext();
@@ -22,11 +21,9 @@ const BoardView = () => {
   useEffect(() => {
     const refresh = async () => {
     await dispatch(fetchBoardByIdAction(boardId));
-    await dispatch(fetchColumnsAction(boardId));
-
     }
     refresh();
-  }, [ ]);
+  }, [ dispatch ]);
   
   return (
     <>

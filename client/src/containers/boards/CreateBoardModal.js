@@ -1,6 +1,6 @@
 
 import { useDispatch, useSelector } from "react-redux";
-import { setModalClosed } from "../features/modalOpenSlice";
+import { setModalClosed } from "../../features/modalOpenSlice";
 import { Modal } from "react-bootstrap";
 import CreateBoardForm from "./CreateBoardForm";
 

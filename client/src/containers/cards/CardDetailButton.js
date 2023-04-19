@@ -2,13 +2,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import CardDetailModal from './CardDetailModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCardDetailModalOpen } from '../features/modalOpenSlice';
-import { fetchCardByIdAction } from '../features/cardDetailSlice';
-import { ColumnIndexContext } from "./RenderColumns";
+import { setCardDetailModalOpen } from '../../features/modalOpenSlice';
+import { fetchCardByIdAction } from '../../features/cardDetailSlice';
+import { ColumnIndexContext } from "../columns/RenderColumns";
 import { useContext } from 'react';
 
 const CardDetailButton = (cardIndex) => {
-  const columns = useSelector((state) => state.boardColumns.columns);
+  const board = useSelector((state) => state.boardById.board);
+  const columns = board.columnInfo;
   const columnIndex = useContext(ColumnIndexContext);
   
   // need to get columnIndex
