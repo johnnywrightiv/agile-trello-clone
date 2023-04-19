@@ -25,7 +25,6 @@ const BoardsView = () => {
   const handleClick = async (e) => {
     const id = e.currentTarget.id;
     await dispatch(fetchBoardByIdAction(id));
-    await dispatch(fetchColumnsAction(id));
     navigate('/boards/' + id);
   }
 

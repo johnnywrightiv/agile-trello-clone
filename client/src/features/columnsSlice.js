@@ -6,20 +6,6 @@ const API_URL = 'https://trello-clone-api-crxa.onrender.com/api/columns/'
 
 
 //action
-export const fetchColumnsAction = createAsyncThunk("columns/fetch", async(id, rejectWithValue) => {
-
-  try {
-    const { data } = await axios.get(API_URL + 'all/' + id, authHeader());
-
-    return data;
-  } catch (error) {
-    if (!error?.response) {
-      throw error;
-    }
-    return rejectWithValue(error?.response?.data);
-  }
-});
-
 export const addColumnAction = createAsyncThunk("column/add", async(body, rejectWithValue) => {
   // console.log(body);
   try {
@@ -49,28 +35,12 @@ export const updateColumnTitleAction = createAsyncThunk("columnTitle/update", as
   }
 });
 
-const initialState = {
-  columns: [],
-};
 
 const columnsSlice = createSlice({
   name: "ColumnColumns",
-  initialState,
+  initialState: {},
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchColumnsAction.pending, (state, action) => {
-      state.loading = true;
-    });
-    builder.addCase(fetchColumnsAction.fulfilled, (state, action) => {
-      state.columns = action?.payload.columns;
-      state.loading = false;
-      state.error = undefined;
-    });
-    builder.addCase(fetchColumnsAction.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action?.payload;
-      state.columns = null; 
-    });
     builder.addCase(addColumnAction.pending, (state, action) => {
       state.loading = true;
     });

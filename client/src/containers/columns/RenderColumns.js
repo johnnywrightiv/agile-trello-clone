@@ -12,7 +12,6 @@ export const ColumnIndexContext = createContext();
 // Renders in BoardView the id of the board is passed down as a prop
 const RenderColumns = () => {
   
-  // const [ columnTitle, setColumnTitle ] = useState();
   const board = useSelector((state) => state.boardById.board);
   const columns = board.columnInfo;
 
