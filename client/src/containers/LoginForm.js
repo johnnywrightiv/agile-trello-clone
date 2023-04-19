@@ -23,7 +23,7 @@ const LoginForm = () => {
       navigate('/');
     } else {
       if (errorMessage.message) {
-      console.log(errorMessage)
+      alert(errorMessage.message)
       }
     }
 }, [user, errorMessage]);

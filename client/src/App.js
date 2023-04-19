@@ -10,21 +10,15 @@ import SignUpForm from './components/SignUpForm';
 import LoginForm from './containers/LoginForm';
 import BoardView from './containers/BoardView';
 
-
-
 function App() {
   return (
     <>
-      {/* Nav Container */}
       <Container fluid>
         <NavBar />
       </Container>
-
     <br />
-    
-      {/* Body Container (render components within this container. can just use rows in the components i think)*/}
       <DndProvider backend={HTML5Backend}>
-        <Container className="md-4 mt-5">
+        <Container className="body-content md-4 pt-5 mt-5">
             <Routes>
               <Route exact path="/" element={<HomePage />} />
               <Route path="/boards/:boardId" element={<BoardView />} />
