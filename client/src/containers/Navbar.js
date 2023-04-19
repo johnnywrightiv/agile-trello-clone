@@ -6,6 +6,7 @@ import Login from "../components/Login";
 import SignUp from "../components/SignUp";
 import UserLogout from "../components/UserLogout";
 import { useSelector } from "react-redux";
+import logoImage from "./check.png";
 
 const NavBar = () => {
   const userIsLoggedIn = useSelector((state) => state.userAuth.isLoggedIn)
@@ -17,7 +18,7 @@ const NavBar = () => {
         <>
           <OrgUsers />
           <Dropdown>
-            <Dropdown.Toggle variant="secondary" id="dropdown-logout">
+            <Dropdown.Toggle className="nav-dropdowns" variant="light" id="dropdown-logout">
               {userEmail}
             </Dropdown.Toggle>
             <Dropdown.Menu>
@@ -37,9 +38,24 @@ const NavBar = () => {
   };
 
   return (
-    <Navbar bg="secondary" variant="dark" expand="md" fixed="top">
+    <Navbar bg="light" variant="dark" expand="md" fixed="top">
       <Container fluid>
-        <Navbar.Brand href="/">Tre-Hello</Navbar.Brand>
+      <Navbar.Brand href="/">
+        <img
+          src={logoImage}
+          alt="Logo"
+          width="35"
+          height="35  "
+          className="d-inline-block"
+          style={{
+            border: "none",
+            boxShadow: "0px 0px 5px rgba(255, 255, 255, 0.7)",
+            borderRadius: "10px",
+            marginRight: "10px"
+          }}
+        />
+        <span className="navbar-text">Tre-Hello</span>
+      </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto"></Nav>

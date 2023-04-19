@@ -63,11 +63,9 @@ function App() {
   }
   return (
     <>
-      {/* Nav Container */}
       <Container fluid>
         <NavBar />
       </Container>
-
     <br />
     
       {/* Body Container (render components within this container. can just use rows in the components i think)*/}
