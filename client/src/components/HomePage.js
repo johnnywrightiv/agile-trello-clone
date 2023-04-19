@@ -1,4 +1,4 @@
-import BoardsView from '../containers/boards/BoardsView';
+import BoardsView from '../containers/Boards/BoardsView';
 import NonAuthView from './NonAuthView';
 import { useSelector } from 'react-redux';
 

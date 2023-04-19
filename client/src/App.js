@@ -1,30 +1,31 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { DragDropContext } from 'react-beautiful-dnd';
 import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-import { DragDropContext } from 'react-beautiful-dnd';
-
 import NavBar from './containers/Navbar';
 import HomePage from './components/HomePage';
 import NotFound from './components/NotFound';
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './containers/LoginForm';
-import BoardView from './containers/boards/BoardView';
+import BoardView from './containers/Boards/BoardView';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
 import { reorderCardsInSameColumn } from './features/cardsSlice';
 import { fetchBoardByIdAction } from './features/boardByIdSlice';
+import { useDispatch } from 'react-redux';
 
 
 
 
-function App() {
+
+function App() {  
   const board = useSelector((state) => state.boardById.board);
   const columns = board.columnInfo;
-
 
   const dispatch = useDispatch();
 
   const onDragEnd = async (result) => {
+    
+
     const { destination, source, draggableId } = result;
 
     
@@ -54,24 +55,12 @@ function App() {
         sameColumnId: column._id,
         sameColumnCardIds: cardOrderById
       }
-
+    
       await dispatch(reorderCardsInSameColumn(requestBody));
       await dispatch(fetchBoardByIdAction(column.boardId));
       
     }
-
-    
-    // this.props.dispatch(sort(
-    //   source.droppableId,
-    //   destination.droppableId,
-    //   source.index,
-    //   destination.index,
-    //   draggableId
-    // ))
-    
-
-    // console.log(result);
-  };
+  }
   return (
     <>
       {/* Nav Container */}
@@ -84,15 +73,15 @@ function App() {
       {/* Body Container (render components within this container. can just use rows in the components i think)*/}
       <DragDropContext onDragEnd={onDragEnd}>
         <Container className="md-4 mt-5">
-            <Routes>
-              <Route exact path="/" element={<HomePage />} />
-              <Route path="/boards/:boardId" element={<BoardView />} />
-              <Route path="/NotFound" element={<NotFound />} />
-              <Route path="/signup" element={<SignUpForm />} />
-              <Route exact path="/login" element={<LoginForm />} />
+          <Routes>
+            <Route exact path="/" element={<HomePage />} />
+            <Route path="/boards/:boardId" element={<BoardView />} />
+            <Route path="/NotFound" element={<NotFound />} />
+            <Route path="/signup" element={<SignUpForm />} />
+            <Route exact path="/login" element={<LoginForm />} />
             </Routes>
         </Container>
-        </DragDropContext>
+      </DragDropContext>
     </>
   );
 }

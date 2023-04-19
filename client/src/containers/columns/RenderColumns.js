@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import CreateCardButton from "../../components/CreateCardButton";
 import CreateColumnButton from "../../components/CreateColumnButton";
 import ColumnTitleChange from "./ColumnTitleChange";
-import RenderCards from "../cards/RenderCards";
+import RenderCards from "../Cards/RenderCards";
 
 export const ColumnIndexContext = createContext();
 

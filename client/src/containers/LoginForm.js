@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { login } from "../features/userAuthSlice"
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
+import { fetchBoardsAction } from "../features/boardsSlice";
 
 
 const LoginForm = () => {
@@ -20,6 +21,7 @@ const LoginForm = () => {
   
   useEffect(() => {
     if (user.isLoggedIn) {
+      dispatch(fetchBoardsAction())
       navigate('/');
     } else {
       if (errorMessage.message) {

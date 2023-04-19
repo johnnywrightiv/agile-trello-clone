@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCreateCardModalClosed } from "../../features/modalOpenSlice";
 import { Modal } from "react-bootstrap";
 import { useContext } from "react";
-import { BoardIdContext } from "../boards/BoardView";
+import { BoardIdContext } from "../Boards/BoardView";
 import { fetchBoardByIdAction } from "../../features/boardByIdSlice";
 
 

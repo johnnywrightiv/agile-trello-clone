@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoardsAction } from '../../features/boardsSlice';
 import { fetchBoardByIdAction } from '../../features/boardByIdSlice';
-import { fetchColumnsAction } from '../../features/columnsSlice';
 import NonAuthView from '../../components/NonAuthView';
 import CreateBoardButton from '../../components/CreateBoardButton';
 
@@ -20,7 +19,7 @@ const BoardsView = () => {
 
   useEffect(() => {
     dispatch(fetchBoardsAction());
-  }, [dispatch]); 
+  }, [boardsArray]); 
 
   const handleClick = async (e) => {
     const id = e.currentTarget.id;

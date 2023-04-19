@@ -1,5 +1,5 @@
 import React, { createContext, useEffect } from 'react';
-import { Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import RenderColumns from '../columns/RenderColumns';
@@ -12,7 +12,7 @@ export const BoardIdContext = createContext();
 const BoardView = () => {
   // connections to the redux store
   const userIsLoggedIn = useSelector((state) => state.userAuth.isLoggedIn);
-  const board = useSelector((state) => state.boardById.board);
+
 
   // retrieve boardId from url parameters
   const { boardId } = useParams();
@@ -23,7 +23,7 @@ const BoardView = () => {
     await dispatch(fetchBoardByIdAction(boardId));
     }
     refresh();
-  }, [ ]);
+  }, [ dispatch ]);
   
   return (
     <>
