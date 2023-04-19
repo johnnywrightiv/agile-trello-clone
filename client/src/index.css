@@ -2,7 +2,7 @@
   /* Main colors */
   --main-color: #00adff;
   --secondary-color: #292946c7;
-  --accent-color: #f5a623;
+  --accent-color: #5d90d2;
   --bg-color: #fff;
 
   /* Gradient */
@@ -10,6 +10,13 @@
     to right,
     var(--main-color),
     var(--secondary-color)
+  );
+
+  /* Semi-Transparent Gradient */
+  --trans-gradient: linear-gradient(
+    to right,
+    rgba(0, 174, 255, 0.435),
+    rgba(93, 144, 210, 0.527)
   );
 }
 
@@ -39,12 +46,6 @@ code {
     monospace;
 }
 
-.card-column {
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-}
-
 .red-required {
   color: red;
 }
@@ -71,7 +72,8 @@ code {
 
 .btn-primary {
   background-color: var(--main-color);
-  border-color: var(--main-color);
+  border-color: var(--accent-color);
+  border-width: 2px;
 }
 
 .btn-primary:hover {
@@ -81,7 +83,7 @@ code {
 
 .btn-outline-primary {
   color: var(--main-color);
-  border-color: var(--main-color);
+  border-color: var(--accent-color);
 }
 
 .btn-outline-primary:hover {
@@ -120,7 +122,7 @@ code {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: var(--main-color);
+  background-color: var(--accent-color);
   color: #fff;
   font-size: 20px;
   font-weight: bold;
@@ -135,4 +137,68 @@ code {
 .nav-dropdowns {
   color: #ffffff;
   background-color: var(--gradient);
+}
+
+.card {
+  background: var(--trans-gradient);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--accent-color);
+}
+
+.card-column {
+  /* Change this rgba value to change the column hue. Play with the a value for transparency */
+  background-color: rgba(196, 29, 46, 0.5);
+  padding: 10px;
+}
+
+.card-body {
+  background: var(--bg-color);
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+  font-size: 20px;
+  font-weight: 500;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--secondary-color);
+}
+
+.card-footer {
+  background-color: rgba(255, 255, 255, 0.85);
+  color: var(--accent-color);
+}
+
+.card-highlight {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+}
+
+.fa-pencil {
+  color: var(--accent-color);
+}
+
+.modal-content {
+  background: var(--trans-gradient);
+  border: none;
+  color: var(--secondary-color);
+}
+
+.modal-header {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-bottom: none;
+}
+
+.modal-body {
+  background: var(--bg-color);
+}
+
+.modal-backdrop.show {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+input[type="text"] {
+  border: 2px solid var(--accent-color);
 }

@@ -1,10 +1,11 @@
-import { Button, Card, Form, FloatingLabel} from "react-bootstrap"
+import { Button, Card, Form, FloatingLabel, Spinner } from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.css";
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import { login } from "../features/userAuthSlice"
 import { useNavigate } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import LoginAlert from "./LoginAlert";
 
 
 const LoginForm = () => {
@@ -13,9 +14,12 @@ const LoginForm = () => {
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const handleFormSubmit = (data) => {
-    dispatch(login(data));
+  const handleFormSubmit = async (data) => {
+    setLoading(true);
+    await dispatch(login(data));
+    setLoading(false);
   }
   
   useEffect(() => {
@@ -23,10 +27,11 @@ const LoginForm = () => {
       navigate('/');
     } else {
       if (errorMessage.message) {
-      alert(errorMessage.message)
+        console.log(errorMessage.message);
+        <LoginAlert variant="danger" message='test' />
       }
     }
-}, [user, errorMessage]);
+  }, [user, errorMessage]);
   
 
   return (
@@ -34,6 +39,7 @@ const LoginForm = () => {
       <Card className="col-3 offset-5 text-center">
         <Card.Header>Login</Card.Header>
           <Card.Body>
+          {errorMessage.message && <LoginAlert message={errorMessage.message} />}
             <Form onSubmit={handleSubmit(handleFormSubmit)}> 
               <FloatingLabel controlId="formBasicEmail" className="mb-3" label={
                 <span>
@@ -50,7 +56,14 @@ const LoginForm = () => {
                 </span>}>
                 <Form.Control type="password" placeholder="Password" {...register("password")} required />
               </FloatingLabel>
-              <Button variant="primary" type="submit">Login</Button>
+              {loading ? (
+                <Button variant="secondary" disabled>
+                <Spinner as="span" animation="border" size="sm" role="status"/>
+                <span>{' '}Loading...</span>
+              </Button>
+              ) : (
+                <Button variant="primary" type="submit">Login</Button>
+              )}
             </Form>
           </Card.Body>
 
