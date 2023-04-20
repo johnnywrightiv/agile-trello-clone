@@ -50,7 +50,7 @@ export const deleteCardAction = createAsyncThunk("card/delete", async(body, reje
 });
 
 export const reorderCardsInSameColumn = createAsyncThunk("cards/reorder", async (body, rejectWithValue) => {
-  console.log(body);
+
   try {
     const { data } = await axios.patch(API_URL + 'same-column-reorder', body, authHeader());
 
@@ -64,7 +64,7 @@ export const reorderCardsInSameColumn = createAsyncThunk("cards/reorder", async 
 })
 
 export const reorderCardsInDifferentColumn = createAsyncThunk("cards/reorder-different", async (body, rejectWithValue) => {
-  console.log(body);
+
   try {
     const { data } = await axios.patch(API_URL + 'different-column-reorder', body, authHeader());
 

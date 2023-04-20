@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBoardByIdAction } from "../../features/boardByIdSlice";
 import {  updateColumnTitleAction } from "../../features/columnsSlice";
-import { BoardIdContext } from "../boards/BoardView";
+
 
 
 
@@ -17,7 +17,7 @@ const ColumnTitleChange = ({ columnIndex, columnTitle }) => {
   // local state to set the index of the column being edited
   const [ editingColumnIndex, setEditingColumnIndex ] = useState(0);
   // boardId prop from BoardView
-  const boardId = useContext(BoardIdContext);
+  
   
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const ColumnTitleChange = ({ columnIndex, columnTitle }) => {
     }
 
     await dispatch(updateColumnTitleAction(requestBody));
-    await dispatch(fetchBoardByIdAction(boardId));
+    await dispatch(fetchBoardByIdAction(board._id));
     setIsEditingColumnTitle(false);
     reset();
 };

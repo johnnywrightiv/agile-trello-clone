@@ -2,20 +2,18 @@ import CreateCardForm from "./CreateCardForm";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateCardModalClosed } from "../../features/modalOpenSlice";
 import { Modal } from "react-bootstrap";
-import { useContext } from "react";
-import { BoardIdContext } from "../boards/BoardView";
 import { fetchBoardByIdAction } from "../../features/boardByIdSlice";
 
 
 
 const CreateCardModal = () => {
   const isOpen = useSelector((state) => state.isModalOpen.createCardOpen);
-  const boardId = useContext(BoardIdContext);
+  const board = useSelector((state) => state.boardById.board)
 
   const dispatch = useDispatch();
 
   const handleModalClose = async () => {
-    await dispatch(fetchBoardByIdAction(boardId));
+    await dispatch(fetchBoardByIdAction(board._id));
     dispatch(setCreateCardModalClosed());
   }
   return (
