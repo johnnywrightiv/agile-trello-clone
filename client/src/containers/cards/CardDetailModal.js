@@ -16,7 +16,6 @@ const CardDetailModal = () => {
   const board = useSelector((state) => state.boardById.board);
   const columnIndex = useSelector((state) => state.columnIndex.index);
   const column = board.columnInfo[columnIndex];
-  console.log(column);
 
   const dispatch = useDispatch();
 
@@ -24,24 +23,28 @@ const CardDetailModal = () => {
     await dispatch(fetchBoardByIdAction(board._id))
     dispatch(setCardDetailModalClosed());
   }
-
-  return (
-    <Modal show={isOpen} onHide={handleModalClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>
-          <CardTitleChange />
-          <h6>in list <u>{column.title}</u></h6>
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <CardLabels />
-        <Modal.Title> Description </Modal.Title>
-        <CardTextChange />
-        <hr className="board-divider" />
-        <RenderCardComments />
-      </Modal.Body>
-    </Modal>
-  )
+  if (columnIndex >= 0) {
+    return (
+      <Modal show={isOpen} onHide={handleModalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <CardTitleChange />
+            <h6>in list <u>{column.title}</u></h6>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <CardLabels />
+          <Modal.Title> Description </Modal.Title>
+          <CardTextChange />
+          <hr className="board-divider" />
+          <RenderCardComments />
+        </Modal.Body>
+      </Modal>
+    )
+  } else {
+    return null;
+  }
+  
 }
 
 export default CardDetailModal;
