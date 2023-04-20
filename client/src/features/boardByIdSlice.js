@@ -30,6 +30,20 @@ export const updateBoardTitleAction = createAsyncThunk("boardTitle/update", asyn
   }
 })
 
+export const updateColumnOrder = createAsyncThunk("columnOrder/update", async({ boardId, newColumnOrder }, rejectWithValue) => {
+
+  try {
+    const { data } = await axios.patch(API_URL + 'column-reorder/' + boardId, { newColumnOrder: newColumnOrder }, authHeader());
+  
+    return data;
+  } catch (error) {
+    if (!error?.response) {
+      throw error;
+    }
+    return rejectWithValue(error?.response?.data);
+  }
+}); 
+
 const initialState = {
   board: {}
 };
