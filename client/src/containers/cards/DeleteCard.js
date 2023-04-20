@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { deleteCardAction } from "../../features/cardsSlice";
-import { fetchColumnsAction } from "../../features/columnsSlice";
 import { ColumnIndexContext } from "../columns/RenderColumns";
 import { fetchBoardByIdAction } from "../../features/boardByIdSlice";
 
@@ -12,7 +11,6 @@ import { fetchBoardByIdAction } from "../../features/boardByIdSlice";
 const DeleteCard = (cardIndex) => {
   const board = useSelector((state) => state.boardById.board);
   const columns = board.columnInfo;
-  const boardId = board._id;
 
   const columnIndex = useContext(ColumnIndexContext);
   const allBoardCardInfo = columns.map(card => card.cardInfo);
@@ -28,7 +26,7 @@ const DeleteCard = (cardIndex) => {
     }
     
     await dispatch(deleteCardAction(requestBody));
-    await dispatch(fetchBoardByIdAction(boardId));
+    await dispatch(fetchBoardByIdAction(board._id));
   }
 
   return (

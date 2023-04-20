@@ -3,7 +3,6 @@ import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchColumnsAction } from "../../features/columnsSlice";
 import { setCardDetailModalClosed } from "../../features/modalOpenSlice";
-import { BoardIdContext } from "../boards/BoardView";
 import CardTextChange from "./CardTextChange";
 import CardTitleChange from "./CardTitleChange";
 import RenderCardComments from "./RenderCardComments";
@@ -11,14 +10,18 @@ import CardLabels from "./CardLabels"
 import { fetchBoardByIdAction } from "../../features/boardByIdSlice";
 
 
+
 const CardDetailModal = () => {
   const isOpen = useSelector((state) => state.isModalOpen.cardDetailOpen);
-  const boardId = useContext(BoardIdContext);
+  const board = useSelector((state) => state.boardById.board);
+  const columnIndex = useSelector((state) => state.columnIndex.index);
+  const column = board.columnInfo[columnIndex];
+  console.log(column);
 
   const dispatch = useDispatch();
 
   const handleModalClose = async () => {
-    await dispatch(fetchBoardByIdAction(boardId))
+    await dispatch(fetchBoardByIdAction(board._id))
     dispatch(setCardDetailModalClosed());
   }
 
@@ -27,6 +30,7 @@ const CardDetailModal = () => {
       <Modal.Header closeButton>
         <Modal.Title>
           <CardTitleChange />
+          <h6>in list <u>{column.title}</u></h6>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
