@@ -14,7 +14,7 @@ import { fetchBoardByIdAction } from "../../features/boardByIdSlice";
 const CardDetailModal = () => {
   const isOpen = useSelector((state) => state.isModalOpen.cardDetailOpen);
   const board = useSelector((state) => state.boardById.board);
-  const columnIndex = useSelector((state) => state.columnIndex.index);
+  const columnIndex = useSelector((state) => state.columnAndCardInfo.columnIndex);
   const column = board.columnInfo[columnIndex];
 
   const dispatch = useDispatch();
