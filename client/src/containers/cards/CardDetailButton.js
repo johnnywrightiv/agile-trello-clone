@@ -6,7 +6,8 @@ import { setCardDetailModalOpen } from '../../features/modalOpenSlice';
 import { fetchCardByIdAction } from '../../features/cardDetailSlice';
 import { ColumnIndexContext } from "../columns/RenderColumns";
 import { useContext } from 'react';
-import { setColumnIndex } from '../../features/columnInfoSlice';
+import { setCardId, setColumnIndex } from '../../features/columnAndCardInfoSlice';
+import { fetchCardCommentsAction } from '../../features/cardCommentsSlice';
 
 const CardDetailButton = (cardIndex) => {
   const board = useSelector((state) => state.boardById.board);
@@ -23,6 +24,8 @@ const CardDetailButton = (cardIndex) => {
     const clickedCardId = columnCards[clickedCardIndex]._id;
     await dispatch(setColumnIndex(columnIndex));
     await dispatch(fetchCardByIdAction(clickedCardId));
+    await dispatch(fetchCardCommentsAction(clickedCardId));
+    await dispatch(setCardId(clickedCardId));
     dispatch(setCardDetailModalOpen(true));
     
   }
