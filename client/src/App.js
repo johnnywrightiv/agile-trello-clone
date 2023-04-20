@@ -9,7 +9,7 @@ import SignUpForm from './components/SignUpForm';
 import LoginForm from './containers/LoginForm';
 import BoardView from './containers/boards/BoardView';
 import { useSelector } from 'react-redux';
-import { reorderCardsInSameColumn } from './features/cardsSlice';
+import { reorderCardsInDifferentColumn, reorderCardsInSameColumn } from './features/cardsSlice';
 import { fetchBoardByIdAction } from './features/boardByIdSlice';
 import { useDispatch } from 'react-redux';
 
@@ -44,22 +44,47 @@ function App() {
     if (source.droppableId === destination.droppableId) {
       // locate the column in the store 
       const column = columns.find(column => source.droppableId === column._id);
-      const cards = column.cardInfo;
       // logic to create an array of ids listing the card order in the column
-      const cardOrderById = cards.map(card => card._id);
+      const cardOrderById = column.cardInfo.map(card => card._id);
       const draggedCard = cardOrderById.splice(source.index, 1);
       // updated card order
       cardOrderById.splice(destination.index, 0, ...draggedCard);
 
-      const requestBody = {
+      const sameColumnRequestBody = {
         sameColumnId: column._id,
         sameColumnCardIds: cardOrderById
       }
     
-      await dispatch(reorderCardsInSameColumn(requestBody));
-      await dispatch(fetchBoardByIdAction(column.boardId));
-      
+      await dispatch(reorderCardsInSameColumn(sameColumnRequestBody));
+      await dispatch(fetchBoardByIdAction(board._id));
+      return;
     }
+
+    // if card is dropped in a different column
+    if (source.droppableId !== destination.droppableId) {
+      // locate the columns in the store
+      const startColumn = columns.find(column => source.droppableId === column._id);
+      const finishColumn = columns.find(column => destination.droppableId === column._id);
+      // logic to create an array of ids listing the card order of the columns
+      const startColumnCardOrder = startColumn.cardInfo.map(card => card._id);
+      const finishColumnCardOrder = finishColumn.cardInfo.map(card => card._id);
+      // remove draggedCard from startColumn
+      const draggedCard = startColumnCardOrder.splice(source.index, 1);
+      // add draggedCard to finishColumn
+      finishColumnCardOrder.splice(destination.index, 0, ...draggedCard);
+      
+      const differentColumnRequestBody = {
+        removedColumnId: startColumn._id,
+        removedColumnCardIds: startColumnCardOrder,
+        addedColumnId: finishColumn._id,
+        addedColumnCardIds: finishColumnCardOrder
+      }
+
+      await dispatch(reorderCardsInDifferentColumn(differentColumnRequestBody));
+      dispatch(fetchBoardByIdAction(board._id));
+      return;
+    }
+
   }
   return (
     <>

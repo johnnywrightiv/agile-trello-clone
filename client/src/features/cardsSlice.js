@@ -63,6 +63,21 @@ export const reorderCardsInSameColumn = createAsyncThunk("cards/reorder", async 
   }
 })
 
+export const reorderCardsInDifferentColumn = createAsyncThunk("cards/reorder-different", async (body, rejectWithValue) => {
+  console.log(body);
+  try {
+    const { data } = await axios.patch(API_URL + 'different-column-reorder', body, authHeader());
+
+    return data;
+  } catch (error) {
+    if (!error?.response) {
+      throw error;
+    }
+    return rejectWithValue(error?.response?.data);
+  }
+})
+
+
 
 const initialState = {
   cards: [],
