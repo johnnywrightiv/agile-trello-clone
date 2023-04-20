@@ -8,7 +8,10 @@ import { io } from "socket.io-client";
 import NonAuthView from '../../components/NonAuthView';
 import CreateBoardButton from '../../components/CreateBoardButton';
 
-const socket = io('https://trello-clone-api-crxa.onrender.com');
+// const socket = io('https://trello-clone-api-crxa.onrender.com');
+// socket.on('get-boards', (data) => {
+//   console.log(data)
+// })
 
 const BoardsView = () => {
   const boardsArray = useSelector((state) => state.userBoards.boards);
@@ -25,8 +28,8 @@ const BoardsView = () => {
 
   const handleClick = async (e) => {
     const boardId = e.currentTarget.id;
-    await dispatch(fetchBoardByIdAction(boardId));
-    
+    // await dispatch(fetchBoardByIdAction(boardId));
+    // socket.emit('send-boards', { boardId })
     navigate('/boards/' + boardId);
   }
   

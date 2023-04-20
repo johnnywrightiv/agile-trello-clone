@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { Droppable } from 'react-beautiful-dnd';
 import RenderColumns from '../columns/RenderColumns';
 import { fetchBoardByIdAction } from '../../features/boardByIdSlice';
 import NonAuthView from '../../components/NonAuthView';
@@ -37,7 +38,6 @@ const BoardView = () => {
       return null;
     }
   }
-  
 
   return (
     <>
