@@ -12,29 +12,38 @@ export const BoardIdContext = createContext();
 const BoardView = () => {
   // connections to the redux store
   const userIsLoggedIn = useSelector((state) => state.userAuth.isLoggedIn);
-
+  const board = useSelector((state) => state.boardById.board);
 
   // retrieve boardId from url parameters
   const { boardId } = useParams();
   const dispatch = useDispatch();
   
   useEffect(() => {
-    const refresh = async () => {
-    await dispatch(fetchBoardByIdAction(boardId));
-    }
-    refresh();
-  }, [ dispatch ]);
+    dispatch(fetchBoardByIdAction(boardId));
+  }, [ ]);
   
+  const renderBoards = () => {
+    if (board && Object.keys(board).length > 0) {
+      return (
+        <>
+        <BoardIdContext.Provider value={boardId}>
+          <Container className="board-view pt-5">
+            <BoardTitleChange />
+            <hr className="board-divider" />
+            <RenderColumns boardId={boardId}/>
+          </Container>
+        </BoardIdContext.Provider>
+        </>
+      )
+    } else {
+      return null;
+    }
+  }
+  
+
   return (
     <>
-    { userIsLoggedIn ? 
-      <BoardIdContext.Provider value={boardId}>
-        <Container className="board-view pt-5">
-          <BoardTitleChange />
-          <hr className="board-divider" />
-          <RenderColumns boardId={boardId}/>
-        </Container>
-      </BoardIdContext.Provider>  : <NonAuthView />  }
+      { userIsLoggedIn ? <>{renderBoards()}</> : <NonAuthView />  }
     </>
    
   )
