@@ -4,9 +4,11 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoardsAction } from '../../features/boardsSlice';
 import { fetchBoardByIdAction } from '../../features/boardByIdSlice';
+import { io } from "socket.io-client";
 import NonAuthView from '../../components/NonAuthView';
 import CreateBoardButton from '../../components/CreateBoardButton';
 
+const socket = io('https://trello-clone-api-crxa.onrender.com');
 
 const BoardsView = () => {
   const boardsArray = useSelector((state) => state.userBoards.boards);
@@ -19,14 +21,15 @@ const BoardsView = () => {
 
   useEffect(() => {
     dispatch(fetchBoardsAction());
-  }, [boardsArray]); 
+  }, []); 
 
   const handleClick = async (e) => {
-    const id = e.currentTarget.id;
-    await dispatch(fetchBoardByIdAction(id));
-    navigate('/boards/' + id);
+    const boardId = e.currentTarget.id;
+    await dispatch(fetchBoardByIdAction(boardId));
+    
+    navigate('/boards/' + boardId);
   }
-
+  
   const renderBoards = () => {
     if (boardsArray && boardsArray.length > 0) {
     return boardsArray.map((board) => (

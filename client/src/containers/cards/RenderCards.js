@@ -19,6 +19,7 @@ const RenderCards = (columnIndex) => {
 
   }, [columns])
 
+ 
   // logic to render cards
   return (
     <>
@@ -43,7 +44,7 @@ const RenderCards = (columnIndex) => {
           </div>
           )}
         </Draggable>
-      ))} </>: <div></div>}
+      ))} </>: <div></div> }
     </>
   )
 }
