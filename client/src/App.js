@@ -10,12 +10,8 @@ import LoginForm from './containers/LoginForm';
 import BoardView from './containers/boards/BoardView';
 import { useSelector } from 'react-redux';
 import { reorderCardsInDifferentColumn, reorderCardsInSameColumn } from './features/cardsSlice';
-import { fetchBoardByIdAction } from './features/boardByIdSlice';
+import { fetchBoardByIdAction, updateColumnOrder  } from './features/boardByIdSlice';
 import { useDispatch } from 'react-redux';
-
-
-
-
 
 function App() {  
   const board = useSelector((state) => state.boardById.board);
@@ -26,7 +22,7 @@ function App() {
   const onDragEnd = async (result) => {
     
 
-    const { destination, source, draggableId } = result;
+    const { destination, source, draggableId, type } = result;
 
     
     if (!destination) {
@@ -39,7 +35,21 @@ function App() {
     ) {
       return;
     }
-    
+
+    // Logic to drag and drop columns
+    if (type === 'column') {
+      const columnOrder = columns.map(column => column._id);
+      const draggedColumn = columnOrder.splice(source.index, 1);
+      columnOrder.splice(destination.index, 0, ...draggedColumn);
+      const requestBody = {
+        newColumnOrder: columnOrder,
+        boardId: board._id
+      }
+      await dispatch(updateColumnOrder(requestBody));
+      await dispatch(fetchBoardByIdAction(board._id));
+      return;
+    }
+
     // if card is dropped in the same column
     if (source.droppableId === destination.droppableId) {
       // locate the column in the store 
