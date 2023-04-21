@@ -41,11 +41,23 @@ export const updateCardTextAction = createAsyncThunk("cardText/update", async({i
   }
 })
 
-export const updateCardLabelAction = createAsyncThunk("cardLabel/updae", async({id, label, labelColor}, rejectWithValue) => {
+export const updateCardLabelsAction = createAsyncThunk("cardLabel/update", async({id, label, labelColor}, rejectWithValue) => {
   try {
-    const { data } = await axios.patch(API_URL + 'label/' + id, { label: label, labelColor: labelColor }, authHeader());
+    const { data } = await axios.patch(API_URL + 'labels/' + id, { title: label, labelColor: labelColor }, authHeader());
     return data;
   } catch (error) {
+    if (!error?.response) {
+      throw error;
+    }
+    return rejectWithValue(error?.response?.data);
+  }
+})
+
+export const deleteCardLabelAction = createAsyncThunk("cardLabel/delete", async(id, rejectWithValue) => {
+  try {
+    const { data } = await axios.delete('https://trello-clone-api-crxa.onrender.com/api/labels/' + id, authHeader())
+    return data;
+  }catch (error) {
     if (!error?.response) {
       throw error;
     }
@@ -97,14 +109,14 @@ const cardByIdSlice = createSlice({
       state.loading = false;
       state.error = action?.payload;
     });
-    builder.addCase(updateCardLabelAction.pending, (state, action) => {
+    builder.addCase(updateCardLabelsAction.pending, (state, action) => {
       state.loading = true;
     });
-    builder.addCase(updateCardLabelAction.fulfilled, (state, action) => {
+    builder.addCase(updateCardLabelsAction.fulfilled, (state, action) => {
       state.loading = false;
       state.error = undefined;
     });
-    builder.addCase(updateCardLabelAction.rejected, (state, action) => {
+    builder.addCase(updateCardLabelsAction.rejected, (state, action) => {
       state.loading = false;
       state.error = action?.payload;
     });

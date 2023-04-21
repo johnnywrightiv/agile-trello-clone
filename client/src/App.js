@@ -10,7 +10,7 @@ import LoginForm from './containers/LoginForm';
 import BoardView from './containers/boards/BoardView';
 import { useSelector } from 'react-redux';
 import { reorderCardsInDifferentColumn, reorderCardsInSameColumn } from './features/cardsSlice';
-import { fetchBoardByIdAction, updateColumnOrder  } from './features/boardByIdSlice';
+import { fetchBoardByIdAction, updateColumnOrderAction  } from './features/boardByIdSlice';
 import { useDispatch } from 'react-redux';
 
 function App() {  
@@ -45,8 +45,7 @@ function App() {
         newColumnOrder: columnOrder,
         boardId: board._id
       }
-      await dispatch(updateColumnOrder(requestBody));
-      await dispatch(fetchBoardByIdAction(board._id));
+      dispatch(updateColumnOrderAction(requestBody));
       return;
     }
 

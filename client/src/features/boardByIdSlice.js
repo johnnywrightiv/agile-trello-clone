@@ -30,11 +30,11 @@ export const updateBoardTitleAction = createAsyncThunk("boardTitle/update", asyn
   }
 })
 
-export const updateColumnOrder = createAsyncThunk("columnOrder/update", async({ boardId, newColumnOrder }, rejectWithValue) => {
-
+export const updateColumnOrderAction = createAsyncThunk("columnOrder/update", async({ boardId, newColumnOrder }, rejectWithValue) => {
+console.log(newColumnOrder);
   try {
     const { data } = await axios.patch(API_URL + 'column-reorder/' + boardId, { newColumnOrder: newColumnOrder }, authHeader());
-  
+
     return data;
   } catch (error) {
     if (!error?.response) {
@@ -77,7 +77,18 @@ const boardByIdSlice = createSlice({
       state.loading = false;
       state.error = action?.payload;
     });
-  }
-});
+    builder.addCase(updateColumnOrderAction.fulfilled, (state, action) => {
+      state.board = action?.payload.updatedBoard;
+      state.loading = false;
+      state.error = undefined;
+    });
+    builder.addCase(updateColumnOrderAction.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(updateColumnOrderAction.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action?.payload;
+    });
+}})
 
 export default boardByIdSlice.reducer
