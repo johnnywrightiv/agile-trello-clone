@@ -1,4 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
+import { produce } from "immer";
 import axios from 'axios';
 import authHeader from "../services/auth-header";
 
@@ -44,6 +45,20 @@ console.log(newColumnOrder);
   }
 }); 
 
+export const reorderCardsInSameColumn = createAsyncThunk("cards/reorder", async (body, rejectWithValue) => {
+
+  try {
+    const { data } = await axios.patch('https://trello-clone-api-crxa.onrender.com/api/cards/same-column-reorder', body, authHeader());
+
+    return data;
+  } catch (error) {
+    if (!error?.response) {
+      throw error;
+    }
+    return rejectWithValue(error?.response?.data);
+  }
+})
+
 const initialState = {
   board: {}
 };
@@ -82,10 +97,37 @@ const boardByIdSlice = createSlice({
       state.loading = false;
       state.error = undefined;
     });
-    builder.addCase(updateColumnOrderAction.pending, (state, action) => {
+    builder.addCase(updateColumnOrderAction.pending, (state, {meta}) => {
+      console.log('meta', meta);
+      state.board = {...state.board, columnInfo: meta.arg.newColumnOrder.map(columnId => {
+        const column = state.board.columnInfo.find(column => column._id === columnId);
+        return column;
+      })};
       state.loading = true;
     });
     builder.addCase(updateColumnOrderAction.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action?.payload;
+    });
+    builder.addCase(reorderCardsInSameColumn.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = undefined;
+    });
+    builder.addCase(reorderCardsInSameColumn.pending, (state, {meta}) => {
+      const columnIndex = state.board.columnInfo.findIndex(column => column._id === meta.arg.sameColumnId);
+    
+      const updatedCardInfo = meta.arg.sameColumnCardIds.map(cardId => {
+        const cardIndex = state.board.columnInfo[columnIndex].cardInfo.findIndex(card => card._id === cardId);
+    
+        return {
+          ...state.board.columnInfo[columnIndex].cardInfo[cardIndex],
+        };
+      });
+    
+      state.board.columnInfo[columnIndex].cardInfo = updatedCardInfo;
+      state.loading = true;
+    });
+    builder.addCase(reorderCardsInSameColumn.rejected, (state, action) => {
       state.loading = false;
       state.error = action?.payload;
     });
