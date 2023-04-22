@@ -17,7 +17,7 @@ const BoardsView = () => {
   
   useEffect(() => {
     dispatch(fetchBoardsAction());
-  }, []); 
+  }, [dispatch, ]); 
   
   const handleClick = async (e) => {
     const boardId = e.currentTarget.id;
@@ -26,8 +26,7 @@ const BoardsView = () => {
   
   const renderBoards = () => {
     if (boardsArray && boardsArray.length > 0) {
-      document.body.style.cursor = 'wait';
-      const renderedBoards = boardsArray.map((board) => (
+      return (boardsArray.map((board) => (
         <Col sm={4} key={board._id} id={board._id} onClick={handleClick}>
           <Card className="board-title">
             <Card.Body>
@@ -35,8 +34,7 @@ const BoardsView = () => {
             </Card.Body>
           </Card>
         </Col>
-      ));
-      return renderedBoards;
+      )))
     } else {
       return null;
     }
