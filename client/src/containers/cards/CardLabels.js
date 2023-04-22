@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteCardLabelAction, updateCardLabelAction } from '../../features/cardDetailSlice';
+import { deleteCardLabelAction, addCardLabelAction, fetchCardByIdAction } from '../../features/cardDetailSlice';
 
 function CardLabels() {
+  const boardId = useSelector((state) => state.boardById.board._id);
+  const cardId = useSelector((state) => state.columnAndCardInfo.cardId);
   const cardLabelData = useSelector((state) => state.cardById.card.labels)
   const cardLabels = cardLabelData.map(({labelColor, title}) => { return { labelColor, title } })
- 
+  
   const [showLabels, setShowLabels] = useState(false);
   const [selectedLabels, setSelectedLabels] = useState(cardLabels);
 
@@ -20,28 +22,41 @@ function CardLabels() {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+
+  }, [cardLabelData])
   const handleLabelButtonEdit = () => {
     setShowLabels(true);
   };
 
-  const handleLabelButtonHide = async () => {
+  const handleLabelButtonHide = () => {
     setShowLabels(false);
   }
 
-  const handleLabelSelection = (selectedLabel) => {
+  const handleLabelSelection = async (selectedLabel) => {
     // if label is already selected, remove it from the selectedLabels
-   if (selectedLabels.some(label => label.labelColor === selectedLabel.labelColor)) {
-    // find index of matching label in local state
-    const labelToRemoveIndex = selectedLabels.findIndex(label => label.labelColor === selectedLabel.labelColor);
-    const labelToDeleteId = cardLabelData[labelToRemoveIndex]._id;
-    // remove label from card
-    dispatch(deleteCardLabelAction(labelToDeleteId));
-    // remove label from selectedLabels local state
-    const updatedSelectedLabels = cardLabels.filter(label => label.lableColor === selectedLabel.labelColor);
-    console.log(updatedSelectedLabels);
-    setSelectedLabels(updatedSelectedLabels);
+    if (selectedLabels.length > 0 && selectedLabels.some(label => label.labelColor === selectedLabel.labelColor)) {
+        // find index of matching label in local state
+        const labelToRemoveIndex = selectedLabels.findIndex(label => label.labelColor === selectedLabel.labelColor);
+        const labelToDeleteId = cardLabelData[labelToRemoveIndex]._id;
+        // remove label from card
+        await dispatch(deleteCardLabelAction(labelToDeleteId));
+        dispatch(fetchCardByIdAction(cardId));
+        // remove label from selectedLabels local state
+        const updatedSelectedLabels = selectedLabels.filter(label => label.labelColor !== selectedLabel.labelColor);
+        console.log(updatedSelectedLabels);
+        setSelectedLabels(updatedSelectedLabels);
     } else {
-
+        // if label is not selected, add it to selectedLabels local state and the card database
+        const requestBody = {
+            title: selectedLabel.title,
+            labelColor: selectedLabel.labelColor,
+            cardId: cardId
+        }
+        console.log(requestBody);
+        await dispatch(addCardLabelAction(requestBody));
+        dispatch(fetchCardByIdAction(cardId))
+        setSelectedLabels(prevSelectedLabels => [...prevSelectedLabels, selectedLabel]);
     }
   };
 

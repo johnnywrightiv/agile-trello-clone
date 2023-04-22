@@ -41,9 +41,10 @@ export const updateCardTextAction = createAsyncThunk("cardText/update", async({i
   }
 })
 
-export const updateCardLabelsAction = createAsyncThunk("cardLabel/update", async({id, label, labelColor}, rejectWithValue) => {
+export const addCardLabelAction = createAsyncThunk("cardLabel/update", async(body, rejectWithValue) => {
   try {
-    const { data } = await axios.patch(API_URL + 'labels/' + id, { title: label, labelColor: labelColor }, authHeader());
+    const { data } = await axios.post('https://trello-clone-api-crxa.onrender.com/api/labels/', body, authHeader());
+    console.log(data);
     return data;
   } catch (error) {
     if (!error?.response) {
@@ -109,14 +110,14 @@ const cardByIdSlice = createSlice({
       state.loading = false;
       state.error = action?.payload;
     });
-    builder.addCase(updateCardLabelsAction.pending, (state, action) => {
+    builder.addCase(addCardLabelAction.pending, (state, action) => {
       state.loading = true;
     });
-    builder.addCase(updateCardLabelsAction.fulfilled, (state, action) => {
+    builder.addCase(addCardLabelAction.fulfilled, (state, action) => {
       state.loading = false;
       state.error = undefined;
     });
-    builder.addCase(updateCardLabelsAction.rejected, (state, action) => {
+    builder.addCase(addCardLabelAction.rejected, (state, action) => {
       state.loading = false;
       state.error = action?.payload;
     });
