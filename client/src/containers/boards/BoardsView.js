@@ -27,27 +27,32 @@ const BoardsView = () => {
   useEffect(() => {
     dispatch(fetchBoardsAction());
   }, []); 
-
+  
   const handleClick = async (e) => {
     const boardId = e.currentTarget.id;
     // await dispatch(fetchBoardByIdAction(boardId));
     // socket.emit('send-boards', { boardId })
+    
+    document.body.style.cursor = 'wait';
     navigate('/boards/' + boardId);
   }
   
   const renderBoards = () => {
     if (boardsArray && boardsArray.length > 0) {
-    return boardsArray.map((board) => (
-      <Col sm={4} key={board._id} id={board._id} onClick={handleClick}>
-        <Card className="board-title">
-          <Card.Body>
-            <Card.Title>{board.title}</Card.Title>
-          </Card.Body>
-        </Card>
-      </Col>
-    ));
+      document.body.style.cursor = 'wait';
+      const renderedBoards = boardsArray.map((board) => (
+        <Col sm={4} key={board._id} id={board._id} onClick={handleClick}>
+          <Card className="board-title">
+            <Card.Body>
+              <Card.Title>{board.title}</Card.Title>
+            </Card.Body>
+          </Card>
+        </Col>
+      ));
+      document.body.style.cursor = 'default';
+      return renderedBoards;
     } else {
-      return null
+      return null;
     }
   };
 

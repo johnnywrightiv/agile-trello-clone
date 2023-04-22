@@ -23,18 +23,28 @@ const RenderCards = (columnIndex) => {
   const renderSelectedLabels = (cardLabels) => {
     if (cardLabels && cardLabels.length > 0) {
       return (
-        <span>
+        <div className="d-flex flex-wrap">
           {cardLabels.map((label, index) => (
-            <span key={index} style={{ backgroundColor: label.labelColor, marginRight: "5px"}}>
-              {label.title}
-            </span>
+            <span 
+              className="card-label-tag" 
+              key={index} 
+              style={{ backgroundColor: label.labelColor, marginRight: "5px" }} 
+            ></span>                    
           ))}
-        </span>
+        </div>
       )
     } else {
-      return null;
+      return (
+        <div className="d-flex flex-wrap">
+          <span 
+            className="card-label-tag" 
+            style={{ visibility: "hidden" }} 
+          ></span>
+        </div>
+      )
     }
   }
+  
   
   // logic to render cards
   return (
@@ -48,11 +58,9 @@ const RenderCards = (columnIndex) => {
               ref={provided.innerRef}
             >
             <Card className="card mb-3">
+              {renderSelectedLabels(card.labels)}
             <Card.Header className="hstack card-title">
-              <div className="d-flex flex-column">
-                {renderSelectedLabels(card.labels)}
-                <Card.Title>{card.title}</Card.Title>
-              </div>
+              <Card.Title>{card.title}</Card.Title>
               <CardDetailButton cardIndex={cardIndex} />
             </Card.Header>
             <Card.Body>
