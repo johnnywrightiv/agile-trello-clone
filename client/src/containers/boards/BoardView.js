@@ -22,17 +22,13 @@ const BoardView = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isLoading) {
+    if (!isLoading) {
       setIsLoadingFirstTime(false);
     }
   }, [isLoading]);
   
   useEffect(() => {
-    document.body.style.cursor = 'wait';
-
-    dispatch(fetchBoardByIdAction(boardId)).finally(() => {
-      document.body.style.cursor = 'default';
-    });
+    dispatch(fetchBoardByIdAction(boardId));
   }, [boardId, dispatch]);
   
   const renderBoards = () => {
