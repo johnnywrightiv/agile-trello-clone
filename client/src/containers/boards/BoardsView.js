@@ -7,6 +7,7 @@ import { fetchBoardByIdAction } from '../../features/boardByIdSlice';
 import { io } from "socket.io-client";
 import NonAuthView from '../../components/NonAuthView';
 import CreateBoardButton from '../../components/CreateBoardButton';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 // const socket = io('https://trello-clone-api-crxa.onrender.com');
 // socket.on('get-boards', (data) => {
@@ -15,6 +16,7 @@ import CreateBoardButton from '../../components/CreateBoardButton';
 
 const BoardsView = () => {
   const boardsArray = useSelector((state) => state.userBoards.boards);
+  const isLoading = useSelector((state) => state.userBoards.loading);
   const userIsLoggedIn = useSelector((state) => state.userAuth.isLoggedIn);
 
 
@@ -51,14 +53,15 @@ const BoardsView = () => {
 
   return (
     <>
-    { userIsLoggedIn ? <Container className="pt-5">
-      <Row xs={1} md={2} lg={3} className="g-4">
-        {renderBoards()}
-        <CreateBoardButton />
-      </Row>
-    </Container> : <NonAuthView />}
-    </>
+    { isLoading ? <LoadingSpinner /> : userIsLoggedIn ? 
+      <Container className="pt-5">
+        <Row xs={1} md={2} lg={3} className="g-4">
+          {renderBoards()}
+          <CreateBoardButton />
+        </Row>
+      </Container> : <NonAuthView />}
     
+    </>
   );
 }
 
