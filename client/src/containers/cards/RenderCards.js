@@ -15,11 +15,27 @@ const RenderCards = (columnIndex) => {
   // array of cards from the store
   const cards = columns[index].cardInfo;
 
+
   useEffect(() => {
 
   }, [columns])
 
- 
+  const renderSelectedLabels = (cardLabels) => {
+    if (cardLabels && cardLabels.length > 0) {
+      return (
+        <span>
+          {cardLabels.map((label, index) => (
+            <span key={index} style={{ backgroundColor: label.labelColor, marginRight: "5px"}}>
+              {label.title}
+            </span>
+          ))}
+        </span>
+      )
+    } else {
+      return null;
+    }
+  }
+  
   // logic to render cards
   return (
     <>
@@ -34,6 +50,7 @@ const RenderCards = (columnIndex) => {
             <Card className="card mb-3">
             <Card.Header className="hstack card-title">
               <Card.Title>{card.title}</Card.Title>
+              {renderSelectedLabels(card.labels)}
               <CardDetailButton cardIndex={cardIndex} />
             </Card.Header>
             <Card.Body>

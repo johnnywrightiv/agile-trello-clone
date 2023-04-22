@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteCardLabelAction, addCardLabelAction, fetchCardByIdAction } from '../../features/cardDetailSlice';
 
 function CardLabels() {
-  const boardId = useSelector((state) => state.boardById.board._id);
   const cardId = useSelector((state) => state.columnAndCardInfo.cardId);
   const cardLabelData = useSelector((state) => state.cardById.card.labels)
   const cardLabels = cardLabelData.map(({labelColor, title}) => { return { labelColor, title } })
