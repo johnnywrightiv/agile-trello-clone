@@ -82,15 +82,15 @@ const boardByIdSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchBoardByIdAction.pending, (state, action) => {
-      state.loading = true;
+      state.isLoading = true;
     });
     builder.addCase(fetchBoardByIdAction.fulfilled, (state, action) => {
       state.board = action?.payload.board;
-      state.loading = false;
+      state.isLoading = false;
       state.error = undefined;
     });
     builder.addCase(fetchBoardByIdAction.rejected, (state, action) => {
-      state.loading = false;
+      state.isLoading = false;
       state.error = action?.payload;
       state.board = null; 
     });
@@ -160,7 +160,6 @@ const boardByIdSlice = createSlice({
     
       // Find the card that is being moved
       const originCards= state.board.columnInfo[originColumnIndex].cardInfo;
-      debugger;
       
       const card = originCards.find(card => addedColumnCardIds.includes(card._id))
       

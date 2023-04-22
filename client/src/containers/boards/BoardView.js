@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Droppable } from 'react-beautiful-dnd';
 import RenderColumns from '../columns/RenderColumns';
 import { fetchBoardByIdAction } from '../../features/boardByIdSlice';
 import NonAuthView from '../../components/NonAuthView';
@@ -15,11 +14,18 @@ const BoardView = () => {
   // connections to the redux store
   const userIsLoggedIn = useSelector((state) => state.userAuth.isLoggedIn);
   const board = useSelector((state) => state.boardById.board);
-  const isLoading = useSelector((state) => state.boardById.loading);
+  const isLoading = useSelector((state) => state.boardById.isLoading);
+  const [isLoadingFirstTime, setIsLoadingFirstTime] = useState(true);
 
   // retrieve boardId from url parameters
   const { boardId } = useParams();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isLoading) {
+      setIsLoadingFirstTime(false);
+    }
+  }, [isLoading]);
   
   useEffect(() => {
     document.body.style.cursor = 'wait';
@@ -47,10 +53,15 @@ const BoardView = () => {
 
   return (
     <>
-      { isLoading? <LoadingSpinner /> : userIsLoggedIn ? <>{renderBoards()}</> : <NonAuthView />  }
+      {isLoading && isLoadingFirstTime ? (
+        <LoadingSpinner />
+      ) : userIsLoggedIn ? (
+        <>{renderBoards()}</>
+      ) : (
+        <NonAuthView />
+      )}
     </>
-   
-  )
+  );
 };
 
 export default BoardView;
