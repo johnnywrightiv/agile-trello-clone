@@ -89,7 +89,7 @@ function CardLabels() {
       </Modal.Title>
       {renderSelectedLabels()}
       {showLabels && (
-        <div>
+        <span>
           {labelOptions.map((option, index) => (
             <Form.Check
               type="checkbox"
@@ -100,7 +100,7 @@ function CardLabels() {
               style={{ backgroundColor: option.labelColor }}
             />
           ))}
-        </div>
+        </span>
       )}
       <hr />
     </>

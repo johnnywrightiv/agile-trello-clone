@@ -202,3 +202,12 @@ code {
 input[type="text"] {
   border: 2px solid var(--accent-color);
 }
+
+.card-label-tag {
+  /* display: inline-block; */
+  width: 30px;
+  height: 10px;
+  border-radius: 50px;
+  margin: 5px;
+  border: 1px solid black;
+}
