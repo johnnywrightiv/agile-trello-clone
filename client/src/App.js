@@ -9,8 +9,7 @@ import SignUpForm from './components/SignUpForm';
 import LoginForm from './containers/LoginForm';
 import BoardView from './containers/boards/BoardView';
 import { useSelector } from 'react-redux';
-import { reorderCardsInDifferentColumn } from './features/cardsSlice';
-import { fetchBoardByIdAction, reorderCardsInSameColumn, updateColumnOrderAction  } from './features/boardByIdSlice';
+import { fetchBoardByIdAction, reorderCardsInDifferentColumn, reorderCardsInSameColumn, updateColumnOrderAction  } from './features/boardByIdSlice';
 import { useDispatch } from 'react-redux';
 
 function App() {  
@@ -90,7 +89,7 @@ function App() {
       }
 
       await dispatch(reorderCardsInDifferentColumn(differentColumnRequestBody));
-      dispatch(fetchBoardByIdAction(board._id));
+      // dispatch(fetchBoardByIdAction(board._id));
       return;
     }
 

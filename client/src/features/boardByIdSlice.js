@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
-import { produce } from "immer";
 import axios from 'axios';
 import authHeader from "../services/auth-header";
 
@@ -49,6 +48,20 @@ export const reorderCardsInSameColumn = createAsyncThunk("cards/reorder", async 
 
   try {
     const { data } = await axios.patch('https://trello-clone-api-crxa.onrender.com/api/cards/same-column-reorder', body, authHeader());
+
+    return data;
+  } catch (error) {
+    if (!error?.response) {
+      throw error;
+    }
+    return rejectWithValue(error?.response?.data);
+  }
+});
+
+export const reorderCardsInDifferentColumn = createAsyncThunk("cards/reorder-different", async (body, rejectWithValue) => {
+
+  try {
+    const { data } = await axios.patch('https://trello-clone-api-crxa.onrender.com/api/cards/different-column-reorder', body, authHeader());
 
     return data;
   } catch (error) {
@@ -114,7 +127,8 @@ const boardByIdSlice = createSlice({
       state.error = undefined;
     });
     builder.addCase(reorderCardsInSameColumn.pending, (state, {meta}) => {
-      const columnIndex = state.board.columnInfo.findIndex(column => column._id === meta.arg.sameColumnId);
+      const { sameColumnId } = meta.arg
+      const columnIndex = state.board.columnInfo.findIndex(column => column._id === sameColumnId);
     
       const updatedCardInfo = meta.arg.sameColumnCardIds.map(cardId => {
         const cardIndex = state.board.columnInfo[columnIndex].cardInfo.findIndex(card => card._id === cardId);
@@ -128,6 +142,42 @@ const boardByIdSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(reorderCardsInSameColumn.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action?.payload;
+    });
+    builder.addCase(reorderCardsInDifferentColumn.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = undefined;
+    });
+    builder.addCase(reorderCardsInDifferentColumn.pending, (state, { meta }) => {
+      const { addedColumnCardIds, addedColumnId, removedColumnIds, removedColumnId } = meta.arg;
+     
+      // Find the index of the origin column
+      const originColumnIndex = state.board.columnInfo.findIndex(column => column._id === removedColumnId);
+    
+      // Find the index of the destination column
+      const destinationColumnIndex = state.board.columnInfo.findIndex(column => column._id === addedColumnId);
+    
+      // Find the card that is being moved
+      const originCards= state.board.columnInfo[originColumnIndex].cardInfo;
+      debugger;
+      
+      const card = originCards.find(card => addedColumnCardIds.includes(card._id))
+      
+      // Find the index of the card in the origin column
+      const originCardIndex = originCards.findIndex(c => c._id === card._id);
+    
+      // Remove the card from the origin column
+      originCards.splice(originCardIndex, 1);
+    
+      // Insert the card into the destination column at the specified index
+      const destinationCards = state.board.columnInfo[destinationColumnIndex].cardInfo;
+      const destinationCardIndex = addedColumnCardIds.indexOf(card._id);
+      destinationCards.splice(destinationCardIndex, 0, card);
+   
+      state.loading = true;
+    }); 
+    builder.addCase(reorderCardsInDifferentColumn.rejected, (state, action) => {
       state.loading = false;
       state.error = action?.payload;
     });
