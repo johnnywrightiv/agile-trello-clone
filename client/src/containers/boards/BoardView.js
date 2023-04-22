@@ -7,6 +7,7 @@ import RenderColumns from '../columns/RenderColumns';
 import { fetchBoardByIdAction } from '../../features/boardByIdSlice';
 import NonAuthView from '../../components/NonAuthView';
 import BoardTitleChange from './BoardTitleChange';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 
 
@@ -14,6 +15,7 @@ const BoardView = () => {
   // connections to the redux store
   const userIsLoggedIn = useSelector((state) => state.userAuth.isLoggedIn);
   const board = useSelector((state) => state.boardById.board);
+  const isLoading = useSelector((state) => state.boardById.loading);
 
   // retrieve boardId from url parameters
   const { boardId } = useParams();
@@ -45,7 +47,7 @@ const BoardView = () => {
 
   return (
     <>
-      { userIsLoggedIn ? <>{renderBoards()}</> : <NonAuthView />  }
+      { isLoading? <LoadingSpinner /> : userIsLoggedIn ? <>{renderBoards()}</> : <NonAuthView />  }
     </>
    
   )
