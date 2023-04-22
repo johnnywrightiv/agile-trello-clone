@@ -1,33 +1,21 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateCardLabelAction } from '../../features/cardDetailSlice';
+import { deleteCardLabelAction, updateCardLabelAction } from '../../features/cardDetailSlice';
 
 function CardLabels() {
-  const card = useSelector((state) => state.cardById.card)
-  const cardLabelColors = card.labelColor;
-  const cardLabelNames = card.label;
-  let cardLabels = [];
-  
-  (cardLabelColors && cardLabelNames ? cardLabels = cardLabelColors.map((color, index) => {
-    // Use the Object.assign() method to create a new object
-    // with the properties from the original arrays
-    return Object.assign({}, {
-      color,
-      label: cardLabelNames[index]
-    });
-  }) : cardLabels = [] );
-    
-  
+  const cardLabelData = useSelector((state) => state.cardById.card.labels)
+  const cardLabels = cardLabelData.map(({labelColor, title}) => { return { labelColor, title } })
+ 
   const [showLabels, setShowLabels] = useState(false);
   const [selectedLabels, setSelectedLabels] = useState(cardLabels);
 
   const labelOptions = [
-    { color: '#F3CFCF', name: 'Label 1' },
-    { color: '#FFD8C6', name: 'Label 2' },
-    { color: '#A7E0B5', name: 'Label 3' },
-    { color: '#82C9E5', name: 'Label 4' },
-    { color: '#D8CADD', name: 'Label 5' }
+    { labelColor: '#F3CFCF', title: 'Label 1' },
+    { labelColor: '#FFD8C6', title: 'Label 2' },
+    { labelColor: '#A7E0B5', title: 'Label 3' },
+    { labelColor: '#82C9E5', title: 'Label 4' },
+    { labelColor: '#D8CADD', title: 'Label 5' }
   ];
 
   const dispatch = useDispatch();
@@ -37,28 +25,41 @@ function CardLabels() {
   };
 
   const handleLabelButtonHide = async () => {
-    const requestBody = {
-      label: selectedLabels.name,
-      labelColor: selectedLabels.color
-    }
-    // OR, if the body will accept an array of objects, we only need to send selectedLabels in the updateCardLabelAction
-    console.log(selectedLabels);
-    // await updateCardLabelAction(selectedLabels) 
     setShowLabels(false);
   }
 
-  const handleLabelSelection = (labelIndex) => {
-    // update selected labels state
-    setSelectedLabels(prevSelectedLabels => {
-      if (prevSelectedLabels.includes(labelIndex)) {
-        // label is already selected, remove it from selected labels
-        return prevSelectedLabels.filter(index => index !== labelIndex);
-      } else {
-        // label is not selected, add it to selected labels
-        return [...prevSelectedLabels, labelIndex];
-      }
-    });
+  const handleLabelSelection = (selectedLabel) => {
+    // if label is already selected, remove it from the selectedLabels
+   if (selectedLabels.some(label => label.labelColor === selectedLabel.labelColor)) {
+    // find index of matching label in local state
+    const labelToRemoveIndex = selectedLabels.findIndex(label => label.labelColor === selectedLabel.labelColor);
+    const labelToDeleteId = cardLabelData[labelToRemoveIndex]._id;
+    // remove label from card
+    dispatch(deleteCardLabelAction(labelToDeleteId));
+    // remove label from selectedLabels local state
+    const updatedSelectedLabels = cardLabels.filter(label => label.lableColor === selectedLabel.labelColor);
+    console.log(updatedSelectedLabels);
+    setSelectedLabels(updatedSelectedLabels);
+    } else {
+
+    }
   };
+
+  const renderSelectedLabels = () => {
+    if (cardLabels && selectedLabels.length > 0) {
+      return (
+        <span>
+            {selectedLabels.map((label, index) => (
+              <span key={index} style={{ backgroundColor: label.labelColor, marginRight: "5px"}}>
+                {label.title}
+              </span>
+            ))}
+          </span>
+      )
+    } else {
+      return null;
+    }
+  }
 
   return (
     <>
@@ -72,25 +73,17 @@ function CardLabels() {
           Edit
         </Button>}
       </Modal.Title>
-      {cardLabels && selectedLabels.length > 0 && (
-        <span>
-          {selectedLabels.map(labelIndex => (
-            <span key={labelIndex} style={{ backgroundColor: labelOptions[labelIndex].color, marginRight: "5px"}}>
-              {labelOptions[labelIndex].name}
-            </span>
-          ))}
-        </span>
-      )}
+      {renderSelectedLabels()}
       {showLabels && (
         <div>
           {labelOptions.map((option, index) => (
             <Form.Check
               type="checkbox"
               key={index}
-              label={option.name}
-              checked={selectedLabels.includes(index)}
-              onChange={() => handleLabelSelection(index)}
-              style={{ backgroundColor: option.color }}
+              label={option.title}
+              checked={selectedLabels.some(label => label.labelColor === option.labelColor)}
+              onChange={() => handleLabelSelection(option)}
+              style={{ backgroundColor: option.labelColor }}
             />
           ))}
         </div>
