@@ -28,8 +28,12 @@ const BoardView = () => {
   }, [isLoading]);
   
   useEffect(() => {
-    dispatch(fetchBoardByIdAction(boardId));
-  }, [ ]);
+    document.body.style.cursor = 'wait';
+
+    dispatch(fetchBoardByIdAction(boardId)).finally(() => {
+      document.body.style.cursor = 'default';
+    });
+  }, [boardId, dispatch]);
   
   const renderBoards = () => {
     if (board && Object.keys(board).length > 0) {
