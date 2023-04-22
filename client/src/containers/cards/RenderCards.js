@@ -49,8 +49,10 @@ const RenderCards = (columnIndex) => {
             >
             <Card className="card mb-3">
             <Card.Header className="hstack card-title">
-              <Card.Title>{card.title}</Card.Title>
-              {renderSelectedLabels(card.labels)}
+              <div className="d-flex flex-column">
+                {renderSelectedLabels(card.labels)}
+                <Card.Title>{card.title}</Card.Title>
+              </div>
               <CardDetailButton cardIndex={cardIndex} />
             </Card.Header>
             <Card.Body>
