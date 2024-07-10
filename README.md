@@ -31,5 +31,6 @@ To get started with our Trello clone project, follow these steps:
 1. Navigate to https://tre-hej.vercel.app/
 2. Sign up and log in
 3. Explore and have fun
+4. ** please note there are some loading lag times in the live deployment. if experiencing issues try refreshing the app or waiting, content will render.
 
 Thanks for checking out our project! 
